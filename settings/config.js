@@ -5,7 +5,7 @@ module.exports = {
     TOKEN: process.env.TOKEN || "YOUR_TOKEN",  // your bot token
     EMBED_COLOR: process.env.EMBED_COLOR || "#FF7100", //<= default is "#000001"
 
-    SEARCH_DEFAULT: ["gustixa", "mockingbird", "justin bieber", "post malone", "anime song"],
+    SEARCH_DEFAULT: ["gustixa", "mockingbird", "justin bieber", "poste", "anime song"],
 
     OWNER_ID: process.env.OWNER_ID || "989430735561715712", //your owner discord id example: "515490955801919488"
 
