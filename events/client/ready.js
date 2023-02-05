@@ -16,15 +16,15 @@ module.exports = async (client) => {
     let channels = client.channels.cache.size;
 
     const activities = [
-        `/premium setup | ${guilds} servers`,
-        `/play <input> | ${members} users`,
-        `/filter doubletime | ${channels} channels`,
+        `on ${guilds} Servers`,
+        `QuietDev`,
+        `/help`,
     ]
 
     setInterval(() => {
         client.user.setPresence({ 
             activities: [{ name: `${activities[Math.floor(Math.random() * activities.length)]}`, type: 2 }], 
-            status: 'online', 
+            status: 'idle', 
         });
     }, 15000)
 
