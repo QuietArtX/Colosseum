@@ -23,7 +23,7 @@ module.exports = {
         if (player) player.destroy();
 
         await interaction.guild.channels.create({
-            name: "song-request",
+            name: "colloseum-request",
             type: 0, // 0 = text, 2 = voice
             topic: `${client.i18n.get(language, "setup", "setup_topic")}`,
             parent: interaction.channel.parentId,

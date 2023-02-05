@@ -1,35 +1,35 @@
 ### 247 command
-247_off: "`🌙` | *Mode 24/7 has been:* `Deactivated`"
-247_on: "`🌕` | *Mode 24/7 has been:* `Activated`"
+247_off: "`🌙` ˧ Mode 24/7 has been: `Deactivated`"
+247_on: "`🌕` ˧ Mode 24/7 has been: `Activated`"
 
 ### Autoplay command!
-autoplay_off: "`📻` | *Autoplay has been:* `Deactivated`"
-autoplay_on: "`📻` | *Autoplay has been:* `Activated`"
+autoplay_off: "`📻` ˧ Autoplay has been: `Deactivated`"
+autoplay_on: "`📻` ˧ Autoplay has been: `Activated`"
 
 ### Clearqueue command!
-clearqueue_msg: "`📛` | *Queue has been:* `Cleared`"
+clearqueue_msg: "`📛` ˧ Queue has been: `Cleared`"
 
 ### Forward command!
-forward_msg: "`⏭` | *Forward to:* `%{duration}`"
+forward_msg: "`⏭` ˧ Forward to: %{duration}`"
 forward_beyond: "Cannot forward beyond the song's duration."
 forward_invalid: "Invalid argument, must be a number.\nCorrect Usage: `%{prefix}forward <seconds>`"
 
 ### Join command!
 join_voice: "You need to be in a voice channel to use the join command."
-join_msg: "`🔊` | *Joined:* `%{channel}`"
+join_msg: "`🔊` ˧ Joined: `%{channel}`"
 
 ### Leave command!
-leave_msg: "`🚫` | *Left:* | `%{channel}`"
+leave_msg: "`🚫` ˧ *Left:* ˧ `%{channel}`"
 
 ### Loop command!
-loop_current: "`🔁` | *Song has been:* `Looped`"
-unloop_current: "`🔁` | *Song has been:* `UnLooped`"
-loop_all: "`🔁` | *Queue has been:* `Looped`"
-unloop_all: "`🔁` | *Queue has been:* `UnLooped`"
+loop_current: "`🔁` ˧ *Song has been:* `Looped`"
+unloop_current: "`🔁` ˧ *Song has been:* `UnLooped`"
+loop_all: "`🔁` ˧ *Queue has been:* `Looped`"
+unloop_all: "`🔁` ˧ *Queue has been:* `UnLooped`"
 
 ### Loopall command!
-loopall: "`🔁` | *Queue has been:* `Looped`"
-unloopall: "`🔁` | *Queue has been:* `UnLooped`"
+loopall: "`🔁` ˧ *Queue has been:* `Looped`"
+unloopall: "`🔁` ˧ *Queue has been:* `UnLooped`"
 
 ### Lyrics command!
 lyrics_notfound: "Couldn't find any lyrics for provided song!"
@@ -57,23 +57,23 @@ np_invoice: "You need to be in a same/voice channel."
 # Message Button
 np_switch_pause: "Paused"
 np_switch_resume: "Resumed"
-np_pause_msg: "`⏯` | *Song has been:* `%{pause}`"
+np_pause_msg: "`⏯` ˧ Song has been: `%{pause}`"
 
-np_replay_msg: "`⏮` | *Song has been:* `Replayed`"
+np_replay_msg: "`⏮` ˧ Song has been: `Replayed`"
 
-np_stop_msg: "`🚫` | *Song has been:* `Stopped`"
+np_stop_msg: "`🚫` ˧ Song has been: `Stopped`"
 
-np_skip_msg: "`⏭` | *Song has been:* `Skipped`"
+np_skip_msg: "`⏭` ˧ Song has been: `Skipped`"
 
 np_switch_enable: "Enabled"
 np_switch_disable: "Disabled"
-np_repeat_msg: "`🔁` | *Loop has been:* `%{loop}`"
+np_repeat_msg: "`🔁` ˧ Loop has been: `%{loop}`"
 
 ### Pause command!
 pause_loading: "Loading please wait..."
 pause_switch_pause: "Paused"
 pause_switch_resume: "Resumed"
-pause_msg: "`⏯` | *Song has been:* `%{pause}`"
+pause_msg: "`⏯` ˧ Song has been: `%{pause}`"
 
 ### Play command!
 play_loading: "Loading please wait..."
@@ -93,28 +93,28 @@ play_match: "Error song not matches"
 ### Previous command!
 previous_loading: "Loading please wait..."
 previous_notfound: "No previous song/s found."
-previous_msg: "`⏮` | *Song has been:* `Previous`"
+previous_msg: "`⏮` ˧ Song has been::`Previous`"
 
 ### Queue command!
 queue_author: "Queue - %{guild}"
 queue_description: "*Currently Playing*\n*[%{title}](%{url})* `[%{duration}]` • %{request}\n\n*Rest of queue*:%{rest}"
-queue_footer: "Page • %{page}/%{pages} | %{queue_lang} • Song | %{duration} • Total duration"
+queue_footer: "Page • %{page}/%{pages} | %{queue_lang} • Song ˧ %{duration} • Total duration"
 queue_notnumber: "Page must be a number."
 queue_page_notfound: "There are only %{page} pages available."
 
 ### Replay command!
 replay_loading: "Loading please wait..."
-replay_msg: "`⏮` | *Song has been:* `Replayed`"
+replay_msg: "`⏮` ˧ Song has been: `Replayed`"
 
 ### Resume command!
 resume_loading: "Loading please wait..."
 resume_switch_pause: "Paused"
 resume_switch_resume: "Resumed"
-resume_msg: "`⏯` | *Song has been:* `%{resume}`"
+resume_msg: "`⏯` ˧ Song has been: `%{resume}`"
 
 ### Rewind command!
 rewind_loading: "Loading please wait..."
-rewind_msg: "`⏮` | *Rewind to:* `%{duration}`"
+rewind_msg: "`⏮` ˧ Rewind to: `%{duration}`"
 rewind_beyond: "Cannot rewind beyond the song's duration."
 rewind_invalid: "Invalid argument, must be a number.\nCorrect Usage: `%{prefix}rewind <seconds>`"
 
@@ -140,28 +140,28 @@ search_match: "Error song not matches"
 seek_loading: "Loading please wait..."
 seek_invalid: "Invalid number. Please provide a number in seconds.\nCorrect Usage: `%{prefix}seek <seconds>`"
 seek_beyond: "Cannot seek beyond length of song."
-seek_msg: "`⏭` | *Seeked to:* `%{duration}`"
+seek_msg: "`⏭` ˧ Seeked to: `%{duration}`"
 
 ### Shuffle command!
 shuffle_loading: "Loading please wait..."
-shuffle_msg: "`🔀` | *Queue has been:* `Shuffled`"
+shuffle_msg: "`🔀` ˧ Queue has been: `Shuffled`"
 
 ### Skip command!
 skip_loading: "Loading please wait..."
-skip_msg: "`⏭` | *Song has been:* `Skipped`"
+skip_msg: "`⏭` ˧ Song has been:`Skipped`"
 
 ### Skipto command!
 skipto_loading: "Loading please wait..."
 skipto_invalid_position: "Invalid number"
 skipto_arg: "Cannot skip to a song that is already playing. To skip the current playing song type: `%{prefix}skip`"
 skipto_invalid: "The song number is invalid."
-skipto_msg: "`⏭` | *Song has been:* `Skipto %{position}`"
+skipto_msg: "`⏭` ˧ Song has been: `Skipto %{position}`"
 
 ### Volume command!
 volume_loading: "Loading please wait..."
 volume_usage: "*Current volume:* `%{volume}%`"
 volume_invalid: "You may only set the volume to 1% - 100%"
-volume_msg: "`🔊` | *Change volume to:* `%{volume}%`"
+volume_msg: "`🔊` ˧ Change volume to: `%{volume}%`"
 
 ### PlaySkip command!
 playskip_loading: "Loading please wait..."

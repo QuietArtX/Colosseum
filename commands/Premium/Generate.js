@@ -48,7 +48,7 @@ module.exports = {
         return interaction.editReply({ embeds: [
           new EmbedBuilder()
           .setColor(client.color)
-          .setDescription(`${plan.join(' | ').toUpperCase()}`)
+          .setDescription(`${plans.join(' | ').toUpperCase()}`)
           ] })
 
         let time;

@@ -36,13 +36,13 @@ replay_msg: "`⏮` ˧ Song has been: `Replayed`"
 
 queue_author: "Queue - %{guild}"
 queue_description: "*Currently Playing*\n*[%{track}](%{track_url})* `[%{duration}]` • %{requester}\n\n*Rest of queue*:%{list_song}"
-queue_footer: "Page • %{page}/%{pages} | %{queue_lang} • Song | %{total_duration} • Total duration"
+queue_footer: "Page • %{page}/%{pages} | %{queue_lang} • Song  %{total_duration} • Total duration"
 
-clear_msg: "`📛` ˧ *Queue has been:* `Cleared`"
+clear_msg: "`📛` ˧ Queue has been: `Cleared`"
 
 
 ##### On QueueEnd Event #####
-queue_end_desc: "`📛` ˧ *Song has been* `Ended`"
+queue_end_desc: "`📛` ˧ Song has been `Ended`"
 
 
 ##### On Track get error!! Event #####
@@ -57,8 +57,8 @@ stuck_desc: "`❌` ˧ Song has stuck: `Auto-Skipped`"
 
 # On player get discoconnect
 dis_title: "Disconnected"
-dis_desc: "*I've been disconnected from <#%{voice}>*"
+dis_desc: "I've been disconnected from <#%{voice}>"
 
 # On player get move! = (detroy player)
 leave_title: "Moved"
-leave_desc: "*I have been moved from <#%{voice}>*"
+leave_desc: "I have been moved from <#%{voice}>"

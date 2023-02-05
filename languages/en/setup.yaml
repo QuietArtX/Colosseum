@@ -10,7 +10,7 @@ setup_playembed_author: "No song playing currently."
 setup_nowplay: "Now playing..."
 setup_songpause: "Paused the song..."
 setup_playembed_image: "https://media.discordapp.net/attachments/1060875376009695265/1071842093993054258/9ecbe10a7b6896049fd7b6717d5a8751.jpg"
-setup_playembed_desc: "Thanks For Using This Bot\nSupport Me By>>> [Invite](https://discord.com/api/oauth2/authorize?client_id=%{clientId}&permissions=2184310032&scope=bot%20applications.commands) | [DONATE](https://saweria.co/quietartx) | [FOLLOW MY IG](https://instagram.com/quietartx)"
+setup_playembed_desc: "Thanks For Using This Bot\nSupport Me By\n>>> [Invite](https://discord.com/api/oauth2/authorize?client_id=%{clientId}&permissions=2184310032&scope=bot%20applications.commands) | [DONATE](https://saweria.co/quietartx) | [FOLLOW MY IG](https://instagram.com/quietartx)"
 setup_playembed_footer: "Prefix is: %{prefix}"
 
 ##### Setup Update Handler #####
