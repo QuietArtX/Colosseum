@@ -93,7 +93,7 @@ module.exports = {
         if (!m) return;
         return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
       }
-      if (b.customId === "fitur") {
+      if (b.customId === "feature") {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`FEATURES`)
@@ -104,14 +104,14 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`PAYMENT METHOD`)
-        .setDescription(`\`\`\`yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``)
+        .setDescription(`\`\`\`yaml\n\u200b\n ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``)
         return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
       }
       if (b.customId === "price") {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`PRICE LIST`)
-        .setDescription(`\`\`\`yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``).setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` })
+        .setDescription(`\`\`\`yaml\n\u200b\n ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``).setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` })
         return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
       }
     });
