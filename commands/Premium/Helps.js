@@ -37,7 +37,7 @@ module.exports = {
       .setStyle(ButtonStyle.Success)
     );
     
-    const per2 = new ActionRowBuilder()
+    const bp1 = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setCustomId("feature")
@@ -46,7 +46,7 @@ module.exports = {
       .setStyle(ButtonStyle.Secondary)
     );
     
-    const per3 = new ActionRowBuilder()
+    const bp2 = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setCustomId("payment")
@@ -55,7 +55,7 @@ module.exports = {
       .setStyle(ButtonStyle.Secondary)
     );
     
-    const per4 = new ActionRowBuilder()
+    const bp3 = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setCustomId("price")
