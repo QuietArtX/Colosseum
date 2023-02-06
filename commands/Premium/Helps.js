@@ -72,7 +72,7 @@ module.exports = {
     
     const m = await interaction.editReply({ embeds: [embed], components: [row, per1, per2, per3, per4] });
     
-    const collector = await msg.createMessageComponentCollector({
+    const collector = m.createMessageComponentCollector({
       filter: (b) => {
         if (b.user && b.message.author.id == client.user.id) return true;
         else {
