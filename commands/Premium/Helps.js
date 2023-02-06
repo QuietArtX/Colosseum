@@ -22,7 +22,7 @@ module.exports = {
     
     const embed = new EmbedBuilder()
       .setColor(client.color)
-      .setTitle(`${client.username} PREMIUM SYSTEM`)
+      .setTitle(`COLOSSEUM PREMIUM SYSTEM`)
       .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
       .setDescription(`If You Want To Buy Premium Commands, Click the **BUY** button below\nAnd After purchasing you will be able to access Premium Commands!`)
       
@@ -60,9 +60,9 @@ module.exports = {
             },
           ]),
         );
-        const msg = interaction.editReply({ embeds: [embed], components: [blink, row] });
+        const msg = await interaction.editReply({ embeds: [embed], components: [blink, row] });
         const collector = msg.createMessageComponentCollector({
-          fitler: (i) => {
+          filter: (i) => {
             if (i.user && i.message.author.id == client.user.id) return true;
             else {
               i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's create your own menu\n Type: /help`)], ephemeral: true });
