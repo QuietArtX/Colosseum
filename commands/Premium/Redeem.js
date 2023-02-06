@@ -10,7 +10,7 @@ module.exports = {
     options: [
         {
             name: "code",
-            description: "The code you want to redeem",
+            description: "Input The Code!",
             required: true,
             type: ApplicationCommandOptionType.String,
         }

@@ -71,9 +71,7 @@ module.exports = {
             collector.on('end', async (collected, reason) => {
                 if(reason === 'time') {
                     const timed = new EmbedBuilder()
-                    .setDescription(`${client.i18n.get(language, "utilities", "help_timeout", {
-                        prefix: "/"
-                    })}`)
+                    .setDescription(`**Timeout! Try again!**`)
                     .setColor(client.color)
 
                     msg.edit({ embeds: [timed], components: [] });

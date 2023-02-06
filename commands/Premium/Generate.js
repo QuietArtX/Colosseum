@@ -16,7 +16,7 @@ module.exports = {
         },
         {
             name: "amount",
-            description: "The amount of codes you want to generate!",
+            description: "The amount of codes you want to generate",
             required: false,
             type: ApplicationCommandOptionType.String,
         }
@@ -48,6 +48,7 @@ module.exports = {
         return interaction.editReply({ embeds: [
           new EmbedBuilder()
           .setColor(client.color)
+          .setTitle(`Available Plans!`)
           .setDescription(`${plans.join(' | ').toUpperCase()}`)
           ] })
 
