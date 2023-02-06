@@ -78,7 +78,7 @@ module.exports = {
               .setColor(client.color)
               .setTitle(`DELETED`)
               .setDescription(`Timeout! Please Try Again!`)
-              msg.edit({ embeds: [timbed], components: [] })
+              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeou: 6000 }))
           }
         });
         collected.on('collect', async (s) => {
@@ -92,7 +92,7 @@ module.exports = {
               if (!msg) return;
               return msg.edit({
                 embeds: [nembed],
-                components[blink, row],
+                components: [blink, row],
               });
           }
           if (options === 'Price') {
@@ -103,7 +103,7 @@ module.exports = {
               if (!msg) return;
               return msg.edit({
                 embeds: [nembed],
-                components[blink, row],
+                components: [blink, row],
               });
           }
           if (options === 'Payment') {
@@ -115,10 +115,8 @@ module.exports = {
               if (!msg) return;
               return msg.edit({
                 embeds: [nembed],
-                components[blink, row],
-              }).then(msg => msg.delete({
-                timeout: 6000
-              }))
+                components: [blink, row],
+              });
           }
         })
   }
