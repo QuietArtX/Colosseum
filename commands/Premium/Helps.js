@@ -18,7 +18,7 @@ module.exports = {
     },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: false });
     
     const embed = new EmbedBuilder()
       .setColor(client.color)
@@ -26,7 +26,7 @@ module.exports = {
       .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
       .setDescription(`If You Want To Buy Premium Commands, Click the **BUY** button below\nAnd After purchasing you will be able to access Premium Commands!`)
       
-      const blink = ActionRowBuilder()
+      const blink = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
           .setLabel('BUY')
@@ -35,7 +35,7 @@ module.exports = {
           .setURL('https://discord.com/users/989430735561715712')
         );
       
-      const row = ActionRowBuilder()
+      const row = new ActionRowBuilder()
       .addComponents(
         new SelectMenuBuilder()
           .setCustomId('help-prem')
