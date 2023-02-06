@@ -51,7 +51,7 @@ module.exports = {
             {
               label: 'Price List',
               emoji: '1013750577089478707',
-              value: 'Price,
+              value: 'Price',
             }
             {
               label: 'Payment',
@@ -116,7 +116,9 @@ module.exports = {
               return msg.edit({
                 embeds: [nembed],
                 components[blink, row],
-              });
+              }).then(msg => msg.delete({
+                timeout: 6000
+              }))
           }
         })
   }
