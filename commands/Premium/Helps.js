@@ -42,7 +42,7 @@ module.exports = {
           .setPlaceholder('Click Here!')
           .setMinValues(1)
           .setMaxValues(1)
-          .addOption(
+          .addOptions([
             {
               label: 'Features',
               emoji: '1013750658643546122',
@@ -58,7 +58,7 @@ module.exports = {
               emoji: '1013750700087451750',
               value: 'Payment',
             },
-          ),
+          ]),
         );
         const msg = interaction.editReply({ embeds: [embed], components: [blink, row] });
         const collector = msg.createMessageComponentCollector({
