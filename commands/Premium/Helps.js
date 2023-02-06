@@ -20,7 +20,7 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
-    const row = new ActionRowBuilder()
+    const blink = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setLabel(`BUY`)
@@ -29,7 +29,7 @@ module.exports = {
       .setURL('https://discord.com/users/989430735561715712')
       );
     
-    const per1 = new ActionRowBuilder()
+    const bhome = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setCustomId("home")
@@ -70,9 +70,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands!`)
     
-    let buttonRow = new ActionRowBuilder().addComponents([per1, per2, per3, per4]);
-    const allbtn = [buttonRow];
-    const m = await interaction.editReply({ embeds: [embed], components: [row, per1, per2, per3, per4] });
+    const m = await interaction.editReply({ embeds: [embed], components: [blink, bp1, bhome, bp2, bp3] });
     
     const collector = m.createMessageComponentCollector({
       filter: (b) => {
@@ -85,24 +83,27 @@ module.exports = {
       time: 60000 
     });
     
-    let dbtnRow = new ActionRowBuilder().addComponents([per1, per2, per3, per4]);
     const disableBtn = [dbtnRow];
-    collector.on('end', async () =>{
-      if(!m) return;
-      await m.edit({ components: [disableBtn] }).catch(() => {});
+    collector.on('end', async (collected, reason) =>{
+      if(!reason === 'time') {
+        const timbed = new EmbedBuilder()
+        .setColor(client.color)
+        .setDescription(`Deleted! Message timed out, try again`)
+        m.edit({ embeds: [timbed], components: [] })
+      }
     });
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
       if (b.customId === "home") {
         if (!m) return;
-        return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
+        return await m.edit({ embeds: [embed], components: [blink, bp1, bhome, bp2, bp3] })
       }
       if (b.customId === "feature") {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`FEATURES`)
-        .setDescription(`\`\`\`yaml\n\u200b\nAUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\nSETUP\n\`\`\``)
-        return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
+        .setDescription(`\`\`\`yaml\n\u200b\nAUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n  ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\nSETUP\n\`\`\``)
+        return await m.edit({ embeds: [embed], components: [blink, bp1, bhome, bp2, bp3] })
       }
       if (b.customId === "payment") {
         const embed = new EmbedBuilder()
@@ -110,14 +111,14 @@ module.exports = {
         .setTitle(`PAYMENT METHOD`)
         .setDescription(`\`\`\`yaml\n\u200b\n ▸ OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``)
         .setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` })
-        return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
+        return await m.edit({ embeds: [embed], components: [blink, bp1, bhome, bp2, bp3] })
       }
       if (b.customId === "price") {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`PRICE LIST`)
         .setDescription(`\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Yearly = 10M OwO Cash\n ▸ Lifetime = 25M OwO Cash\n\nDANA:\n ▸ Daily = 5.000 IDR\n ▸ Weekly = 10.000 IDR\n ▸ Monthly = 20.000 IDR\n ▸ Yearly = 50.000 IDR\n ▸ Lifetime = 150.000 IDR\`\`\``)
-        return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
+        return await m.edit({ embeds: [embed], components: [blink, bp1, bhome, bp2, bp3] })
       }
     });
   }
