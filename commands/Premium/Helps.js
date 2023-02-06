@@ -65,7 +65,7 @@ module.exports = {
           fitler: (i) => {
             if (i.user && i.message.author.id == client.user.id) return true;
             else {
-              i.reply{( embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's create your own menu\n Type: /help`)], ephemeral: true )};
+              i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's create your own menu\n Type: /help`)], ephemeral: true });
               return false;
             };
           },
