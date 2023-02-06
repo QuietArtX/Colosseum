@@ -26,7 +26,7 @@ module.exports = {
     DEFAULT_SEARCH: "ytsearch", // default search engine & "ytmsearch" / "ytsearch" / "scsearch" / "spsearch"
     NODES: [
       { 
-        identifier: "NanoSpace",
+        identifier: "OddCoder",
         host: process.env.NODE_HOST || "lavalink.oddcoder.xyz",
         port: parseInt(process.env.NODE_PORT || "443"),
         password: process.env.NODE_PASSWORD || "oddcoder",

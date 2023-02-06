@@ -55,7 +55,7 @@ module.exports = {
       .setStyle(ButtonStyle.Secondary)
     );
     
-    const per3 = new ActionRowBuilder()
+    const per4 = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setCustomId("price")
