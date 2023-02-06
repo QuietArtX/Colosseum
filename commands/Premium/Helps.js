@@ -68,7 +68,7 @@ module.exports = {
     .setTitle(`PREMIUM SYSTEM`)
     .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
     .setColor(client.color)
-    .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands!`)
+    .setDescription(`If You Want To Buy Premium Commands, Click the buy button below\nAnd After purchasing you will be able to access Premium Commands!`)
     
     const m = await interaction.editReply({ embeds: [embed], components: [blink, bp1, bhome, bp2, bp3] });
     
