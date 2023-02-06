@@ -66,15 +66,15 @@ module.exports = {
       }
       if (b.customId === "fitur") {
         editEmbed.setColor(client.color).setTitle(`FEATURES`).setDescription(`\`\`\`yaml\n\u200b\n  ▸ AUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\n▸ SETUP\n\`\`\``)
-        return await m.edit({ embeds [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
+        return await m.edit({ embeds: [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
       }
       if (b.customId === "payment") {
         editEmbed.setColor(client.color).setTitle(`PAYMENT METHOD`).setDescription(`\`\`\`yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``)
-        return await m.edit({ embeds [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
+        return await m.edit({ embeds: [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
       }
       if (b.customId === "price") {
         editEmbed.setColor(client.color).setTitle(`PRICE LIST`).setDescription(`\`\`\`yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``).setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` })
-        return await m.edit({ embeds [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
+        return await m.edit({ embeds: [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
       }
     });
   }
