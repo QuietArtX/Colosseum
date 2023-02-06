@@ -45,6 +45,10 @@ module.exports = {
 
             interaction.editReply({ embeds: [embed], components: [row] }).then(async (msg) => {
                 let filter = (i) => (i.isSelectMenu()) && i.user && i.message.author.id == client.user.id;
+                if (i.user && i.message.author id == client user.id) return true;
+                else {
+                  i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's make your own menu`)], ephemeral: true }); return false;
+                };
                 let collector = await msg.createMessageComponentCollector({ 
                     filter,
                     time: 60000 

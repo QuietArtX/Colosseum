@@ -71,16 +71,7 @@ module.exports = {
           },
           time: 60000
         });
-        
-        collector.on('end', async (collected, reason) => {
-          if (!reason === 'time') {
-            const timbed = new EmbedBuilder()
-              .setColor(client.color)
-              .setTitle(`DELETED`)
-              .setDescription(`Timeout! Please Try Again!`)
-              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeou: 6000 }))
-          }
-        });
+     
         collected.on('collect', async (s) => {
           if (!s.deffered) await s.deferUpdate()
           const options = s.values[0]
@@ -118,6 +109,15 @@ module.exports = {
                 components: [blink, row],
               });
           }
-        })
+        });
+        collector.on('end', async (collected, reason) => {
+          if (reason === 'time') {
+            const timbed = new EmbedBuilder()
+              .setColor(client.color)
+              .setTitle(`DELETED`)
+              .setDescription(`Timeout! Please Try Again!`)
+              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
+          }
+        });        
   }
 }
