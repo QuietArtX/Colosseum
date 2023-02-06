@@ -83,9 +83,8 @@ module.exports = {
       time: 60000 
     });
     
-    const disableBtn = [dbtnRow];
-    collector.on('end', async (collected, reason) =>{
-      if(!reason === 'time') {
+    collector.on('end', async (collected, reason) => {
+      if(reason === 'time') {
         const timbed = new EmbedBuilder()
         .setColor(client.color)
         .setDescription(`Deleted! Message timed out, try again`)
