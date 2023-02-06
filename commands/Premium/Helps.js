@@ -70,8 +70,8 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands!`)
     
-    let buttonRow = new ActionRowBuilder().addComponents([per1, per2, per3 per4]]
-    const allbtn = [buttonRow]
+    let buttonRow = new ActionRowBuilder().addComponents([per1, per2, per3 per4]);
+    const allbtn = [buttonRow];
     const m = await interaction.editReply({ embeds: [embed], components: [row, per1, per2, per3, per4] });
     
     const collector = m.createMessageComponentCollector({
@@ -85,8 +85,8 @@ module.exports = {
       time: 60000 
     });
     
-    let dbtnRow = new ActionRowBuilder().addComponents([per1, per2, per3, per4]
-    const disableBtn = [dbtnRow]
+    let dbtnRow = new ActionRowBuilder().addComponents([per1, per2, per3, per4]);
+    const disableBtn = [dbtnRow];
     collector.on('end', async () =>{
       if(!m) return;
       await m.edit({ components: [disableBtn] }).catch(() => {});
