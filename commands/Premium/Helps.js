@@ -23,7 +23,6 @@ module.exports = {
     const row = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
-      .setCustomId('dc')
       .setLabel(`DM ME`)
       .setEmoji('800609264124821546')
       .setStyle(ButtonStyle.Link)
