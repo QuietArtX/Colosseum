@@ -52,7 +52,7 @@ module.exports = {
               label: 'Price List',
               emoji: '1013750577089478707',
               value: 'Price',
-            }
+            },
             {
               label: 'Payment',
               emoji: '1013750700087451750',
