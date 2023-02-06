@@ -17,7 +17,7 @@ module.exports = async (client) => {
 
     const activities = [
         `on ${guilds} Servers`,
-        `QuietDev`,
+        `Colloseum Project`,
         `/help`,
     ]
 
@@ -26,6 +26,6 @@ module.exports = async (client) => {
             activities: [{ name: `${activities[Math.floor(Math.random() * activities.length)]}`, type: 2 }], 
             status: 'idle', 
         });
-    }, 15000)
+    }, 10000)
 
 };

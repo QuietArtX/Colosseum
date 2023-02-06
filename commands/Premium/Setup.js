@@ -34,7 +34,7 @@ module.exports = {
         const attachment = new AttachmentBuilder("./settings/images/banner.png", { name: "setup.png" });
 
         const queueMsg = `${client.i18n.get(language, "setup", "setup_queuemsg")}`;
-
+        
         const playEmbed = new EmbedBuilder()
             .setColor(client.color)
             .setAuthor({ name: `${client.i18n.get(language, "setup", "setup_playembed_author")}` })

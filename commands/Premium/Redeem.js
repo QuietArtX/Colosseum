@@ -43,7 +43,7 @@ module.exports = {
   
         const premium = await Redeem.findOne({ code: input.toUpperCase() });
         if (premium) {
-            const expires = moment(premium.expiresAt).format('dddd MMMM YYYY - HH:mm:ss')
+            const expires = moment(premium.expiresAt).format('dddd MMMM Do YYYY - HH:mm:ss')
   
             member.isPremium = true
             member.premium.redeemedBy.push(interaction.user)
