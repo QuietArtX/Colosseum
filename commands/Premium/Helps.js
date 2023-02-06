@@ -36,8 +36,8 @@ module.exports = {
         );
       
       const row = ActionRowBuilder()
-      new SelectMenuBuilder()
-        .addComponents(
+      .addComponents(
+        new SelectMenuBuilder()
           .setCustomId('help-prem')
           .setPlaceholder('Click Here!')
           .setMinValues(1)
