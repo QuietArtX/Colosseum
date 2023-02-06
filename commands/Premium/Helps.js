@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
-  name: ["premium", "help"],
+  name: ["premium", "helps"],
   description: "Premium help if u want to buy premium",
   category: "Premium",
   permissions: {
@@ -42,7 +42,7 @@ module.exports = {
     .setFields({
       name: `PRICE LIST`, value: `\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n\`\`\``, inline: true
     })
-    .setFooter(`if you don't have Indonesian payments, please pay via OwO Cash only`);
+    .setFooter({ text: `if you don't have Indonesian payments, please pay via OwO Cash only` });
    
     interaction.editReply({
       embeds: [embed], 
