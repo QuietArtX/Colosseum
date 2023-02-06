@@ -12,7 +12,7 @@ module.exports = {
   settings: {
     isPremium: false,
     isPlayer: false,
-    isOwner: true,
+    isOwner: false,
     inVoice: false,
     sameVoice: false,
     },
@@ -32,7 +32,12 @@ module.exports = {
     const embed = new EmbedBuilder()
     .setTitle(`PREMIUM SYSTEM`)
     .setColor(client.color)
-    .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands\n Payment:\n  • OwO Cash\n  • DANA\n  • Shopeepay`)
+    .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands!`)
+    .addFields({
+      name: `PAYMENT`,
+      value: `\`\`\`yaml\n ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``,
+      inline: true
+    })
     .addFields({
       name: `PREMIUM FEATURES`,
       value: `\`\`\`yaml\n ▸ AUTOPLAY\n ▸ PLAYLIST\n ▸ SETUP\nAnd Much More!`,
