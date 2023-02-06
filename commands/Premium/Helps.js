@@ -23,15 +23,15 @@ module.exports = {
     const row = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
-      .setLabel(`DM ME`)
-      .setEmoji('800609264124821546')
+      .setLabel(`BUY`)
+      .setEmoji('917981825736011846>')
       .setStyle(ButtonStyle.Link)
       .setURL('https://discord.com/users/989430735561715712')
       );
     
     const embed = new EmbedBuilder()
     .setTitle(`PREMIUM SYSTEM`)
-    .setThumbnail(client.user.DisplayAvatarURL({ dynamic: true, size: 2048 }))
+    .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
     .setColor(client.color)
     .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands!`)
     .setFields([
