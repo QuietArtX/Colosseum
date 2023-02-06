@@ -85,13 +85,13 @@ module.exports = {
     
     collector.on('end', async () =>{
       if(!m) return;
-      await m.edit({ components: [new ActionRowBuilder().addComponents(row.setDisabled(true), per1.setDisabled(true), per2.setDisabled(true), per3.setDisabled(true), per4.setDisabled(true))] }).catch(() => {});
+      await m.edit({ components: [row, per1.setDisabled(true), per2.setDisabled(true), per3.setDisabled(true), per4.setDisabled(true))] }).catch(() => {});
     });
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
       if (b.customId === "home") {
         if (!m) return;
-        return await m.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(row, per1, per2, per3, per4)] })
+        return await m.edit({ embeds: [embed], components: [row, per1, per2, per3, per4] })
       }
       if (b.customId === "fitur") {
         const embed = new EmbedBuilder()
