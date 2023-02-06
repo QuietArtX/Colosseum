@@ -16,7 +16,7 @@ module.exports = {
         },
         {
             name: "amount",
-            description: "The amount of codes you want to generate",
+            description: "The amount of codes you want to generate!",
             required: false,
             type: ApplicationCommandOptionType.String,
         }
