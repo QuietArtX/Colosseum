@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } = require("discord.js");
 
 module.exports = {
   name: ["premium", "helps"],
@@ -40,10 +40,48 @@ module.exports = {
       { name: `PAYMENT`, value: `\`\`\`yaml\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``, inline: true },
     ])
     .setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` });
-   
+    
+    const menu = new ActionRowBuilder().addComponents([
+      new SelectMenuBuilder()
+         .setCustomId('feature')
+         .setPlaceholder('Come Here!')
+         .setMinValues(1)
+         .setMaxValues(1)
+         .addOptions([
+           {
+             label: 'FEATURES',
+             value: `\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n\`\`\``
+           },
+           {
+             label: 'PRICE LIST',
+             value: `\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n\`\`\``
+           },
+           {
+             label: `PAYMENT`,
+             value: `\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n\`\`\``
+           },
+           ])
+      ])
     interaction.editReply({
       embeds: [embed], 
       components: [row]
+    }).then(async (msg) => {
+      if (interaction.isSelectMenu()) {
+        if (interaction.customId === 'feature') {
+          let prem = "";
+          await interaction.deferUpdate()
+          await interaction.values.forEach(async value => {
+            prem += `\n\n${value}`
+          })
+          const embed = new EmbedBuilder()
+          .setColor(client.color)
+          .setTitle(`PREMIUM SYSTEM`)
+          .setDescription(`${prem}`)
+          
+          msg.edit({ embeds: [embed] });
+          
+        }
+      }
     });
   }
 }
