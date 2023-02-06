@@ -20,6 +20,10 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
+    let w1 = "PREMIUM FEATURES\n```yaml\n  ▸ AUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\n▸ SETUP\n```";
+    let w2 = "PRICE LIST\n```yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n```";
+    let w3 = "PAYMENT\n```yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n```";
+    
     const row = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
@@ -50,15 +54,15 @@ module.exports = {
          .addOptions([
            {
              label: 'FEATURES',
-             value: 'FEATURES\n```yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n```'
+             value: w1
            },
            {
              label: 'PRICE LIST',
-             value: 'PRICE LIST\n\n```yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n```'
+             value: w2
            },
            {
              label: 'PAYMENT',
-             value: 'PAYMENT\nOwO Cash, DANA, Shopeepay'
+             value: w3
            },
            ])
       ])
