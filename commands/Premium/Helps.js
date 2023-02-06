@@ -20,10 +20,6 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
-    let w1 = "PREMIUM FEATURES\n```yaml\n  ▸ AUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\n▸ SETUP\n```";
-    let w2 = "PRICE LIST\n```yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n```";
-    let w3 = "PAYMENT\n```yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n```";
-    
     const row = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
@@ -38,53 +34,47 @@ module.exports = {
     .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
     .setColor(client.color)
     .setDescription(`If You Want To Buy Premium Commands Just Click DM Me!\n And After purchasing you will be able to access Premium Commands!`)
-    .addFields([
-      { name: `PREMIUM FEATURES`, value: `\`\`\`yaml\n  ▸ AUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\n▸ SETUP\n\`\`\``, inline: true },      
-      { name: `PRICE LIST`, value: `\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Lifetime = 5M OwO Cash\n\nIDR (DANA, Shopeepay):\n ▸ Daily = Rp5.000\n ▸ Weekly = Rp10.000\n ▸ Monthly = Rp25.000\n ▸ Lifetime = Rp50.000\n\`\`\``, inline: true },
-      { name: `PAYMENT`, value: `\`\`\`yaml\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``, inline: true },
-    ])
-    .setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` });
     
-    const menu = new ActionRowBuilder().addComponents([
-      new SelectMenuBuilder()
-         .setCustomId('feature')
-         .setPlaceholder('Come Here!')
-         .setMinValues(1)
-         .setMaxValues(1)
-         .addOptions([
-           {
-             label: 'FEATURES',
-             value: w1
-           },
-           {
-             label: 'PRICE LIST',
-             value: w2
-           },
-           {
-             label: 'PAYMENT',
-             value: w3
-           },
-           ])
-      ])
-    interaction.editReply({
-      embeds: [embed], 
-      components: [row]
-    }).then(async (msg) => {
-      if (interaction.isSelectMenu()) {
-        if (interaction.customId === 'feature') {
-          let prem = "";
-          await interaction.deferUpdate()
-          await interaction.values.forEach(async value => {
-            prem += `\n\n${value}`
-          })
-          const embed = new EmbedBuilder()
-          .setColor(client.color)
-          .setTitle(`PREMIUM SYSTEM`)
-          .setDescription(`${prem}`)
-          
-          msg.edit({ embeds: [embed] });
-          
-        }
+    let p1 = new ButtonBuilder().setCustomId("home").setLabel("🏠").setStyle(ButtonStyle.Success);
+    let p2 = new ButtonBuilder().setCustomId("fitur").setLabel("FEATURES").setEmoji("1013750658643546122").setStyle(ButtonStyle.Success);
+    let p3 = new ButtonBuilder().setCustomId("payment").setLabel("PAYMENT").setEmoji("1013750700087451750").setStyle(ButtonStyle.Success);
+    let p4 = new ButtonBuilder().setCustomId("price").setLabel("PRICE LIST").setEmoji("1013750577089478707").setStyle(ButtonStyle.Success);
+    let editEmbed = new EmbedBuilder();
+    
+    const m = await interaction.editReply({ embeds: [embed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)]});
+    
+    const collector = await msg.createMessageComponentCollector({
+      filter: (b) => {
+        if (b.user && b.message.author.id == client.user.id) return true;
+        else {
+          b.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You Can't Use This Button!! Lets Make Your Own Button`)], ephemeral: true });
+          return false;
+        };
+      },
+      time: 60000 
+    });
+    
+    collector.on('end', async () =>{
+      if(!m) return;
+      await m.edit({ components: [new ActionRowBuilder().addComponents(row.setDisable(true), p1.setDisable(true), p2.setDisable(true), p3.setDisable(true), p4.setDisable(true))] }).catch(() => {});
+    });
+    collector.on('collect', async (b) => {
+      if (!b.deffered) await b.deferUpdate()
+      if (b.customId === "home") {
+        if (!m) return;
+        return await m.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)]})
+      }
+      if (b.customId === "fitur") {
+        editEmbed.setColor(client.color).setTitle(`FEATURES`).setDescription(`\`\`\`yaml\n\u200b\n  ▸ AUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\n▸ SETUP\n\`\`\``)
+        return await m.edit({ embeds [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
+      }
+      if (b.customId === "payment") {
+        editEmbed.setColor(client.color).setTitle(`PAYMENT METHOD`).setDescription(`\`\`\`yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``)
+        return await m.edit({ embeds [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
+      }
+      if (b.customId === "price") {
+        editEmbed.setColor(client.color).setTitle(`PRICE LIST`).setDescription(`\`\`\`yaml\n\u200b\n  ▸OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``).setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` })
+        return await m.edit({ embeds [editEmbed], components: [new ActionRowBuilder().addComponents(row, p1, p2, p3, p4)] })
       }
     });
   }
