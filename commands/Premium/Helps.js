@@ -40,8 +40,7 @@ module.exports = {
     let per3 = new ButtonBuilder().setCustomId("payment").setLabel("PAYMENT").setEmoji("1013750700087451750").setStyle(ButtonStyle.Success);
     let per4 = new ButtonBuilder().setCustomId("price").setLabel("PRICE LIST").setEmoji("1013750577089478707").setStyle(ButtonStyle.Success);
     let editEmbed = new EmbedBuilder();
-    
-    const m = await interaction.editReply({ embeds: [embed], components: [row, per1, per2, per3, per4]});
+    const m = await interaction.editReply({ embeds: [embed], components: [row, per1, per2, per3, per4] });
     
     const collector = await msg.createMessageComponentCollector({
       filter: (b) => {
@@ -56,13 +55,13 @@ module.exports = {
     
     collector.on('end', async () =>{
       if(!m) return;
-      await m.edit({ components: [new ActionRowBuilder().addComponents(row.setDisable(true), p1.setDisable(true), p2.setDisable(true), p3.setDisable(true), p4.setDisable(true))] }).catch(() => {});
+      await m.edit({ components: [new ActionRowBuilder().addComponents(row.setDisabled(true), p1.setDisabled(true), p2.setDisabled(true), p3.setDisabled(true), p4.setDisabled(true))] }).catch(() => {});
     });
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
       if (b.customId === "home") {
         if (!m) return;
-        return await m.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(row, per1, per2, per3, per4)]})
+        return await m.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(row, per1, per2, per3, per4)] })
       }
       if (b.customId === "fitur") {
         editEmbed.setColor(client.color).setTitle(`FEATURES`).setDescription(`\`\`\`yaml\n\u200b\n  ▸ AUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\n▸ SETUP\n\`\`\``)
