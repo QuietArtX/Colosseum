@@ -72,7 +72,7 @@ module.exports = {
           time: 60000
         });
      
-        collected.on('collect', async (s) => {
+        collector.on('collect', async (s) => {
           if (!s.deffered) await s.deferUpdate()
           const options = s.values[0]
           if (options === 'Features') {
@@ -110,7 +110,7 @@ module.exports = {
               });
           }
         });
-        collector.on('end', async (reason) => {
+        collector.on('end', async (collected, reason) => {
           if (reason === 'time') {
             const timbed = new EmbedBuilder()
               .setColor(client.color)
