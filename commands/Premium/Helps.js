@@ -63,7 +63,7 @@ module.exports = {
         const msg = await interaction.editReply({ embeds: [embed], components: [blink, row] });
         const collector = msg.createMessageComponentCollector({
           filter: (i) => {
-            if (i.user && i.message.author.id == client.user.id) return true;
+            if (i.user === interaction.user.id) return true;
             else {
               i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's create your own menu\n Type: /help`)], ephemeral: true });
               return false;
