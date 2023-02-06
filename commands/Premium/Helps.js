@@ -85,7 +85,7 @@ module.exports = {
     
     collector.on('end', async () =>{
       if(!m) return;
-      await m.edit({ components: [row, per1.setDisabled(true), per2.setDisabled(true), per3.setDisabled(true), per4.setDisabled(true))] }).catch(() => {});
+      await m.edit({ components: [row, per1.setDisabled(true), per2.setDisabled(true), per3.setDisabled(true), per4.setDisabled(true)] }).catch(() => {});
     });
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
