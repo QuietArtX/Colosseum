@@ -44,14 +44,15 @@ module.exports = {
                 ])
 
             interaction.editReply({ embeds: [embed], components: [row] }).then(async (msg) => {
-                let filter = (i) => (i.isSelectMenu()) && i.user && i.message.author.id == client.user.id;
-                if (i.user && i.message.author.id == client.user.id) return true;
-                else {
-                  i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's make your own menu`)], ephemeral: true }); return false;
-                };
-                let collector = await msg.createMessageComponentCollector({ 
-                    filter,
-                    time: 60000 
+              const collector = msg.createMessageComponentCollector({
+                filter: (i) => {
+                  if (i.user && i.message.author.id == client.user.id) return true;
+                  else {
+                    i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`You can't use this menu! let's create your own menu\n Type: /help`)], ephemeral: true });
+                    return false;
+                    };
+                },
+                time: 60000
                 });
                 collector.on('collect', async (m) => {
                     if(m.isSelectMenu()) {
