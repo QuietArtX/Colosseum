@@ -59,7 +59,7 @@ module.exports = {
       );
       
       const msg = await interaction.editReply({
-        embeds: [Embed],
+        embeds: [Embed.setDescription('!! ARE YOU SURE BAN THIS USER! BECAUSE I LOVED IT')],
         components: [row]
       });
       
