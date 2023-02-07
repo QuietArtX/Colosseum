@@ -13,7 +13,7 @@ module.exports = {
   category: "Moderation",
   options: [
     {
-      name: "target",
+      name: "user",
       description: "mention a user",
       required: true,
       type: ApplicationCommandOptionType.User,
@@ -38,7 +38,7 @@ module.exports = {
     },
     run: async (interaction, client, user) => {
       
-      const member = await interaction.guild.members.fetch(interaction.options.getUser('user').id);
+      const member = await interaction.guild.members.fetch(interaction.options.getUser('user'));
       const reason = interaction.options.getString('reason') || 'Not given';
       if (member.permissions.has("BanMembers") || member.permissions.has("BanMembers")) return interaction.editReply({ content: `You cant ban a moderator`});
       
