@@ -76,22 +76,21 @@ module.exports = {
         });
         collector.on('collect', async (b) => {
           if(!b.deffered) await b.deferUpdate()
-          if(b.user.id !== user.id) return;
-          if(b.customId === "b-yes") {
-            member.ban({ 
-              reason: reason,
-              deleteMessageMember: 1
-            })
-            const embed = new EmbedBuilder()
+          if(b.user.id !== user.id) return
+          switch(b.customId) {
+            case "b-yes":
+              member.ban({ reason })
+              const embed = new EmbedBuilder()
               .setTitle('BANNED SUCCESS!')
               .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
               return await msg.edit({ embeds: [embed], components: [] })
-          }
-          if(b.customId === "b-no") {
+            break;
+            case "b-no":
             const embed = new EmbedBuilder()
              .setTitle('BANNED CANCELED')
              .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
-             return await msg.edit({ embeds: [embed], components: [] })
+            return await msg.edit({ embeds: [embed], components: [] })
+            break;
           }
         });
         collector.on('end', async (collected, timed) => {
