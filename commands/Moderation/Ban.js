@@ -36,10 +36,10 @@ module.exports = {
         inVoice: false,
         sameVoice: false,
     },
-    run: async (interaction, client, user) => {
+    run: async (interaction, client, user, guild) => {
       await interaction.deferReply({ ephemeral: false })
       
-
+      const (options, guild) = interaction
       const member = interaction.options.getMember("target")
       const reason = interaction.options.getString("reason") || "No reason provided"
       
