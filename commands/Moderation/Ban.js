@@ -37,7 +37,7 @@ module.exports = {
         sameVoice: false,
     },
     run: async (interaction, client, user) => {
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply({ ephemeral: false });
       
       const member = await interaction.guild.members.fetch(interaction.options.getUser('user'));
       const reason = interaction.options.getString('reason') || 'Not given';
@@ -80,17 +80,21 @@ module.exports = {
         switch(b.customId) {
           case "b-yes":
             member.ban({ reason })
-            interaction.editReply({
+            msg.edit({
               embeds: [
-                Embed.setDescription(`${member} Has Been Successfully Banned!\nReason: ${reason}`)
+                new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(`${member} Has Been Successfully Banned!\nReason: ${reason}`)
               ],
               components: []
             })
           break;
           case "b-no":
-            interaction.editReply({
+            msg.edit({
               embeds: [
-                Embed.setDescription(`CANCELED`)
+                new EmbedBuilder()
+                .setColor(client.color)
+                .setDescription(`CANCELED`)
               ],
               components: []
             })
