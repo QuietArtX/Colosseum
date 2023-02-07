@@ -39,7 +39,7 @@ module.exports = {
         )}:F> `;
       });
 
-    interaction.reply({
+    interaction.editReply({
       embeds: [
         new EmbedBuilder()
           .setTitle(`All Premium Users`)
