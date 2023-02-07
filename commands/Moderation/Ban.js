@@ -45,7 +45,7 @@ module.exports = {
       
       if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
       if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
-      if(interaction.member.roles.highest.position =< member.roles.highest.position) return interaction.editReply('cant ban this member because your roles are same or higher')
+      if(interaction.member.roles.highest.position => member.roles.highest.position) return interaction.editReply('cant ban this member because your roles are same or higher')
       
       const Embed = new EmbedBuilder()
      .setColor(client.color)
