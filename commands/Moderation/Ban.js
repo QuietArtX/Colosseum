@@ -45,6 +45,8 @@ module.exports = {
       
       const Embed = new EmbedBuilder()
       .setColor(client.color)
+      .setTitle(`BANNED!`)
+      .setDescription(`ARE YOU SURE DUDE?!?!? LETS GOOO!!`)
       
       const row = new ActionRowBuilder()
       .addComponents(
@@ -59,7 +61,7 @@ module.exports = {
       );
       
       const msg = await interaction.editReply({
-        embeds: [Embed.setDescription('!! ARE YOU SURE BAN THIS USER! BECAUSE I LOVED IT')],
+        embeds: [Embed],
         components: [row]
       });
       
@@ -77,23 +79,25 @@ module.exports = {
       collector.on('collect', async (b) => {
         if(!b.deffered) await b.deferUpdate()
         if(b.user.id !== user.id) return;
-        switch(b.customId) {
-          case "b-yes":
-            member.ban({ reason })
-            msg.edit({
-              embeds: [
-                Embed.setColor(client.color).setDescription(`${member} Has Been Successfully Banned!\nReason: ${reason}`)
-              ],
-              components: []
-            })
-          break;
-          case "b-no":
-            msg.edit({
-              embeds: [Embed.setColor(client.color).setDescription(`CANCELED`)
-              ],
-              components: []
-            })
-          break;
+        if(b.customId === "b-yes") {
+          member.ban({ 
+            reason: reason,
+            deleteMessageMember: 1
+          })
+          const embed = new EmbedBuilder()
+          .setTitle('BANNED SUCCESS!')
+          .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
+          msg.edit({ embeds: [embed], components: [] })
+        }
+        if(b.customId === 'b-no') {
+          member.ban({
+            reason: reason,
+            deleteMessageMember: 1
+          })
+          const embed = new EmbedBuilder()
+          .setTitle('BANNED CANCELED')
+          .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
+          msg.edit({ embeds: [embed], components: [] })
         }
       });
       
