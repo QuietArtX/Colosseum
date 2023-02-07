@@ -32,9 +32,9 @@ module.exports = {
     let data = client.premiums
       .filter((data) => data?.isPremium === true)
       .map((data) => {
-        return `<@${data.Id}> **Plan** : \`${
+        return `• **Username:** <@${data.Id}\n• **Plan** : **${
           data.premium.plan
-        }\` **Expire At** :  <t:${Math.floor(
+        }**\n• **Expire At** :  <t:${Math.floor(
           data.premium.expiresAt / 1000
         )}:F> `;
       });
@@ -42,8 +42,8 @@ module.exports = {
     interaction.editReply({
       embeds: [
         new EmbedBuilder()
-          .setTitle(`All Premium Users`)
-          .setColor("Blurple")
+          .setTitle(`LIST PREMIUM USERS`)
+          .setColor(client.color)
           .setDescription(data.join("\n") || "No Premium User Found"),
       ],
     });
