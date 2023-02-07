@@ -69,7 +69,13 @@ module.exports = {
         components: [row]
       });
       const collector = page.createMessageComponentCollector({
-          componentType: componentType.Button,
+        filter: (i) => {
+          if (i.user.id === interaction.user.id) return true;
+          else {
+            i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
+            return false;
+            };
+        },
           time: 15000
         });
         
