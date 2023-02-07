@@ -80,16 +80,16 @@ module.exports = {
           switch(b.customId) {
             case "b-yes":
               member.ban({ reason })
-              const embed = new EmbedBuilder()
+              const bembed = new EmbedBuilder()
               .setTitle('BANNED SUCCESS!')
               .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
-              return await msg.edit({ embeds: [embed], components: [] })
+              return await msg.edit({ embeds: [bembed], components: [] })
             break;
             case "b-no":
-            const embed = new EmbedBuilder()
+            const nembed = new EmbedBuilder()
              .setTitle('BANNED CANCELED')
              .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
-            return await msg.edit({ embeds: [embed], components: [] })
+            return await msg.edit({ embeds: [nembed], components: [] })
             break;
           }
         });
