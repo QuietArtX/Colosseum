@@ -36,16 +36,18 @@ module.exports = {
         inVoice: false,
         sameVoice: false,
     },
-    run: async (interaction, client, user, guild) => {
+    run: async (interaction, client, user) => {
       await interaction.deferReply({ ephemeral: false })
       
-      const { options } = interaction
+      const { options, guild } = interaction
       const member = interaction.options.getMember("target")
       const reason = interaction.options.getString("reason") || "No reason provided"
+      const members = guild.members.cache.get(user.id)
       
       if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
       if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
-      if(member.roles.highest.position === member.id) return interaction.editReply('can ban this member because your roles are same or higher')
+      if(guild.members.roles.me.highest.position <= members.roles.highest.position) return interaction.editReply('can ban this member because your roles are same or higher')
+      if(interaction.member.roles.highest.position <= members.roles.highest.position) return interaction.editReply(`can ban uu`)
       
       const Embed = new EmbedBuilder()
      .setColor(client.color)
@@ -62,13 +64,13 @@ module.exports = {
         .setLabel('No')
       );
         
-      const page = interaction.editReply({
+      const msg = interaction.editReply({
         embeds: [
           Embed.setDescription(`are you serious about banning this guy?`)
           ],
         components: [row]
       });
-      const collector = page.createMessageComponentCollector({
+      const collector = msg.createMessageComponentCollector({
         filter: (i) => {
           if (i.user.id === interaction.user.id) return true;
           else {
@@ -79,15 +81,14 @@ module.exports = {
           time: 15000
         });
         
-      collector.on('collect', async (i) => {
+      collector.on('collect', i => {
         if(i.user.id !== user.id) return
-
         switch(i.customId) {
           case "ban-yes": {
-            member.ban({ reason })
+            members.ban({ reason })
             interaction.editReply({
               embeds: [
-                new EmbedBuilder().setDescription(`${member} has been banned from the server`)
+                Embed.setDescription(`${members} has been banned from the server`)
                 ],
               components: []
             })
@@ -96,7 +97,7 @@ module.exports = {
           case "ban-no": {
             interaction.editReply({
               embeds: [
-                new EmbedBuilder().setDescription(`Cancel!`)
+                new Embed.setDescription(`Cancel!`)
                 ],
               components: []
             })
@@ -105,13 +106,13 @@ module.exports = {
         }
       });
       
-      collector.on('end', async(collected) => {
-        interaction.editReply({
-              embeds: [
-                new EmbedBuilder().setDescription(`Cancel!`)
-                ],
-              components: []
-            })
+      collector.on('end', async(collected, reasons) => {
+        if(reasons === 'time') {
+          const timed = new EmbedBuilder()
+          .setDescription(`**Timeout! Try again!**`)
+          .setColor(client.color)
+          msg.edit({ embeds: [timed], components: [] }).then(msg => msg.delete({ Timeout: 6000 }))
+        }
       });
     }
 }
