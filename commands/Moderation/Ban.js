@@ -42,11 +42,10 @@ module.exports = {
       const { options, guild } = interaction
       const member = interaction.options.getMember("target")
       const reason = interaction.options.getString("reason") || "No reason provided"
-      const members = guild.members.cache.get(user.id)
       
       if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
       if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
-      if(guild.members.user.role.highest.position <= members.role.highest.position) return interaction.editReply('can ban this member because your roles are same or higher')
+      if(guildMember.roles.highest.position <= members.role.highest.position) return interaction.editReply('can ban this member because your roles are same or higher')
       if(interaction.member.role.highest.position <= members.role.highest.position) return interaction.editReply(`can ban uu`)
       
       const Embed = new EmbedBuilder()
@@ -85,7 +84,7 @@ module.exports = {
         if(i.user.id !== user.id) return
         switch(i.customId) {
           case "ban-yes": {
-            members.ban({ reason })
+            member.ban({ reason })
             interaction.editReply({
               embeds: [
                 Embed.setDescription(`${members} has been banned from the server`)
