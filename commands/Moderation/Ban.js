@@ -45,8 +45,11 @@ module.exports = {
       
       if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
       if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
-      if(guild.members.me.role.highest.position <= member.roles.highest.position) interaction.editReply(`Cant ban a role high level`)
-      if(interaction.member.roles.highest.position <= member.roles.highest.position('cant ban this member because your roles are same or higher')
+      if(guild.members.me.role.highest.position <= member.roles.highest.position) return interaction.editReply(`Cant ban a role high level`)
+      if(interaction.member.roles.highest.position <= member.roles.highest.position) return interaction.editReply('cant ban this member because your roles are same or higher')
+      
+      const Embed = new EmbedBuilder()
+     .setColor(client.color)
      
       const row = new ActionRowBuilder()
       .addComponents(
@@ -62,7 +65,7 @@ module.exports = {
         
       const page = interaction.editReply({
         embeds: [
-          embed.setDescription(`are you serious about banning this guy?`)
+          Embed.setDescription(`are you serious about banning this guy?`)
           ],
         components: [row]
       });
