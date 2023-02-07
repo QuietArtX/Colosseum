@@ -32,7 +32,7 @@ module.exports = {
     let data = client.premiums
       .filter((data) => data?.isPremium === true)
       .map((data) => {
-        return `• **Username:** <@${data.Id}\n• **Plan** : **${
+        return `• **Username:** <@${data.Id}>\n• **Plan** : **${
           data.premium.plan
         }**\n• **Expire At** :  <t:${Math.floor(
           data.premium.expiresAt / 1000
@@ -44,7 +44,7 @@ module.exports = {
         new EmbedBuilder()
           .setTitle(`LIST PREMIUM USERS`)
           .setColor(client.color)
-          .setDescription(data.join("\n") || "No Premium User Found"),
+          .setDescription(data.join("\n⎯⎯⎯⎯⎯⎯⎯⎯⎯\n") || "No Premium User Found"),
       ],
     });
   },
