@@ -4,7 +4,7 @@ const {
 const moment = require("moment");
 
 module.exports = {
-    name: ["premium", "setup"],
+    name: ["premium", "list"],
     description: "Setup channel song request",
     category: "Premium",
     permissions: {
