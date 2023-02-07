@@ -79,7 +79,7 @@ module.exports = {
       collector.on('collect', async (b) => {
         if(!b.deffered) await b.deferUpdate()
         if(b.user.id !== user.id) return;
-        if(b.customId === "b-yes") {
+        if(b.customId === "b-yes").then(function () {
           member.ban({ 
             reason: reason,
             deleteMessageMember: 1
@@ -88,12 +88,8 @@ module.exports = {
           .setTitle('BANNED SUCCESS!')
           .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
           return await msg.edit({ embeds: [embed], components: [] })
-        }
+        })
         if(b.customId === "b-no") {
-          member.ban({
-            reason: reason,
-            deleteMessageMember: 1
-          })
           const embed = new EmbedBuilder()
           .setTitle('BANNED CANCELED')
           .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
