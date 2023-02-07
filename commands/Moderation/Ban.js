@@ -75,7 +75,7 @@ module.exports = {
       
       collector.on('collect', async (b) =>{
         if(!b.deffered) await deferUpdate()
-        if(b.user.id !== user.id return;
+        if(b.user.id !== user.id) return;
         switch(b.customId) {
           case "b-yes":
             member.ban({ reason })
