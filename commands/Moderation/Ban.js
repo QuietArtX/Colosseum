@@ -87,9 +87,9 @@ module.exports = {
           const embed = new EmbedBuilder()
           .setTitle('BANNED SUCCESS!')
           .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
-          msg.edit({ embeds: [embed], components: [] })
+          return await msg.edit({ embeds: [embed], components: [] })
         }
-        if(b.customId === 'b-no') {
+        if(b.customId === "b-no") {
           member.ban({
             reason: reason,
             deleteMessageMember: 1
@@ -97,17 +97,17 @@ module.exports = {
           const embed = new EmbedBuilder()
           .setTitle('BANNED CANCELED')
           .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
-          msg.edit({ embeds: [embed], components: [] })
+          return await msg.edit({ embeds: [embed], components: [] })
         }
       });
       
       collector.on('end', async (collected, timed) =>{
-        if(timed === 'time') {
+        if(timed === "time") {
             const timbed = new EmbedBuilder()
               .setColor(client.color)
               .setTitle(`DELETED`)
               .setDescription(`Timeout! Please Try Again!`)
-              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
+              return await msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
         }
       });
     }
