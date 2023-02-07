@@ -18,7 +18,7 @@ module.exports = {
       name: "reason",
       description: "provide a reason",
       type: ApplicationCommandOptionType.String,
-    },
+    }
     ],
     permissions: {
         channel: [],
@@ -33,8 +33,8 @@ module.exports = {
         sameVoice: false,
     },
     run: async (interaction, client, user) => {
-      const people = interaction.option.getUser("target");
-      const reason = interaction.option.getString("reason");
+      const people = interaction.options.getUser("target");
+      const reason = interaction.options.getString("reason");
       const member = await interaction.guild.members
         .fetch(people.id)
         .catch(console.error);
