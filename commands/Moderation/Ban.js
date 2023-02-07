@@ -63,48 +63,46 @@ module.exports = {
       const msg = await interaction.editReply({
         embeds: [Embed],
         components: [row]
-      });
-      
-      const collector = msg.createMessageComponentCollector({
-        filter: (i) => {
-          if (i.user.id === interaction.user.id) return true;
-          else {
-            i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
-            return false;
-          };
-        },
+      }).then( async (msg) => {
+        const collector = msg.createMessageComponentCollector({
+          filter: (i) => {
+            if (i.user.id === interaction.user.id) return true;
+            else {
+              i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
+              return false;
+            };
+          },
          time: 60000
-      });
-      
-      collector.on('collect', async (b) => {
-        if(!b.deffered) await b.deferUpdate()
-        if(b.user.id !== user.id) return;
-        if(b.customId === "b-yes").then(function () {
-          member.ban({ 
-            reason: reason,
-            deleteMessageMember: 1
-          })
-          const embed = new EmbedBuilder()
-          .setTitle('BANNED SUCCESS!')
-          .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
-          return await msg.edit({ embeds: [embed], components: [] })
-        })
-        if(b.customId === "b-no") {
-          const embed = new EmbedBuilder()
-          .setTitle('BANNED CANCELED')
-          .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
-          return await msg.edit({ embeds: [embed], components: [] })
-        }
-      });
-      
-      collector.on('end', async (collected, timed) =>{
-        if(timed === "time") {
+        });
+        collector.on('collect', async (b) => {
+          if(!b.deffered) await b.deferUpdate()
+          if(b.user.id !== user.id) return;
+          if(b.customId === "b-yes") {
+            member.ban({ 
+              reason: reason,
+              deleteMessageMember: 1
+            })
+            const embed = new EmbedBuilder()
+              .setTitle('BANNED SUCCESS!')
+              .setDescription(`BANNED HAS SUCCESS\n\nUser: ${member.tag}\nReason: ${reason}`)
+              return await msg.edit({ embeds: [embed], components: [] })
+          }
+          if(b.customId === "b-no") {
+            const embed = new EmbedBuilder()
+             .setTitle('BANNED CANCELED')
+             .setDescription(`WHY YOU DONT BAN THIS USER?! ARE YOU IDIOOTS?`)
+             return await msg.edit({ embeds: [embed], components: [] })
+          }
+        });
+        collector.on('end', async (collected, timed) => {
+          if(timed === "time") {
             const timbed = new EmbedBuilder()
               .setColor(client.color)
               .setTitle(`DELETED`)
               .setDescription(`Timeout! Please Try Again!`)
               return await msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
-        }
-      });
+          }
+        });
+      })
     }
 }
