@@ -22,7 +22,7 @@ module.exports = {
     ],
     permissions: {
         channel: [],
-        bot: ["Administration"],
+        bot: ["Administrator"],
         user: ["Administrator"]
     },
     settings: {
