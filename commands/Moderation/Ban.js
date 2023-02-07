@@ -37,80 +37,73 @@ module.exports = {
         sameVoice: false,
     },
     run: async (interaction, client, user) => {
-      await interaction.deferReply({ ephemeral: false })
       
-      const { options, guild } = interaction
-      const member = interaction.options.getMember("target")
-      const reason = interaction.options.getString("reason") || "No reason provided"
-      
-      if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
-      if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
-      if(guild.members.me.roles.highest.position <= members.roles.highest.position) return interaction.editReply('can ban this member because your roles are same or higher')
-      if(interaction.members.roles.highest.position <= members.roles.highest.position) return interaction.editReply(`can ban uu`)
+      const member = await interaction.guild.members.fetch(interaction.options.getUser('user').id);
+      const reason = interaction.options.getString('reason') || 'Not given';
+      if (member.permissions.has("BanMembers") || member.permissions.has("BanMembers")) return interaction.editReply({ content: `You cant ban a moderator`});
       
       const Embed = new EmbedBuilder()
-     .setColor(client.color)
-     
+      .setColor(client.color)
+      
       const row = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
-        .setCustomId('ban-yes')
-        .setStyle(ButtonStyle.Danger)
-        .setLabel('Yes'),
+        .setCustomId('b-yes')
+        .setLabel('YES')
+        .setStyle(ButtonStyle.Danger),
         new ButtonBuilder()
-        .setCustomId('ban-no')
+        .setCustomId('b-no')
+        .setLabel('NO')
         .setStyle(ButtonStyle.Secondary)
-        .setLabel('No')
       );
-        
-      const msg = interaction.editReply({
-        embeds: [
-          Embed.setDescription(`are you serious about banning this guy?`)
-          ],
+      
+      const msg = await interaction.editReply({
+        embeds: [Embed],
         components: [row]
       });
+      
       const collector = msg.createMessageComponentCollector({
         filter: (i) => {
           if (i.user.id === interaction.user.id) return true;
           else {
             i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
             return false;
-            };
+          };
         },
-          time: 15000
-        });
-        
-      collector.on('collect', i => {
-        if(i.user.id !== user.id) return
-        switch(i.customId) {
-          case "ban-yes": {
+         time: 60000
+      });
+      
+      collector.on('collect', async (b) =>{
+        if(!b.deffered) await deferUpdate()
+        if(b.user.id !== user.id return;
+        switch(b.customId) {
+          case "b-yes":
             member.ban({ reason })
             interaction.editReply({
               embeds: [
-                Embed.setDescription(`${members} has been banned from the server`)
-                ],
+                Embed.setDescription(`${member} Has Been Successfully Banned!\nReason: ${reason}`)
+              ],
               components: []
             })
-          }
-            break;
-          case "ban-no": {
+          break;
+          case "b-no":
             interaction.editReply({
               embeds: [
-                new Embed.setDescription(`Cancel!`)
-                ],
+                Embed.setDescription(`CANCELED`)
+              ],
               components: []
             })
-          }
-            break;
+          break;
         }
       });
       
-      collector.on('end', async(collected, reasons) => {
-        if(reasons === 'time') {
-          const timed = new EmbedBuilder()
-          .setDescription(`**Timeout! Try again!**`)
-          .setColor(client.color)
-          msg.edit({ embeds: [timed], components: [] }).then(msg => msg.delete({ Timeout: 6000 }))
+      collector.on('end', async (collected, timed) =>{
+        if(timed === 'time') {
+            const timbed = new EmbedBuilder()
+              .setColor(client.color)
+              .setTitle(`DELETED`)
+              .setDescription(`Timeout! Please Try Again!`)
+              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
         }
       });
     }
