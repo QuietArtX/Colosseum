@@ -1,5 +1,9 @@
 const {
   EmbedBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ComponentType,
   ApplicationCommandOptionType,
 } = require("discord.js");
 
@@ -22,8 +26,8 @@ module.exports = {
     ],
     permissions: {
         channel: [],
-        bot: ["Administrator"],
-        user: ["Administrator"]
+        bot: ["BanMembers"],
+        user: ["BanMembers"]
     },
     settings: {
         isPremium: false,
@@ -33,20 +37,76 @@ module.exports = {
         sameVoice: false,
     },
     run: async (interaction, client, user) => {
-      const people = interaction.options.getUser("target");
-      const reason = interaction.options.getString("reason");
-      const member = await interaction.guild.members
-        .fetch(people.id)
-        .catch(console.error);
+      await interaction.deferReply({ ephemeral: false })
       
-      if (!reason) reason = "no reason provided";
+      const member = interaction.options.getMember("target");
+      const reason = interaction.options.getString("reason") || "No reason provided";
+      if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
+      if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
+      if(guild.members.me.role.highest.position <= member.roles.highest.position) interaction.editReply(`Cant ban a role high level`)
+      if(interaction.member.roles.highest.position <= member.roles.highest.position('cant ban this member because your roles are same or higher')
       
-      await member.ban({
-        deleteMessageDays: 1,
-        reason: reason,
-      })
-      await interaction.reply({ 
-        content: `Succesful! ${user.tag} Has Banned From This Server`
-      })
+      const embed = new EmbedBuilder()
+        .setColor(client.color)
+        
+      const row = new ActionRowBuilder()
+      .addComponents(
+        .setCustomId('ban-yes')
+        .setStyle(ButtonStyle.Danger)
+        .setLabel('Yes')
+        );
+      const row = new ActionRowBuilder()
+      .addComponents(
+        .setCustomId('ban-no')
+        .setStyle(ButtonStyle.Secondary)
+        .setLabel('No')
+        );
+        
+      const page = interaction.editReply({
+        embeds: [
+          new EmbedBuilder()
+            .setColor(client.color)
+            .setDescription(`are you serious about banning this guy?`)
+          ]
+      });
+      const collector = page.createMessageComponentCollector({
+          componentType: componentType.Button,
+          time: 15000
+        });
+        
+      collector.on('collect', async (i) => {
+        if(i.user.id !== user.id) return
+
+        switch(i.customId) {
+          case "ban-yes": {
+            member.ban({ reason })
+            interaction.editReply({
+              embeds: [
+                new EmbedBuilder().setDescription(`${member} has been banned from the server`)
+                ],
+              components: []
+            })
+          }
+            break;
+          case "ban-no": {
+            interaction.editReply({
+              embeds: [
+                new EmbedBuilder().setDescription(`Cancel!`)
+                ],
+              components: []
+            })
+          }
+            break;
+        }
+      });
+      
+      collector.on('end', async(collected) => {
+        interaction.editReply({
+              embeds: [
+                new EmbedBuilder().setDescription(`Cancel!`)
+                ],
+              components: []
+            })
+      });
     }
 }
