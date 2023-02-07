@@ -16,7 +16,7 @@ module.exports = async (client) => {
     let channels = client.channels.cache.size;
 
     const activities = [
-        `${guilds} Servers | ${users} Users Premium!`,
+        `${guilds} Servers`,
         `Colloseum Project`,
         `/help`,
     ]
