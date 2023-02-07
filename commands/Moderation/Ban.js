@@ -39,8 +39,10 @@ module.exports = {
     run: async (interaction, client, user) => {
       await interaction.deferReply({ ephemeral: false })
       
-      const member = interaction.options.getMember("target");
-      const reason = interaction.options.getString("reason") || "No reason provided";
+
+      const member = interaction.options.getMember("target")
+      const reason = interaction.options.getString("reason") || "No reason provided"
+      
       if(member.id === user.id) return interaction.editReply(`You Can Banned Yourself`)
       if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
       if(guild.members.me.role.highest.position <= member.roles.highest.position) interaction.editReply(`Cant ban a role high level`)
