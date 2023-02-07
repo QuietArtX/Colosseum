@@ -32,10 +32,10 @@ module.exports = {
         sameVoice: false,
     },
     run: async (interaction, client, user) => {
-      const user = interaction.option.getUser("target");
+      const people = interaction.option.getUser("target");
       const reason = interaction.option.getString("reason");
       const member = await interaction.guild.members
-        .fetch(user.id)
+        .fetch(people.id)
         .catch(console.error);
       
       if (!reason) reason = "no reason provided";
