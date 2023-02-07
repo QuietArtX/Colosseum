@@ -47,27 +47,25 @@ module.exports = {
       if(interaction.member.roles.highest.position <= member.roles.highest.position('cant ban this member because your roles are same or higher')
       
       const embed = new EmbedBuilder()
-        .setColor(client.color)
+      .setColor(client.color)
         
       const row = new ActionRowBuilder()
       .addComponents(
+        new ButtonBuilder()
         .setCustomId('ban-yes')
         .setStyle(ButtonStyle.Danger)
-        .setLabel('Yes')
-        );
-      const row = new ActionRowBuilder()
-      .addComponents(
+        .setLabel('Yes'),
+        new ButtonBuilder()
         .setCustomId('ban-no')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('No')
-        );
+      );
         
       const page = interaction.editReply({
         embeds: [
-          new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`are you serious about banning this guy?`)
-          ]
+          embed.setDescription(`are you serious about banning this guy?`)
+          ],
+        components: [row]
       });
       const collector = page.createMessageComponentCollector({
           componentType: componentType.Button,
