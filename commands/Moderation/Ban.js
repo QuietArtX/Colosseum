@@ -82,19 +82,14 @@ module.exports = {
             member.ban({ reason })
             msg.edit({
               embeds: [
-                new EmbedBuilder()
-                .setColor(client.color)
-                .setDescription(`${member} Has Been Successfully Banned!\nReason: ${reason}`)
+                Embed.setColor(client.color).setDescription(`${member} Has Been Successfully Banned!\nReason: ${reason}`)
               ],
               components: []
             })
           break;
           case "b-no":
             msg.edit({
-              embeds: [
-                new EmbedBuilder()
-                .setColor(client.color)
-                .setDescription(`CANCELED`)
+              embeds: [Embed.setColor(client.color).setDescription(`CANCELED`)
               ],
               components: []
             })
