@@ -16,7 +16,7 @@ module.exports = async (client) => {
     let channels = client.channels.cache.size;
 
     const activities = [
-        `on ${guilds} Servers`,
+        `${guilds} Servers | ${users} Users Premium!`,
         `Colloseum Project`,
         `/help`,
     ]
@@ -26,6 +26,6 @@ module.exports = async (client) => {
             activities: [{ name: `${activities[Math.floor(Math.random() * activities.length)]}`, type: 2 }], 
             status: 'idle', 
         });
-    }, 10000)
+    }, 5000)
 
 };
