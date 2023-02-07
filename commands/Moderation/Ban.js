@@ -37,10 +37,11 @@ module.exports = {
         sameVoice: false,
     },
     run: async (interaction, client, user) => {
+      await interaction.deferReply({ ephemeral: true });
       
       const member = await interaction.guild.members.fetch(interaction.options.getUser('user'));
       const reason = interaction.options.getString('reason') || 'Not given';
-      if (member.permissions.has("BanMembers") || member.permissions.has("BanMembers")) return interaction.editReply({ content: `You cant ban a moderator`});
+      if (member.permissions.has("BanMembers") || member.permissions.has("BanMembers")) return interaction.editReply({ content: `You cant ban a moderator` });
       
       const Embed = new EmbedBuilder()
       .setColor(client.color)
@@ -73,7 +74,7 @@ module.exports = {
          time: 60000
       });
       
-      collector.on('collect', async (b) =>{
+      collector.on('collect', async (b) => {
         if(!b.deffered) await b.deferUpdate()
         if(b.user.id !== user.id) return;
         switch(b.customId) {
