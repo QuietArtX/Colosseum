@@ -45,10 +45,7 @@ module.exports = {
       if(guild.ownerId === member.id) return interaction.editReply(`Cant Ban Owner`)
       if(guild.members.me.role.highest.position <= member.roles.highest.position) interaction.editReply(`Cant ban a role high level`)
       if(interaction.member.roles.highest.position <= member.roles.highest.position('cant ban this member because your roles are same or higher')
-      
-      const embed = new EmbedBuilder()
-      .setColor(client.color)
-        
+     
       const row = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
