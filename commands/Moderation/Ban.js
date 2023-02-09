@@ -2,7 +2,8 @@ const {
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
-  ButtonStyle
+  ButtonStyle,
+  ApplicationCommandOptionType
 } = require("discord.js");
 
 module.exports = {
@@ -14,10 +15,12 @@ module.exports = {
       name: "target",
       description: "mention a target for ban",
       required: true,
+      type: ApplicationCommandOptionType.User,
     },
     {
       name: "reason",
       description: "provided a reason",
+      type: ApplicationCommandOptionType.String,
     }
   ],
   permissions: {
