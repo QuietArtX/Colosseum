@@ -83,21 +83,26 @@ module.exports = {
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
       if (b.user.id !== user.id) return;
-      switch (b.customId === 'yes') {
-        const embed = new EmbedBuilder()
-        .setColor(client.color)
-        .setTitle(`SUCCES`)
-        .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`)
-        if (!msg) return;
-        return msg.edit({ embeds: [embed], components: [] }).then (member => member.ban({reason}))
+      switch (b.customId) {
+        case "yes":
+          member.ban({reason})
+          const embed = new EmbedBuilder()
+          .setColor(client.color)
+          .setTitle(`SUCCES`)
+          .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`)
+          if (!msg) return;
+          return msg.edit({ embeds: [embed], components: [] })
+          break;
+        case "no":
+          const embed = new EmbedBuilder()
+          .setColot(client.color)
+          .setTitle(`CANCELED`)
+          .setDescription(`dndn`)
+          if (!msg) return;
+          return msg.edit({ embeds: [embed], components: [] })
+          break;
       }
-      if (b.customId === 'no') {
-        const embed = new EmbedBuilder()
-        .setColor(client.color)
-        .setTitle(`CANCEL`)
-        .setDescription(`CANCELED`)
-        if (!msg) return;
-        return msg.edit({ embeds: [embed], components: [] })
+      
       }
     });
     
