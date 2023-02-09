@@ -106,6 +106,7 @@ module.exports = {
               .setTitle(`DELETED`)
               .setDescription(`Timeout! Please Try Again!`)
               msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
+      }
     });
   }
 }
