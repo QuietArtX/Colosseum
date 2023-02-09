@@ -37,7 +37,7 @@ module.exports = {
   },
   
   run: async (interaction, client) => {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: false });
     const { channel, options } = interaction;
     
     const user = interaction.options.getUser("target");
@@ -80,7 +80,7 @@ module.exports = {
       time: 60000
     });
     
-    collector.on('collect', async (b) =>{
+    collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
       if (b.user.id !== user.id) return;
       if (b.customId === 'yes') {
@@ -88,6 +88,7 @@ module.exports = {
         .setColor(client.color)
         .setTitle(`SUCCES`)
         .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`)
+        if (!msg) return;
         return await msg.edit({ embeds: [embed], components: [] }).then (member => member.ban({reason}))
       }
       if (b.customId === 'no') {
@@ -95,6 +96,7 @@ module.exports = {
         .setColor(client.color)
         .setTitle(`CANCEL`)
         .setDescription(`CANCELED`)
+        if (!msg) return;
         return await msg.edit({ embeds: [embed], components: [] })
       }
     });
