@@ -1,7 +1,7 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
-    name: ["music", "loop"],
+    name: ["loop"],
     description: "Loops the current song!",
     category: "Music",
     options: [

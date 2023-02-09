@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    name: ["music", "loopqueue"],
+    name: ["loopqueue"],
     description: "Loops all songs in queue!",
     category: "Music",
     permissions: {

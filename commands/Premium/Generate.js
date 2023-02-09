@@ -49,7 +49,7 @@ module.exports = {
           new EmbedBuilder()
           .setColor(client.color)
           .setTitle(`Available Plans!`)
-          .setDescription(`${plans.join(' | ').toUpperCase()}`)
+          .setDescription(`**${plans.join(' | ').toUpperCase()}**`)
           ] })
 
         let time;

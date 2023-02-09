@@ -4,7 +4,7 @@ const formatDuration = require('../../structures/FormatDuration.js');
 const rewindNum = 10;
 
 module.exports = {
-    name: ["music", "rewind"],
+    name: ["rewind"],
     description: "Rewind timestamp in the song!",
     category: "Music",
     options: [

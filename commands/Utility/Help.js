@@ -24,8 +24,9 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor(client.color)
+            .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 })
             .setTitle(`Colosseum Music`)
-            .setDescription(`I Am **${client.user.tag}**!\nAn Advenced Discord Music Bot With Many Features!\nSupport Many Source\nYouTube • SoundCloud • Spotify • etc.\nAnd **Premium** users are available`)
+            .setDescription(`I Am **${client.user.tag\n}**!\nAn Advenced Discord Music Bot With Many Features!\nSupport Many Source\nYouTube • SoundCloud • Spotify • etc.\nAnd **Premium** users are available`)
 
         const row = new ActionRowBuilder()
             .addComponents([

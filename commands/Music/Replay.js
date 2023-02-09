@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    name: ["music", "replay"],
+    name: ["replay"],
     description: "Replay the current song!",
     category: "Music",
     permissions: {

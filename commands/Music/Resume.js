@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    name: ["music", "resume"],
+    name: ["resume"],
     description: "Resume the music!",
     category: "Music",
     permissions: {

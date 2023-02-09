@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const os = require('os');
 
 module.exports = {
-    name: ["utility", "vps"], // The name of the command
+    name: ["vps"], // The name of the command
     description: "Display the VPS stats", // The description of the command (for help text)
     category: "Utility",
     permissions: {
