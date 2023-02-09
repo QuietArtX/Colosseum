@@ -89,7 +89,7 @@ module.exports = {
         .setTitle(`SUCCES`)
         .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`)
         if (!msg) return;
-        return await msg.edit({ embeds: [embed], components: [] }).then (member => member.ban({reason}))
+        return msg.edit({ embeds: [embed], components: [] }).then (member => member.ban({reason}))
       }
       if (b.customId === 'no') {
         const embed = new EmbedBuilder()
@@ -97,7 +97,7 @@ module.exports = {
         .setTitle(`CANCEL`)
         .setDescription(`CANCELED`)
         if (!msg) return;
-        return await msg.edit({ embeds: [embed], components: [] })
+        return msg.edit({ embeds: [embed], components: [] })
       }
     });
     
