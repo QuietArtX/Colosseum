@@ -52,8 +52,6 @@ module.exports = {
     if (member.roles.highest.position >= interaction.member.roles.highest.position)
        return interaction.editReply({ embeds: [errEmbed], ephemeral: true })
     
-    await member.ban({reason});
-    
     const bEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setTitle(`!! BAN WARNING`)
