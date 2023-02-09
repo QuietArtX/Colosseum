@@ -82,12 +82,12 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
-      if (b.user.id !== user.id) return;
+      if (b.user.id !== user.id) return
       switch (b.customId) {
         case "yes":
           member.ban({reason})
           interaction.editReply({ embeds: [bEmbed.setDescription('Ban Succes')], components: [] })
-          break;
+        break;
         case "no":
           const nembed = new EmbedBuilder()
           .setColot(client.color)
