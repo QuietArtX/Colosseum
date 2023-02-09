@@ -79,9 +79,9 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
+      await b.deferUpdate();
       const id = interaction.customId
       if (id === "yes") {
-        await b.deferUpdate()
         await member.ban({reason})
         const embed = new EmbedBuilder()
         .setColor(client.color)
