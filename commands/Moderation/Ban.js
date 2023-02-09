@@ -99,7 +99,7 @@ module.exports = {
           .setTitle(`CANCELED`)
           .setDescription(`dndn`)
           if (!msg) return;
-          return msg.edit({ embeds: [embed], components: [] })
+          return msg.edit({ embeds: [nembed], components: [] })
           break;
       }
       
