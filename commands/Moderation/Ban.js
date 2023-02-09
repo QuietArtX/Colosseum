@@ -79,6 +79,7 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
+      if(!b.deferred) await b.deferUpdate()
       const id = interaction.customId
       if (id === "yes") {
         await member.ban({reason})
