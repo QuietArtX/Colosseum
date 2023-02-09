@@ -79,7 +79,6 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
-      if (!b.deffered) await b.deferUpdate()
       if (b.user.id !== user.id) return
       switch (b.customId) {
         case "yes":
