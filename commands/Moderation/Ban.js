@@ -43,7 +43,7 @@ module.exports = {
     const user = interaction.options.getUser("target");
     const reason = interaction.options.getString("reason") || "no reason provided";
     
-    const member = interaction.guild.members.fetch(user.id);
+    const member = await interaction.guild.members.fetch(user.id);
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
