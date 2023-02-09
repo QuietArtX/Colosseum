@@ -83,7 +83,7 @@ module.exports = {
     collector.on('collect', async (b) => {
       if (!b.deffered) await b.deferUpdate()
       if (b.user.id !== user.id) return;
-      if (b.customId === 'yes') {
+      switch (b.customId === 'yes') {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`SUCCES`)
