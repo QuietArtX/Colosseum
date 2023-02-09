@@ -50,12 +50,10 @@ module.exports = {
     .setDescription(`You cannot ban ${user.username}, because it has a higher role`);
     
     if (member.roles.highest.position >= interaction.member.roles.highest.position)
-       return interaction.editReply({ embeds: [errEmbed], ephemeral: true })
+       return interaction.editReply({ embeds: [errEmbed], ephemeral: true });
     
     const bEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`!! BAN WARNING`)
-    .setDescription(`are you sure ban this member?`);
     
     const row = new ActionRowBuilder()
     .addComponents(
@@ -68,7 +66,7 @@ module.exports = {
       .setLabel('NO')
       .setStyle(ButtonStyle.Secondary)
     );
-    const msg = await interaction.editReply({ embeds: [bEmbed], components: [row] });
+    const msg = await interaction.editReply({ embeds: [bEmbed.setTitle(`!! BAN WARNING`).setDescription(`are you sure ban this member?`)], components: [row] });
     const collector = msg.createMessageComponentCollector({
       filter: (i) => {
         if (i.user.id === interaction.user.id) return true;
