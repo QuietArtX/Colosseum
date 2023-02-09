@@ -94,7 +94,7 @@ module.exports = {
           return msg.edit({ embeds: [embed], components: [] })
           break;
         case "no":
-          const embed = new EmbedBuilder()
+          const nembed = new EmbedBuilder()
           .setColot(client.color)
           .setTitle(`CANCELED`)
           .setDescription(`dndn`)
