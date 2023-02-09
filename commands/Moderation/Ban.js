@@ -86,12 +86,7 @@ module.exports = {
       switch (b.customId) {
         case "yes":
           member.ban({reason})
-          const embed = new EmbedBuilder()
-          .setColor(client.color)
-          .setTitle(`SUCCES`)
-          .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`)
-          if (!msg) return;
-          return msg.edit({ embeds: [embed], components: [] })
+          interaction.editReply({ embeds: [bEmbed.setDescription('Ban Succes')], components: [] })
           break;
         case "no":
           const nembed = new EmbedBuilder()
