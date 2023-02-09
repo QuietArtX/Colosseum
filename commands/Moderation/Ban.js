@@ -49,7 +49,7 @@ module.exports = {
     
     const errEmbed = await interaction.editReply({
       embeds: [
-        new EmbedBuilder().
+        new EmbedBuilder()
         .setColor(client.color)
         .setDescription(`KAMU TIDAK BISA BAN MEMBER INI KARNA DIA MEMPUNYAI ROLE PALING TINGGI DARI KAMU`)
       ],
