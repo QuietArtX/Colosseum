@@ -102,8 +102,6 @@ module.exports = {
           return msg.edit({ embeds: [nembed], components: [] })
           break;
       }
-      
-      }
     });
     
     collector.on('end', async(collected, del) => {
