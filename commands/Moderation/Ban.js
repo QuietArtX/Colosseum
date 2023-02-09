@@ -42,7 +42,7 @@ module.exports = {
     
     const { channel, options } = interaction;
     
-    const user = options.getUser("user");
+    const user = options.getUser("target");
     const reason = options.getString("reason") || "no provided reason";
     
     const member = await interaction.guild.members.fetch(user.id);
