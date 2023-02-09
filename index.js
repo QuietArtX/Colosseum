@@ -1,4 +1,4 @@
-const MainClient = require("./nanospace.js");
+const MainClient = require("./Colosseum.js");
 const client = new MainClient();
 
 client.connect()
