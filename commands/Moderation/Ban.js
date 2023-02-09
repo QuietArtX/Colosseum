@@ -40,56 +40,81 @@ module.exports = {
   run: async (interaction, client) => {
     await interaction.deferReply({ ephemeral: true });
     
-    const user = options.getUser("target");
+    const { channel, options } = interaction;
+    
+    const user = options.getUser("user");
     const reason = options.getString("reason");
     
     const member = await interaction.guild.members.fetch(user.id);
     
     const errEmbed = await interaction.editReply({
-      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`kamu tidak bisa ban member ini karena role dia lebih tinggi!!`)],
-      ephemeral: true,
-    })
-    
-    const bEmbed = await interaction.editReply({
-      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`kamu yakin ban member ini? ${member}`)],
-      components: [
-        new ActtionRowBuilder()
-        .addComponents(
-          new ButtonBuilder()
-          .setCustomId('yes')
-          .setLabel('YES')
-          .setStyle(ButtonStyle.Danger),
-          new ButtonBuilder()
-          .setCustomId('no')
-          .setLabel('NO')
-          .setStyle(ButtonStyle.Secondary)
-        )
+      embeds: [
+        new EmbedBuilder().
+        .setColor(client.color)
+        .setDescription(`KAMU TIDAK BISA BAN MEMBER INI KARNA DIA MEMPUNYAI ROLE PALING TINGGI DARI KAMU`)
       ],
       ephemeral: true,
     });
     
+    if (member.roles.highest.position >= interaction.member.roles.highest.position)
+      return interaction.reply({
+        embeds : [errEmbed],
+        ephemeral: true,
+      });
+      
+    const bEmbed = await interaction.editReply({
+      embeds: [
+        new EmbedBuilder()
+        .setColor(client.color)
+        .setTitle(`BAN SYSTEM!`)
+        .setDescription(`KAMU YAKIN BAN MEMBER INI?\nUsername: **${member}**\nReason: **${reason}**`)
+      ],
+      ephemeral: true,
+      components: [
+        new ActionRowBuilder()
+        .addComponents(
+          new ButtonBuilder()
+          .setCustomId('yes')
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger)
+        ),
+          new ButtonBuilder()
+          .setCustomId('no')
+          .setLabel('NO')
+          .setStyle(ButtonStyle.Secondary)
+        ),
+      ]
+    });
+    
     const collector = bEmbed.createMessageComponentCollector({
-      componentType: ComponentType.Button
+      componentType: ComponentType.Button,
+      time: 15000
     });
     
     collector.on('collect', async (b) => {
       if (b.customId === 'yes') {
         await member.ban({reason})
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN MEMBER ${member} BERHASIL!!\nDENGAN ALASAN ${reason}`)],
+          embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN SUSCES!!\nUsername: **${member}**\nReason: **${reason}**\nTelah Di Banned Dari Server!!`)],
           components: [],
+          ephemeral: true
         });
       }
       if (b.customId === 'no') {
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN DI BATALKAN!`)],
+          embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN DIBATALKAN!!`)],
           components: [],
+          ephemeral: true
         });
       }
     });
     
-    collector.on('end', async() => {
-      await interaction.deleteReply().then (msg => msg.delete({ Timeout: 6000 }))
+    collector.on('end', async (interaction, timeded) => {
+      if (timeded === 'time') {
+        interaction.editReply({
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`TIMEOUT`)]
+        }).then (msg => msg.delete({ Timeout: 5000 }))
+      }
     });
   }
 }
