@@ -79,20 +79,24 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
-      if (b.user.id !== user.id) return
-      switch (b.customId) {
-        case "yes":
-          member.ban({reason})
-          interaction.editReply({ embeds: [bEmbed.setDescription('Ban Succes')], components: [] })
-        break;
-        case "no":
-          const nembed = new EmbedBuilder()
-          .setColot(client.color)
-          .setTitle(`CANCELED`)
-          .setDescription(`dndn`)
-          if (!msg) return;
-          return msg.edit({ embeds: [nembed], components: [] })
-          break;
+      const id = interaction.customId
+      if (id === "yes") {
+        await member.ban({reason})
+        const embed = new EmbedBuilder()
+        .setColor(client.color)
+        .setDescription(`Ban!`)
+        interaction.editReply({
+          embeds: [embed],
+          components: []
+        })
+      } else if(id === "no") {
+        const embed = new EmbedBuilder()
+        .setColor(client.color)
+        .setDescription(`NOO`)
+        interaction.editReply({
+          embeds: [embed],
+          components: []
+        })
       }
     });
     
