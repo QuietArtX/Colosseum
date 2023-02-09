@@ -87,7 +87,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`SUCCES`)
-        .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`
+        .setDescription(`BAN MEMBER : ${user}\nSUCCESSFULL\nREASON : ${reason}`)
         return msg.edit({ embeds: [embed], components: [] }).then (member => member.ban({reason}))
       }
       if (b.customId === 'no') {
