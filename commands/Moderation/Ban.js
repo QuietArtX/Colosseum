@@ -59,7 +59,7 @@ module.exports = {
     .setTitle(`!! BAN WARNING`)
     .setDescription(`are you sure ban this member?`);
     
-    const row = ActionRowBuilder()
+    const row = new ActionRowBuilder()
     .addComponents(
       new ButtonBuilder()
       .setCustomId('yes')
