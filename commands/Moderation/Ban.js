@@ -38,6 +38,7 @@ module.exports = {
   
   run: async (interaction, client) => {
     await interaction.deferReply({ ephemeral: true });
+    const { channel, options } = interaction;
     
     const user = interaction.options.getUser("target");
     const reason = interaction.options.getString("reason") || "no reason provided";
@@ -48,7 +49,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`You cannot ban ${user.username}, because it has a higher role`);
     
-    if(member.roles.highest.position >= interaction.member.roles.highest.position)
+    if (member.roles.highest.position >= interaction.member.roles.highest.position)
        return interaction.editReply({ embeds: [errEmbed], ephemeral: true })
     
     await member.ban({reason});
