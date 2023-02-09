@@ -81,7 +81,7 @@ module.exports = {
     });
     
     collector.on('collect', async (b) =>{
-      if (!s.deffered) await s.deferUpdate()
+      if (!b.deffered) await b.deferUpdate()
       if (b.user.id !== user.id) return;
       if (b.customId === 'yes') {
         const embed = new EmbedBuilder()
@@ -99,7 +99,7 @@ module.exports = {
       }
     });
     
-    collector.end('end', async(collected, del) => {
+    collector.on('end', async(collected, del) => {
       if (del === 'time') {
             const timbed = new EmbedBuilder()
               .setColor(client.color)
