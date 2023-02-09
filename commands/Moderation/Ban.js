@@ -76,13 +76,12 @@ module.exports = {
           new ButtonBuilder()
           .setCustomId('yes')
           .setLabel('YES')
-          .setStyle(ButtonStyle.Danger)
-        ),
+          .setStyle(ButtonStyle.Danger),
           new ButtonBuilder()
           .setCustomId('no')
           .setLabel('NO')
-          .setStyle(ButtonStyle.Secondary)
-        ),
+          .setStyle(ButtonStyle.Danger)
+        )
       ]
     });
     
