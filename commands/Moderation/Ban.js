@@ -86,9 +86,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setDescription(`Ban!`)
-        await client.clearInterval(client.interval);
-        if (msg) await msg.edit({ components: [] })
-        interaction.reply({
+        await interaction.reply({
           embeds: [embed],
           components: []
         })
@@ -96,7 +94,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setDescription(`NOO`)
-        interaction.editReply({
+        interaction.reply({
           embeds: [embed],
           components: []
         })
