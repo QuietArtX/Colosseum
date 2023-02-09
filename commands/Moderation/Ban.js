@@ -79,14 +79,14 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
-      if(!b.deferred) await b.deferUpdate()
       const id = interaction.customId
       if (id === "yes") {
+        await b.deferUpdate()
         await member.ban({reason})
         const embed = new EmbedBuilder()
         .setColor(client.color)
         .setDescription(`Ban!`)
-        await interaction.reply({
+        await interaction.editReply({
           embeds: [embed],
           components: []
         })
