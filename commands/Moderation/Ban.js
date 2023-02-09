@@ -37,10 +37,10 @@ module.exports = {
   },
   
   run: async (interaction, client) => {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply({ ephemeral: true });
     
     const user = interaction.options.getUser("target");
-    const reason = interaction.options.getStrinf("reason") || "no reason provided";
+    const reason = interaction.options.getString("reason") || "no reason provided";
     
     const member = interaction.guild.members.fetch(user.id);
     
@@ -69,9 +69,7 @@ module.exports = {
       .setLabel('NO')
       .setStyle(ButtonStyle.Secondary)
     );
-    
     const msg = await interaction.editReply({ embeds: [bEmbed], components: [row] });
-    
     const collector = msg.createMessageComponentCollector({
       filter: (i) => {
         if (i.user.id === interaction.user.id) return true;
