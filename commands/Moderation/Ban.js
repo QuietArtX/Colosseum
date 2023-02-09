@@ -34,7 +34,7 @@ module.exports = {
   },
   
   run: async (interaction, client) => {
-    await interaction.deferReply({ ephemeral: false )};
+    await interaction.deferReply({ ephemeral: false });
     
     const user = interaction.options.getUser("target");
     const reason = interaction.options.getStrinf("reason") || "no reason provided";
@@ -97,6 +97,15 @@ module.exports = {
         .setDescription(`CANCELED`)
         return await msg.edit({ embeds: [embed], components: [] })
       }
+    });
+    
+    collector.end('end', async(collected, del) => {
+      if (del === 'time') {
+            const timbed = new EmbedBuilder()
+              .setColor(client.color)
+              .setTitle(`DELETED`)
+              .setDescription(`Timeout! Please Try Again!`)
+              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
     });
   }
 }
