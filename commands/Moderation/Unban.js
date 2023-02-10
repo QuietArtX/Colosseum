@@ -8,7 +8,7 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  name: ["ban"],
+  name: ["unban"],
   description: "ban member from this server",
   category: "Moderation",
   options: [
