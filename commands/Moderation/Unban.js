@@ -38,7 +38,7 @@ module.exports = {
     const { channel, options } = interaction;
     
     const userId = options.getUser("userid");
-    const member = await interaction.guild.members.unban(user.id)
+    const member = await interaction.guild.members.unban(userId)
     
     const msg = await interaction.editReply({
       embeds: [
