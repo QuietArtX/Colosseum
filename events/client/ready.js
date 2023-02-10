@@ -17,14 +17,14 @@ module.exports = async (client) => {
 
     const activities = [
         `${guilds} Servers`,
-        `Colloseum Project`,
+        `Colosseum Project`,
         `/help`,
     ]
 
     setInterval(() => {
         client.user.setPresence({ 
             activities: [{ name: `${activities[Math.floor(Math.random() * activities.length)]}`, type: 2 }], 
-            status: 'idle', 
+            status: 'busy', 
         });
     }, 5000)
 
