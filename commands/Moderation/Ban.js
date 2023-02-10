@@ -42,8 +42,8 @@ module.exports = {
     
     const { channel, options } = interaction;
     
-    const user = options.getUser("target")
-    const reason = options.getString("reason")
+    const user = options.getUser("target");
+    const reason = options.getString("reason") || "NO REASON PROVIDED";
     const member = await interaction.guild.members.fetch(user.id);
     
     const errEmbed = new EmbedBuilder()
@@ -59,11 +59,12 @@ module.exports = {
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`BAN SYSTEM !`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?`)
-        .addFields({
-          name: `--------------`, value: `Username: ${member}\nReason: ${reason}`, inline: true
+        .setTitle(`BAN PENDING!`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n--------------\nUser: ${member}\nModerator: ${interaction.author.tag}\nReason: ${reason}`)
+        .setFooter({
+          text: `Colosseum Music Moderator`
         })
+        .setTimestamp()
       ],
       components: [
         new ActionRowBuilder().addComponents(
@@ -91,8 +92,8 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`BAN SYSTEM!`)
-            .setDescription(`SUCCESSFUL BANNED!\nUsername: ${member}\nReason: ${reason}`)
+            .setTitle(`BAN SUCCESS`)
+            .setDescription(`SUCCESSFUL BANNED!\nUser: ${member}\nReason: ${reason}`)
           ],
           components: []
         });
@@ -102,8 +103,8 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`BAN SYSTEM!`)
-            .setDescription(`BANNED CANCELLED`)
+            .setTitle(`BAN CANCEL`)
+            .setDescription(`BANNED CANCELED`)
           ],
           components: []
         });
