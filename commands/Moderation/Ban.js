@@ -56,6 +56,18 @@ module.exports = {
       ephemeral: true,
     });
     
+    const bButton = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+      .setCustomId('yes')
+      .setLabel('YES')
+      .setStyle(ButtonStyle.Danger),
+      new ButtonBuilder()
+      .setCustomId('no')
+      .setLabel('NO')
+      .setStyle(ButtonStyle.Secondary)
+    );
+    
     if (member.roles.highest.position >= interaction.member.roles.highest.position)
       return interaction.reply({
         embeds : [errEmbed],
@@ -70,19 +82,7 @@ module.exports = {
         .setDescription(`KAMU YAKIN BAN MEMBER INI?\nUsername: **${member}**\nReason: **${reason}**`)
       ],
       ephemeral: true,
-      components: [
-        new ActionRowBuilder()
-        .addComponents(
-          new ButtonBuilder()
-          .setCustomId('yes')
-          .setLabel('YES')
-          .setStyle(ButtonStyle.Danger),
-          new ButtonBuilder()
-          .setCustomId('no')
-          .setLabel('NO')
-          .setStyle(ButtonStyle.Danger)
-        )
-      ]
+      components: [bButton]
     });
     
     const collector = bEmbed.createMessageComponentCollector({
@@ -95,20 +95,20 @@ module.exports = {
         await member.ban({reason})
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN SUSCES!!\nUsername: **${member}**\nReason: **${reason}**\nTelah Di Banned Dari Server!!`)],
-          components: [],
+          components: [bButton.setDisabled(true)],
           ephemeral: true
         });
       }
       if (b.customId === 'no') {
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN DIBATALKAN!!`)],
-          components: [],
+          components: [bButton.setDisabled(true)],
           ephemeral: true
         });
       }
     });
     
-    collector.on('end', async (interaction, timeded) => {
+    collector.on('end', async (collected, timeded) => {
       if (timeded === 'time') {
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`TIMEOUT`)]
