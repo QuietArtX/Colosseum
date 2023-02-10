@@ -60,7 +60,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`BAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n--------------\nUser: ${member}\nModerator: ${interaction.author.tag}\nReason: ${reason}`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n--------------\nUser: ${member}\nModerator: ${interaction.author.id}\nReason: ${reason}`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
