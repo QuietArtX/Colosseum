@@ -92,7 +92,7 @@ module.exports = {
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`UNMUTE SUCCESS`)
-            .setDescription(`SUCCESSFUL MUTED!\n－－－－－－－\n◈ User: ${member}\n－－－－－－－`)
+            .setDescription(`\n－－－－－－－\n◈ User: ${member}\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })

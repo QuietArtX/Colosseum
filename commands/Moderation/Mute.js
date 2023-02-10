@@ -77,7 +77,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`MUTE PENDING!`)
-        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n◈  Duration: ${time}\n－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n◈  Duration: ${time}\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -110,7 +110,7 @@ module.exports = {
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`MUTE SUCCESS`)
-            .setDescription(`SUCCESSFUL MUTED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n◈  Duration: ${time}－－－－－－－`)
+            .setDescription(`\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n◈  Duration: ${time}\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
