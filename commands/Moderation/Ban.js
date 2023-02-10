@@ -3,7 +3,8 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ApplicationCommandOptionType
+  ApplicationCommandOptionType,
+  ComponentType
 } = require("discord.js");
 
 module.exports = {
@@ -51,64 +52,51 @@ module.exports = {
     
     if (member.roles.highest.position >= interaction.member.roles.highest.position)
        return interaction.editReply({ embeds: [errEmbed], ephemeral: true });
-    
-    const bEmbed = new EmbedBuilder()
-    .setColor(client.color)
-    
-    const row = new ActionRowBuilder()
-    .addComponents(
-      new ButtonBuilder()
-      .setCustomId('yes')
-      .setLabel('YES')
-      .setStyle(ButtonStyle.Danger),
-      new ButtonBuilder()
-      .setCustomId('no')
-      .setLabel('NO')
-      .setStyle(ButtonStyle.Secondary)
-    );
-    const msg = await interaction.editReply({ embeds: [bEmbed.setTitle(`!! BAN WARNING`).setDescription(`are you sure ban this member?`)], components: [row] });
-    const collector = msg.createMessageComponentCollector({
-      filter: (i) => {
-        if (i.user.id === interaction.user.id) return true;
-        else {
-          i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
-          return false;
-          };
-      },
-      time: 60000
+       
+    const bBan = await interaction.editReply({
+      embeds: [
+       new EmbedBuilder()
+       .setColor(client.color)
+       .setTitle(`!BAN WARNING`)
+       .setDescription(`ARE YOU SURE FOR BANN THIS MEMBER ${user}`)
+      ],
+      components: [
+        new ActionRowBuilder()
+        .addComponents(
+          new ButtonBuilder()
+          .setCustomId('yes')
+          .setLabel('YES')
+          .setStye(ButtonStyle.Danger),
+          new ButtonBuilder()
+          .setCustomId('no')
+          .setLabel('NO')
+          .setStye(ButtonStyle.Danger),
+        )
+      ],
+      ephemeral: true
     });
     
+    const collector = bBan.messageCreateComponentCollector({
+      componentType: ComponentType.Button
+    })
     collector.on('collect', async (b) => {
-      await b.deferUpdate();
-      const id = interaction.customId
-      if (id === "yes") {
-        await member.ban({reason})
-        const embed = new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`Ban!`)
-        await interaction.editReply({
-          embeds: [embed],
-          components: []
-        })
-      } else if(id === "no") {
-        const embed = new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`NOO`)
-        interaction.reply({
-          embeds: [embed],
-          components: []
-        })
-      }
+      if (b.customId === 'yes')
+      await member.ban({reason})
+      interaction.editReply({
+        embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN SUCESS FOR BANNING ${member}`)],
+        components: [],
+        ephemeral: true
+      });
+      if (b.customId === 'no')
+      interaction.editReply({
+        embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN CANCELED`)],
+        components: [],
+        ephemeral: true
+      });
     });
     
-    collector.on('end', async(collected, del) => {
-      if (del === 'time') {
-            const timbed = new EmbedBuilder()
-              .setColor(client.color)
-              .setTitle(`DELETED`)
-              .setDescription(`Timeout! Please Try Again!`)
-              msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
-      }
+    collect.on('end', async () =>{
+      interaction.deleteReply().then (msg => msg.delete({ Timeout: 6000 }))
     });
   }
 }
