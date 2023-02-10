@@ -38,14 +38,13 @@ module.exports = {
     const { channel, options } = interaction;
     
     const userId = options.getString("userid");
-    const member = await interaction.guild.members.unban(userId)
     
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`UNBAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n－－－－－－－\n◈ User: <@${member}>\n－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -72,13 +71,13 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (b.customId === "yes") {
-        await member.ban({reason})
+        await interaction.guild.members.ban(userId)
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`UNBAN SUCCESS`)
-            .setDescription(`SUCCESSFUL UNBANNED!\n－－－－－－－\n◈ User: <@${member}>\n－－－－－－－`)
+            .setDescription(`SUCCESSFUL UNBANNED!\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
