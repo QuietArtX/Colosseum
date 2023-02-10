@@ -38,44 +38,41 @@ module.exports = {
   },
   
   run: async (interaction, client) => {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ false });
     
     const { channel, options } = interaction;
     
-    const user = options.getUser("target");
-    const reason = options.getString("reason") || "no provided reason";
-    
+    const user = options.getUser("target")
+    const reason = options.getString("reason")
     const member = await interaction.guild.members.fetch(user.id);
     
-    const errEmbed = await interaction.editReply({
-      embeds: [
-        new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`KAMU TIDAK BISA BAN MEMBER INI KARNA DIA MEMPUNYAI ROLE PALING TINGGI DARI KAMU`)
-      ],
-      ephemeral: true,
+    const errEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`Action denied! cannot ban the role above you!`);
+    
+    if (member.roles.highest.position >= interaction.member.highest.position) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
     });
     
-    if (member.roles.highest.position >= interaction.member.roles.highest.position)
-      return interaction.reply({
-        embeds : [errEmbed],
-      });
-      
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`BAN SYSTEM!`)
-        .setDescription(`KAMU YAKIN BAN MEMBER INI?\nUsername: **${member}**\nReason: **${reason}**`)
+        .setTitle(`BAN SYSTEM !`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?`)
+        .addFields({
+          name: `--------------`, value: `Username: ${member}\nReason: ${reason}`, inline: true
+        })
       ],
       components: [
         new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-          .setCustomId('yes')
+          .setCustomId(`yes`)
           .setLabel('YES')
           .setStyle(ButtonStyle.Danger),
           new ButtonBuilder()
-          .setCustomId('no')
+          .setCustomId(`no`)
           .setLabel('NO')
           .setStyle(ButtonStyle.Secondary)
         )
@@ -84,45 +81,41 @@ module.exports = {
     
     const collector = msg.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      time: 15000
+      time: 25000
     });
     
     collector.on('collect', async (b) => {
-      if (b.customId === 'yes') {
+      if (b.customId === "yes") {
         await member.ban({reason})
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN SUSCES!!\nUsername: **${member}**\nReason: **${reason}**\nTelah Di Banned Dari Server!!`)],
-          components: [
-            new ActionRowBuilder().addComponents(
-              new ButtonBuilder()
-              .setLabel('YES')
-              .setStyle(ButtonStyle.Danger)
-              .setDisabled(true)
-            )
-          ]
+          embeds: [
+            new EmbedBuilder()
+            .setColor(client.color)
+            .setTitle(`BAN SYSTEM!`)
+            .setDescription(`SUCCESSFUL BANNED!\nUsername: ${member}\nReason: ${reason}`)
+          ],
+          components: []
         });
       }
-      if (b.customId === 'no') {
+      if (b.customId === "no") {
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN DIBATALKAN!!`)],
-          components: [
-            new ActionRowBuilder().addComponents(
-              new ButtonBuilder()
-              .setLabel('NO')
-              .setStyle(ButtonStyle.Secondary)
-              .setDisabled(true)
-            )
-          ]
+          embeds: [
+            new EmbedBuilder()
+            .setColor(client.color)
+            .setTitle(`BAN SYSTEM!`)
+            .setDescription(`BANNED CANCELLED`)
+          ],
+          components: []
         });
       }
     });
     
     collector.on('end', async (collected, reason) => {
-      if (reason === 'time') {
-        msg.edit({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`TIMEOUT`)],
-          components: []
-        }).then (msg => msg.delete({ Timeout: 5000 }))
+      if (reason === "time") {
+        const timbed = new EmbedBuilder()
+        .setColor(client.color)
+        .setDescription(`Timeout! Please Try Again!`)
+        msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
       }
     });
   }
