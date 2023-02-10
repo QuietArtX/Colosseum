@@ -38,7 +38,7 @@ module.exports = {
   },
   
   run: async (interaction, client) => {
-    await interaction.deferReply(( ephemeral: true ));
+    await interaction.deferReply({ ephemeral: true });
     
     const user = options.getUser("target");
     const reason = options.getString("reason");
