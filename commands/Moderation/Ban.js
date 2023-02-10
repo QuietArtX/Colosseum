@@ -56,36 +56,33 @@ module.exports = {
       ephemeral: true,
     });
     
-    const bButton = new ActionRowBuilder()
-    .addComponents(
-      new ButtonBuilder()
-      .setCustomId('yes')
-      .setLabel('YES')
-      .setStyle(ButtonStyle.Danger),
-      new ButtonBuilder()
-      .setCustomId('no')
-      .setLabel('NO')
-      .setStyle(ButtonStyle.Secondary)
-    );
-    
     if (member.roles.highest.position >= interaction.member.roles.highest.position)
       return interaction.reply({
         embeds : [errEmbed],
-        ephemeral: true,
       });
       
-    const bEmbed = await interaction.editReply({
+    const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`BAN SYSTEM!`)
         .setDescription(`KAMU YAKIN BAN MEMBER INI?\nUsername: **${member}**\nReason: **${reason}**`)
       ],
-      ephemeral: true,
-      components: [bButton]
+      components: [
+        new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId('yes')
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger),
+          new ButtonBuilder()
+          .setCustomId('no')
+          .setLabel('NO')
+          .setStyle(ButtonStyle.Secondary)
+        )
+      ]
     });
     
-    const collector = bEmbed.createMessageComponentCollector({
+    const collector = msg.createMessageComponentCollector({
       componentType: ComponentType.Button,
       time: 15000
     });
@@ -95,25 +92,37 @@ module.exports = {
         await member.ban({reason})
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN SUSCES!!\nUsername: **${member}**\nReason: **${reason}**\nTelah Di Banned Dari Server!!`)],
-          components: [bButton.setDisabled(true)],
-          ephemeral: true
+          components: [
+            new ActionRowBuilder().addComponents(
+              new ButtonBuilder()
+              .setLabel('YES')
+              .setStyle(ButtonStyle.Danger)
+              .setDisabled(true)
+            )
+          ]
         });
       }
       if (b.customId === 'no') {
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN DIBATALKAN!!`)],
-          components: [bButton.components.forEach(b => setDisabled(true))],
-          ephemeral: true
+          components: [
+            new ActionRowBuilder().addComponents(
+              new ButtonBuilder()
+              .setLabel('NO')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true)
+            )
+          ]
         });
       }
     });
     
-    collector.on('end', async (collected, timeded) => {
-      if (timeded === 'time') {
-        interaction.editReply({
+    collector.on('end', async (collected, reason) => {
+      if (reason === 'time') {
+        msg.edit({
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`TIMEOUT`)],
           components: []
-        }).then (bEmbed => bEmbed.delete({ Timeout: 5000 }))
+        }).then (msg => msg.delete({ Timeout: 5000 }))
       }
     });
   }
