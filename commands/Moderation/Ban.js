@@ -76,13 +76,13 @@ module.exports = {
       if (b.customId === 'yes') {
         await member.ban({reason})
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN MEMBER ${member} BERHASIL!!\nDENGAN ALASAN ${reason}`],
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN MEMBER ${member} BERHASIL!!\nDENGAN ALASAN ${reason}`)],
           components: [],
         });
       }
       if (b.customId === 'no') {
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN DI BATALKAN!!`)],
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN DI BATALKAN!`)],
           components: [],
         });
       }
