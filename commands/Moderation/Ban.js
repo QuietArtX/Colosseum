@@ -76,7 +76,7 @@ module.exports = {
       ephemeral: true
     });
     
-    const collector = bBan.messageCreateComponentCollector({
+    const collector = bBan.createMessageComponentCollector({
       componentType: ComponentType.Button
     })
     collector.on('collect', async (b) => {
