@@ -60,7 +60,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`BAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -93,7 +93,11 @@ module.exports = {
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`BAN SUCCESS`)
-            .setDescription(`SUCCESSFUL BANNED!\n－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－`)
+            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+            .setFooter({
+              text: `Colosseum Music Moderator`
+            })
+            .setTimestamp()
           ],
           components: []
         });
@@ -105,6 +109,10 @@ module.exports = {
             .setColor(client.color)
             .setTitle(`BAN CANCEL`)
             .setDescription(`BANNED CANCELED`)
+            .setFooter({
+              text: `Colosseum Music Moderator`
+            })
+            .setTimestamp()
           ],
           components: []
         });
