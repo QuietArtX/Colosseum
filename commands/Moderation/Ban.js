@@ -102,7 +102,7 @@ module.exports = {
       if (b.customId === 'no') {
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN DIBATALKAN!!`)],
-          components: [bButton.components.forEach(b => setDisabled(true)],
+          components: [bButton.components.forEach(b => setDisabled(true))],
           ephemeral: true
         });
       }
