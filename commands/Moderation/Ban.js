@@ -38,7 +38,7 @@ module.exports = {
   },
   
   run: async (interaction, client) => {
-    await interaction.deferReply({ false });
+    await interaction.deferReply({ ephemeral: false });
     
     const { channel, options } = interaction;
     
