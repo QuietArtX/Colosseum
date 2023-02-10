@@ -82,7 +82,7 @@ module.exports = {
       }
       if (b.customId === 'no') {
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN DI BATALKAN!!`],
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN DI BATALKAN!!`)],
           components: [],
         });
       }
