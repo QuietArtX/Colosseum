@@ -50,7 +50,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`Action denied! cannot ban the role above you!`);
     
-    if (member.roles.highest.position >= interaction.member.highest.position) return interaction.reply({
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
       embeds: [errEmbed],
       ephemeral: true
     });
