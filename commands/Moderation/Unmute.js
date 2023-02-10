@@ -6,23 +6,24 @@ const {
   ApplicationCommandOptionType,
   ComponentType
 } = require("discord.js");
+const ms = require("ms");
 
 module.exports = {
-  name: ["unban"],
-  description: "Unban member from this server",
+  name: ["unmute"],
+  description: "Unmute member from this server",
   category: "Moderation",
   options: [
     {
-      name: "userid",
-      description: "input userid",
+      name: "target",
+      description: "mention a target for unmute",
       required: true,
-      type: ApplicationCommandOptionType.String,
+      type: ApplicationCommandOptionType.User,
     }
   ],
   permissions: {
         channel: [],
-        bot: ["BanMembers"],
-        user: ["BanMembers"]
+        bot: ["ModerateMembers"],
+        user: ["ModerateMembers"]
     },
   settings: {
         isPremium: false,
@@ -35,16 +36,30 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
-    const { channel, options } = interaction;
+    const { guild, options } = interaction;
     
-    const userId = options.getString("userid");
+    const users = options.getUser("target");
+    const member = guild.members.cache.get(users.id)
+    
+    const errEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`Action denied! Please Try Again Later!`);
+    
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
+    });
+    if (!interaction.guild.members.me.permission.has("ModerateMembers")) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
+    });
     
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`UNBAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+        .setTitle(`UNMUTE PENDING!`)
+        .setDescription(`ARE YOU SURE FOR UNMUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -71,13 +86,13 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (b.customId === "yes") {
-        await interaction.guild.members.unban(userId)
+        await member.timeout(null)
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`UNBAN SUCCESS`)
-            .setDescription(`SUCCESSFUL UNBANNED!\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+            .setTitle(`UNMUTE SUCCESS`)
+            .setDescription(`SUCCESSFUL MUTED!\n－－－－－－－\n◈ User: ${member}\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
@@ -91,7 +106,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setDescription(`BANNED CANCELED`)
+            .setDescription(`UNMUTE CANCELED`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })

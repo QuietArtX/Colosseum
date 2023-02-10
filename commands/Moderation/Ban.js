@@ -107,7 +107,6 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`BAN CANCEL`)
             .setDescription(`BANNED CANCELED`)
             .setFooter({
               text: `Colosseum Music Moderator`

@@ -6,23 +6,35 @@ const {
   ApplicationCommandOptionType,
   ComponentType
 } = require("discord.js");
+const ms = require("ms");
 
 module.exports = {
-  name: ["unban"],
-  description: "Unban member from this server",
+  name: ["mute"],
+  description: "Mute member from this server",
   category: "Moderation",
   options: [
     {
-      name: "userid",
-      description: "input userid",
+      name: "target",
+      description: "mention a target for mute",
       required: true,
+      type: ApplicationCommandOptionType.User,
+    },
+    {
+      name: "time",
+      description: "provided a reason",
+      required: true
       type: ApplicationCommandOptionType.String,
+    },
+    {
+      name: "reason",
+      description: "set mute time",
+      ApplicationCommandOptionType.String,
     }
   ],
   permissions: {
         channel: [],
-        bot: ["BanMembers"],
-        user: ["BanMembers"]
+        bot: ["ModerateMembers"],
+        user: ["ModerateMembers"]
     },
   settings: {
         isPremium: false,
@@ -35,16 +47,37 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
-    const { channel, options } = interaction;
+    const { guild, options } = interaction;
     
-    const userId = options.getString("userid");
+    const users = options.getUser("target");
+    const reason = options.getString("reason") || "NO REASON PROVIDED";
+    const time = options.getString("time")
+    const member = guild.members.cache.get(users.id);
+    const convertedTime = ms(time)!
+    
+    const errEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`Action denied! Please Try Again Later!`);
+    
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
+    });
+    if (!interaction.guild.members.me.permission.has("ModerateMembers")) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
+    });
+    if (!convertedTime) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
+    });
     
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`UNBAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+        .setTitle(`MUTE PENDING!`)
+        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n◈  Duration: ${time}－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -71,13 +104,13 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (b.customId === "yes") {
-        await interaction.guild.members.unban(userId)
+        await member.timeout({convertedTime, reason})
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`UNBAN SUCCESS`)
-            .setDescription(`SUCCESSFUL UNBANNED!\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+            .setTitle(`MUTE SUCCESS`)
+            .setDescription(`SUCCESSFUL MUTED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n◈  Duration: ${time}－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
@@ -91,7 +124,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setDescription(`BANNED CANCELED`)
+            .setDescription(`MUTE CANCELED`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })

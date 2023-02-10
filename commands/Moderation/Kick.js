@@ -93,7 +93,7 @@ module.exports = {
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`KICK SUCCESS`)
-            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+            .setDescription(`SUCCESSFUL KICK!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
@@ -107,8 +107,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`KICK CANCEL`)
-            .setDescription(`BANNED CANCELED`)
+            .setDescription(`KICK CANCELED`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
