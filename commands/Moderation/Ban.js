@@ -37,14 +37,14 @@ module.exports = {
         sameVoice: false,
   },
   
-  run: async (interaction, client) => {
+  run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
     const { channel, options } = interaction;
     
-    const user = options.getUser("target");
+    const users = options.getUser("target");
     const reason = options.getString("reason") || "NO REASON PROVIDED";
-    const member = await interaction.guild.members.fetch(user.id);
+    const member = await interaction.guild.members.fetch(users.id);
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
@@ -60,7 +60,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`BAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n--------------\nUser: ${member}\nModerator: ${interaction.author.id}\nReason: ${reason}`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n--------------\nUser: ${member}\nModerator: ${interaction.author.tag}\nReason: ${reason}`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
