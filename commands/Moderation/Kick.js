@@ -8,21 +8,26 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  name: ["unban"],
-  description: "Unban member from this server",
+  name: ["kick"],
+  description: "Kick member from this server",
   category: "Moderation",
   options: [
     {
-      name: "userid",
-      description: "input userid",
+      name: "target",
+      description: "mention a target for kick",
       required: true,
+      type: ApplicationCommandOptionType.User,
+    },
+    {
+      name: "reason",
+      description: "provided a reason",
       type: ApplicationCommandOptionType.String,
     }
   ],
   permissions: {
         channel: [],
-        bot: ["BanMembers"],
-        user: ["BanMembers"]
+        bot: ["KickMembers"],
+        user: ["KickMembers"]
     },
   settings: {
         isPremium: false,
@@ -37,14 +42,25 @@ module.exports = {
     
     const { channel, options } = interaction;
     
-    const userId = options.getString("userid");
+    const users = options.getUser("target");
+    const reason = options.getString("reason") || "NO REASON PROVIDED";
+    const member = await interaction.guild.members.fetch(users.id);
+    
+    const errEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`Action denied! cannot kick the role above you!`);
+    
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
+      embeds: [errEmbed],
+      ephemeral: true
+    });
     
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`UNBAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+        .setTitle(`KICK PENDING!`)
+        .setDescription(`ARE YOU SURE FOR KICK THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -71,13 +87,13 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (b.customId === "yes") {
-        await interaction.guild.members.unban(userId)
+        await member.kick({reason})
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`UNBAN SUCCESS`)
-            .setDescription(`SUCCESSFUL UNBANNED!\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+            .setTitle(`KICK SUCCESS`)
+            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
@@ -91,7 +107,7 @@ module.exports = {
           embeds: [
             new EmbedBuilder()
             .setColor(client.color)
-            .setTitle(`UNBAN CANCEL`)
+            .setTitle(`KICK CANCEL`)
             .setDescription(`BANNED CANCELED`)
             .setFooter({
               text: `Colosseum Music Moderator`
