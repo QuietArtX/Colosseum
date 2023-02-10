@@ -77,7 +77,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`MUTE PENDING!`)
-        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n◈  Duration: ${time}－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n◈  Duration: ${time}\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -104,7 +104,7 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (b.customId === "yes") {
-        await member.timeout({convertedTime, reason})
+        await member.timeout(convertedTime, reason)
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
