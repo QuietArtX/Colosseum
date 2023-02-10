@@ -69,6 +69,7 @@ module.exports = {
                                 .setColor(client.color)
                                 .addFields({ name: `▸  ${directory.toUpperCase()} [${client.slash.filter(c => c.category === directory).size}]`, value: `${client.slash.filter(c => c.category === directory).map(c => `\`${c.name.at(-1)}\``).join(", ")}`, inline: false })
                                 .setFooter({ text: `© ${interaction.guild.members.me.displayName} | Total Commands: ${client.slash.size}`, iconURL: client.user.displayAvatarURL({ dynamic: true })})
+                                .setImage(`https://media.discordapp.net/attachments/1073472346322653224/1073578138174496799/20230210_191312.jpg`)
 
                             msg.edit({ embeds: [embed] });
                         }

@@ -80,7 +80,8 @@ module.exports = {
             const nembed = new EmbedBuilder()
               .setTitle(`PREMIUM FEATURES`)
               .setColor(client.color)
-              .setDescription(`\`\`\`yaml\n\u200b\nAUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n  ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\nSETUP\n\`\`\``);
+              .setDescription(`\`\`\`yaml\n\u200b\nAUTOPLAY\nPLAYLIST [\n  ▸ Add\n  ▸ Create\n  ▸ Delete\n  ▸ Detail\n  ▸ Import\n  ▸ Private\n  ▸ Public\n  ▸ Remove\n  ▸ Save Current\n  ▸ Save Queue\n  ▸ View\n          ]\nSETUP\n\`\`\``)
+              .setImage(`https://media.discordapp.net/attachments/1073472346322653224/1073578137864114217/20230210_191457.jpg`);
               if (!msg) return;
               return msg.edit({
                 embeds: [nembed],
@@ -91,7 +92,8 @@ module.exports = {
             const nembed = new EmbedBuilder()
               .setTitle(`PRICE LIST`)
               .setColor(client.color)
-              .setDescription(`\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Yearly = 10M OwO Cash\n ▸ Lifetime = 25M OwO Cash\n\nDANA & Shopeepay:\n ▸ Daily = 5.000 IDR\n ▸ Weekly = 10.000 IDR\n ▸ Monthly = 20.000 IDR\n ▸ Yearly = 50.000 IDR\n ▸ Lifetime = 150.000 IDR\`\`\``);
+              .setDescription(`\`\`\`yaml\nOwO Cash:\n ▸ Daily = 300K OwO Cash\n ▸ Weekly = 1M OwO Cash\n ▸ Monthly = 3M OwO Cash\n ▸ Yearly = 10M OwO Cash\n ▸ Lifetime = 25M OwO Cash\n\nDANA & Shopeepay:\n ▸ Daily = 5.000 IDR\n ▸ Weekly = 10.000 IDR\n ▸ Monthly = 20.000 IDR\n ▸ Yearly = 50.000 IDR\n ▸ Lifetime = 150.000 IDR\`\`\``)
+              .setImage(`https://media.discordapp.net/attachments/1073472346322653224/1073578137864114217/20230210_191457.jpg`);
               if (!msg) return;
               return msg.edit({
                 embeds: [nembed],
@@ -103,7 +105,8 @@ module.exports = {
               .setTitle(`PAYMENT`)
               .setColor(client.color)
               .setDescription(`\`\`\`yaml\n\u200b\n ▸ OwO Cash\n ▸ DANA\n ▸ Shopeepay\n\`\`\``)
-               .setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` });
+               .setFooter({ text: `If you don't have Indonesian Payments, please pay via OwO Cash only` })
+               .setImage(`https://media.discordapp.net/attachments/1073472346322653224/1073578137864114217/20230210_191457.jpg`);
               if (!msg) return;
               return msg.edit({
                 embeds: [nembed],
