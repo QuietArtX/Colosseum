@@ -71,7 +71,7 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (b.customId === "yes") {
-        await interaction.guild.members.ban(userId)
+        await interaction.guild.members.unban(userId)
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
