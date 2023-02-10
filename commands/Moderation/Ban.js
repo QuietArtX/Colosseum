@@ -80,19 +80,21 @@ module.exports = {
       componentType: ComponentType.Button
     })
     collector.on('collect', async (b) => {
-      if (b.customId === 'yes')
-      await member.ban({reason})
-      interaction.editReply({
+      if (b.customId === 'yes') {
+        await member.ban({reason})
+        interaction.editReply({
         embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN SUCESS FOR BANNING ${member}`)],
         components: [],
-        ephemeral: true
-      });
-      if (b.customId === 'no')
-      interaction.editReply({
-        embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN CANCELED`)],
-        components: [],
-        ephemeral: true
-      });
+        ephemeral: true,
+        });
+      }
+      if (b.customId === 'no') {
+        interaction.editReply({
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`BAN CANCELED`)],
+          components: [],
+          ephemeral: true,
+          });
+      }
     });
     
     collect.on('end', async () =>{
