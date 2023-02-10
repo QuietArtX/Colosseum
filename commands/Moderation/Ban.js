@@ -66,11 +66,11 @@ module.exports = {
           new ButtonBuilder()
           .setCustomId('yes')
           .setLabel('YES')
-          .setStye(ButtonStyle.Danger),
+          .setStyle(ButtonStyle.Danger),
           new ButtonBuilder()
           .setCustomId('no')
           .setLabel('NO')
-          .setStye(ButtonStyle.Danger),
+          .setStyle(ButtonStyle.Danger),
         )
       ],
       ephemeral: true
