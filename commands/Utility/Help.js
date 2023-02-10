@@ -27,6 +27,7 @@ module.exports = {
             .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
             .setTitle(`Colosseum Music`)
             .setDescription(`I Am **${client.user.tag}**!\nAn Advenced Discord Music Bot With Many Features!\nSupport Many Source\nYouTube • SoundCloud • Spotify • etc.\nAnd **Premium** users are available`)
+            .setImage(`https://media.discordapp.net/attachments/1073472346322653224/1073578138174496799/20230210_191312.jpg`)
 
         const row = new ActionRowBuilder()
             .addComponents([

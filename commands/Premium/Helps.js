@@ -25,6 +25,7 @@ module.exports = {
       .setTitle(`COLOSSEUM PREMIUM SYSTEM`)
       .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
       .setDescription(`If You Want To Buy Premium Commands, Click the **BUY** button below\nAnd After purchasing you will be able to access Premium Commands!`)
+      .setImage(`https://media.discordapp.net/attachments/1073472346322653224/1073578137864114217/20230210_191457.jpg`)
       
       const blink = new ActionRowBuilder()
       .addComponents(
