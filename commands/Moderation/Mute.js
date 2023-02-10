@@ -22,13 +22,13 @@ module.exports = {
     {
       name: "time",
       description: "provided a reason",
-      required: true
+      required: true,
       type: ApplicationCommandOptionType.String,
     },
     {
       name: "reason",
       description: "set mute time",
-      ApplicationCommandOptionType.String,
+      type: ApplicationCommandOptionType.String,
     }
   ],
   permissions: {
