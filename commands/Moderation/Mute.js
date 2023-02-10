@@ -53,7 +53,7 @@ module.exports = {
     const reason = options.getString("reason") || "NO REASON PROVIDED";
     const time = options.getString("time")
     const member = guild.members.cache.get(users.id);
-    const convertedTime = ms(time)!
+    const convertedTime = ms(time);
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
