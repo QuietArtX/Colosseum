@@ -63,7 +63,7 @@ module.exports = {
       embeds: [errEmbed],
       ephemeral: true
     });
-    if (!interaction.guild.members.me.permission.has("ModerateMembers")) return interaction.reply({
+    if (!interaction.guild.members.me.permissions.has("ModerateMembers")) return interaction.reply({
       embeds: [errEmbed],
       ephemeral: true
     });
