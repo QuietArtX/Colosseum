@@ -102,7 +102,7 @@ module.exports = {
       if (b.customId === 'no') {
         interaction.editReply({
           embeds: [new EmbedBuilder().setColor(client.color).setTitle(`BAN SYSTEM`).setDescription(`BAN DIBATALKAN!!`)],
-          components: [bButton.setDisabled(true)],
+          components: [bButton.components.forEach(b => setDisabled(true)],
           ephemeral: true
         });
       }
@@ -111,8 +111,9 @@ module.exports = {
     collector.on('end', async (collected, timeded) => {
       if (timeded === 'time') {
         interaction.editReply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`TIMEOUT`)]
-        }).then (msg => msg.delete({ Timeout: 5000 }))
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`TIMEOUT`)],
+          components: []
+        }).then (bEmbed => bEmbed.delete({ Timeout: 5000 }))
       }
     });
   }
