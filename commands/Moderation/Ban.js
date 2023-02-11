@@ -120,7 +120,7 @@ module.exports = {
     });
     
     collector.on('end', async () => {
-      await interaction.deleteReply();
+      await interaction.deleteReply({ timeout: 5000 });
     });
   }
 }
