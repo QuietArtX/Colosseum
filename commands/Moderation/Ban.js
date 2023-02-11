@@ -61,7 +61,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`BAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator`
         })
@@ -94,7 +94,7 @@ module.exports = {
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`BAN SUCCESS`)
-            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n${uTag}－－－－－－－`)
+            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
@@ -119,13 +119,8 @@ module.exports = {
       }
     });
     
-    collector.on('end', async (collected, reason) => {
-      if (reason === "time") {
-        const timbed = new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`Timeout! Please Try Again!`)
-        msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
-      }
+    collector.on('end', async () => {
+      await interaction.deleteReply();
     });
   }
 }
