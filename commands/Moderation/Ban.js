@@ -45,6 +45,7 @@ module.exports = {
     const users = options.getUser("target");
     const reason = options.getString("reason") || "NO REASON PROVIDED";
     const member = await interaction.guild.members.fetch(users.id);
+    const uTag = await interaction.user.tag;
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
@@ -93,7 +94,7 @@ module.exports = {
             new EmbedBuilder()
             .setColor(client.color)
             .setTitle(`BAN SUCCESS`)
-            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n${uTag}－－－－－－－`)
             .setFooter({
               text: `Colosseum Music Moderator`
             })
