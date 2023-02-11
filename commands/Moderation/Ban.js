@@ -88,7 +88,7 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (!b.deferred) await b.deferUpdate();
-      if (i.user.id === interaction.user.id) return true;
+      if (b.user.id === interaction.user.id) return true;
             else {
               i.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
               return false;
