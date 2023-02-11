@@ -90,7 +90,7 @@ module.exports = {
       if (!b.deferred) await b.deferUpdate();
       if (b.user.id === interaction.user.id) return true;
             else {
-              b.reply({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
+              b.followUp({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
               return false;
             }
       if (b.customId === "yes") {
