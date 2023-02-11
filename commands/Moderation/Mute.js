@@ -59,7 +59,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`Action denied! Please Try Again Later!`);
     
-    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.editReply({
       embeds: [errEmbed],
       ephemeral: true
     });
@@ -67,7 +67,7 @@ module.exports = {
       embeds: [errEmbed],
       ephemeral: true
     });
-    if (!convertedTime) return interaction.reply({
+    if (!convertedTime) return interaction.editReply({
       embeds: [errEmbed],
       ephemeral: true
     });
