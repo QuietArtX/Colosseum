@@ -103,10 +103,10 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
-      if (!deffered) await b.deferUpdate();
+      if (!b.deffered) await b.deferUpdate();
       if (!interaction.guild.members.me.permissions.has("ModerateMembers")) return interaction.reply({
-      embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MODERATE MEMBERS`)],
-      ephemeral: true
+        embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MODERATE MEMBERS`)],
+        ephemeral: true
       });      if (b.customId === "yes") {
         await member.timeout(convertedTime, reason)
         interaction.editReply({
