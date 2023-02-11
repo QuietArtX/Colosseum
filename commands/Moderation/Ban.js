@@ -88,11 +88,10 @@ module.exports = {
     
     collector.on('collect', async (b) => {
       if (!b.deferred) await b.deferUpdate();
-      if (b.user.id === interaction.user.id) return true;
-            else {
-              b.followUp({ embeds: [new EmbedBuilder().setColor(client.color).setDescription(`Only **${interaction.user.tag}** can use this button, if you want then you've run the command again!`)], ephemeral: true });
-              return false;
-            }
+      if (!interaction.guild.members.me.permissions.has("BanMembers")) return interaction.reply({
+      embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
+      ephemeral: true
+      });
       if (b.customId === "yes") {
         await member.ban({reason})
         interaction.editReply({

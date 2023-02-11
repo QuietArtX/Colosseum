@@ -86,6 +86,11 @@ module.exports = {
     });
     
     collector.on('collect', async (b) => {
+      if (!b.deffered) await b.deferUpdate();
+      if (!interaction.guild.members.me.permissions.has("KickMembers")) return interaction.reply({
+      embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR KICK MEMBERS`)],
+      ephemeral: true
+      });
       if (b.customId === "yes") {
         await member.kick({reason})
         interaction.editReply({
