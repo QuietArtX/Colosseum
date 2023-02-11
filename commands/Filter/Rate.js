@@ -20,7 +20,7 @@ module.exports = {
         user: []
     },
     settings: {
-        isPremium: false,
+        isPremium: true,
         isPlayer: true,
         isOwner: false,
         inVoice: false,

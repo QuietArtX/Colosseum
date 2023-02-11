@@ -5,7 +5,7 @@ const moment = require("moment");
 
 module.exports = {
     name: ["premium", "list"],
-    description: "Setup channel song request",
+    description: "list of premium users",
     category: "Premium",
     permissions: {
         channel: [],
@@ -13,9 +13,9 @@ module.exports = {
         user: []
     },
     settings: {
-        isPremium: true,
+        isPremium: false,
         isPlayer: false,
-        isOwner: false,
+        isOwner: true,
         inVoice: false,
         sameVoice: false,
     },
