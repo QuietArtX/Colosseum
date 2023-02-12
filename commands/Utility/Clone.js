@@ -8,8 +8,8 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  name: ["invite"],
-  description: "Invite me to your seever",
+  name: ["bot", "clone"],
+  description: "Clone bot for your discord server",
   category: "Utility",
   ooption: [],
   permissions: {
