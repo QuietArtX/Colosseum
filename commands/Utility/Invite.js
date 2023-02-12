@@ -42,6 +42,9 @@ module.exports = {
     const time = 6000;
     const bEmbed = await interaction.editReply({
       content: `Loading...`,
-    }).then(bEmbed => bEmbed.delete({ timeout: `${time}` }));
-  }
+    }).then(bEmbed => {
+      setTimeout({
+        bEmbed.delete()
+      }, 6000)
+    });
 }
