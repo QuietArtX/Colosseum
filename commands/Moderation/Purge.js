@@ -45,7 +45,7 @@ module.exports = {
     const trashButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
       .setCustomId('trash')
-      .setLabel('🗑️ DEETE THIS MESSAGE!')
+      .setLabel('🗑️ DELETE THIS MESSAGE!')
       .setStyle(ButtonStyle.Success)
       );
       
@@ -74,11 +74,11 @@ module.exports = {
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
       if (p.customId === 'trash') {
-        interaction.deleteReply()
+        await interaction.deleteReply()
       }
       if (p.customId === 'yes') {
         interaction.channel.bulkDelete(number).then(() => {
-          interaction.channel.send({ embeds: [purEmbed], components: [trashButton] })
+          interaction.editReply({ embeds: [purEmbed], components: [trashButton] })
         });
       }
       if (p.customId === 'no') {
