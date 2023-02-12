@@ -3,7 +3,7 @@
 </p>
 
 <p align="center"> 
-  <a href="https://saweria.co/quietartx" target="_blank"> <img src="https://media.discordapp.net/attachments/1074294982401343579/1074327025604636782/20230212_205139.png"/> </a> 
+  <a href="https://saweria.co/quietartx" target="_blank"> <img src="https://media.discordapp.net/attachments/1074294982401343579/1074329105585160263/20230212_210005.png"/> </a> 
 </p>
 
 ## 📑 Feature
