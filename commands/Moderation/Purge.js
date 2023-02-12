@@ -37,8 +37,6 @@ module.exports = {
    
     let number = interaction.options.getInteger("amount");
     
-    await interaction.channel.bulkDelete(number)
-    
     const purEmbed = new EmbedBuilder()
     .setTitle(`PURGE SUCCESS`)
     .setColor(client.color)
@@ -49,9 +47,20 @@ module.exports = {
       .setCustomId('trash')
       .setLabel('🗑️ DEETE THIS MESSAGE!')
       .setStyle(ButtonStyle.Success)
+      );
+      
+    const PButton = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+      .setCustomId('yes')
+      .setLabel('YES')
+      .setStyle(ButtonStyle.Danger),
+      new ButtonBuilder()
+      .setCustomId('no')
+      .setLabel('NO')
+      .setStyle(ButtonStyle.Secondary)
       )
     
-    const purge = await interaction.deferReply({
+    const purge = await interaction.editReply({
       embeds: [purEmbed],
       components: [trashButton]
     });
@@ -66,6 +75,16 @@ module.exports = {
       });
       if (p.customId === 'trash') {
         interaction.deleteReply()
+      }
+      if (p.customId === 'yes') {
+        interaction.channel.bulkDelete(number);
+        await interaction.editReply({ content: `succes`, components: [trashButton] })
+      }
+      if (p.customId === 'no') {
+        interaction.editReply({
+          content: 'cancel',
+          components: [trashButton]
+        })
       }
     });
   }
