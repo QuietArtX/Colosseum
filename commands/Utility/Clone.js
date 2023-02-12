@@ -46,7 +46,7 @@ module.exports = {
       .setStyle(ButtonBuilder.Link)
       .setURL('https://github.com/QuietArtX/Colloseum/fork'
     );
-    
+    )
     await interaction.editReply({
       embeds: [cEmbed],
       components: [cButton],
