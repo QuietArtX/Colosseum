@@ -42,9 +42,8 @@ module.exports = {
       new ButtonBuilder()
       .setLabel('Fork on GitHub')
       .setEmoji('1064244587541045319')
-      .setStyle(ButtonBuilder.Link)
-      .setURL('https://github.com/QuietArtX/Colloseum/fork'
-    )
+      .setStyle(ButtonStyle.Link)
+      .setURL('https://github.com/QuietArtX/Colloseum/fork')
     );
     await interaction.editReply({
       embeds: [cEmbed],
