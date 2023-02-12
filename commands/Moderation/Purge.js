@@ -74,10 +74,10 @@ module.exports = {
       if (!interaction.guild.members.me.permissions.has("ManageMessage")) return interaction.reply({
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
-      if (b.customId === 'trash') {
+      if (p.customId === 'trash') {
         await interaction.deleteReply()
       }
-      if (b.customId === 'yes') {
+      if (p.customId === 'yes') {
         await interaction.channel.bulkDelete(number)
         interaction.editReply({
           embeds: [
@@ -88,7 +88,7 @@ module.exports = {
           components: [trash]
         });
       }
-      if (b.customId === 'no') {
+      if (p.customId === 'no') {
         interaction.editReply({
           embeds: [
             new EmbedBuilder()
