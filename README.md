@@ -1,21 +1,17 @@
 <p align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=NanoSpacePlus&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Colosseum&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
 </p>
 
 <p align="center"> 
-  <a href="https://discord.gg/SNG3dh3MbR" target="_blank"> <img src="https://discordapp.com/api/guilds/903043706410643496/widget.png?style=banner2"/> </a> 
-</p>
-
-<p align="center"> 
-  <a href="https://ko-fi.com/nanotect" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a> 
+  <a href="https://saweria.co/quietartx" target="_blank"> <img src="https://media.discordapp.net/attachments/1074294982401343579/1074327025604636782/20230212_205139.png"/> </a> 
 </p>
 
 ## 📑 Feature
 - [x] Music System (AutoComplete [Play, Playskip, Playtop])
+- [x] Moderation
 - [x] Playlists System (AutoComplete, [All])
-- [x] Premium System (Ko-Fi Support!)
+- [x] Premium System
 - [x] Setup Request System
-- [x] Multi Language
 - [x] Slash Command (Base, Group, Sub)
 - [x] Context Message Menu
 - [x] Custom Filters
@@ -29,47 +25,6 @@
 - [x] Vimeo
 - [x] Https (Radio)
 
-<details><summary>📃 Plugins (More Support Source) [CLICK ME]</summary>
-<p>
-
-## 📃 Plugins (More Support Source) (Require: LavaLink v3.6.x)
-- [x] [LavaSrc](https://github.com/TopiSenpai/LavaSrc)
-- Spotify
-- Deezer
-- Apple
-- Yandex
-
-- [x] [skybot-lavalink-plugin](https://github.com/DuncteBot/skybot-lavalink-plugin)
-- Mixcloud
-- Ocremix
-- Clyp
-- Reddit
-- Getyarn
-- TikTok
-- PornHub
-- Soundgasm
-
-</p>
-</details>
-
-<details><summary>📎 Requirements [CLICK ME]</summary>
-<p>
-
-## 📎 Requirements
-
-- [x] Node.js v16+ **[Download](https://nodejs.org/en/download/)**
-- [x] Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
-- [x] LavaLink **[Guide](https://github.com/freyacodes/lavalink)** (*Dev Version!* **[Download](https://ci.fredboat.com/repository/)**)
-- [My Application File](https://cdn.discordapp.com/attachments/1010784573061349496/1038914440734715994/application.yml)
-- [x] MongoDB **[Download](https://www.mongodb.com/try/download/community)** (Download & install = Finish!)
-
-## 🛑 Super Requirements 
-
-- Java 11-13 **[Download JDK13](http://www.mediafire.com/file/m6gk7aoq96db8g0/file)** (i use this version) for LAVALINK!
-
-</p>
-</details>
-
 ## 📚 Installation
 
 ```
@@ -77,42 +32,6 @@ git clone https://github.com/Adivise/NanoSpacePlus
 cd NanoSpacePlus
 npm install
 ```
-
-<details><summary>📄 Configuration [CLICK ME]</summary>
-<p>
-
-## 📄 Configuration
-
-Copy or Rename `.env.example` to `.env` and fill out the values:
-
-```.env
-# Bot
-TOKEN=REPLACE_HERE
-NP_REALTIME=false
-LEAVE_TIMEOUT=120000
-LANGUAGE=en
-EMBED_COLOR=#000001
-
-# Dev
-OWNER_ID=REPLACE_HERE
-
-# Database
-MONGO_URI=mongodb://127.0.0.1:27017/nanospaceplus
-LIMIT_TRACK=50
-LIMIT_PLAYLIST=10
-
-# Nodes
-NODE_HOST=localhost
-NODE_PORT=5555
-NODE_PASSWORD=123456
-```
-After installation or finishes all you can use `node .` to start the bot. or `Run Start.bat`
-
-</p>
-</details>
-
-<details><summary>🔩 Features & Commands [CLICK ME]</summary>
-<p>
 
 ## 🔩 Features & Commands
 
@@ -208,7 +127,6 @@ After installation or finishes all you can use `node .` to start the bot. or `Ru
 - Generate (/premium generate [plan] [amount]) // (OWNER ONLY)
 - Redeem (/redeem [code])
 - Setup (/premium setup)
-- Transaction (/premium transaction [id])
 - Remove (/premium remove [mention]) // (OWNER ONLY)
 	
 📑 **Utility Commands!**
@@ -218,12 +136,9 @@ After installation or finishes all you can use `node .` to start the bot. or `Ru
 - CommandStats (/commandstats)
 - Vps (/utility vps)
 - LavaLink (/utility lavalink)
+- Invite (Link Invite)
 
-</p>
-</details>
-
-## ❣ Contributors
-
-<a href="https://github.com/Adivise/NanoSpacePlus/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=Adivise/NanoSpacePlus" />
-</a>
+🛡️ **Moderation**
+- Ban / Unban
+- Kick
+- Mute / Unmute

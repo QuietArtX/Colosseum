@@ -26,28 +26,23 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false});
+    await interaction.deferReply({ ephemeral: false });
     
     const iEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`HERE YOUR INVITE LINK\n CLICK ON BUTTON BELLOW`);
+    .setDescription(`HERE YOUR INVITE LINK\nCLICK ON BUTTON BELLOW`);
     
     const iButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
       .setLabel('INVITE')
+      .setEmoji('1024428007215091712')
       .setStyle(ButtonStyle.Link)
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1064974505597993152&permissions=8&scope=bot%20applications.commands')
     );
     
     await interaction.editReply({
-      content: `<a:waiting:802770372516118561>`,
-      timeout: 6000
-    }).then(msg => {
-      msg.edit({
-        content: ` `,
         embeds: [iEmbed],
         components: [iButton]
-      })
-    })
+    });
   }
 }
