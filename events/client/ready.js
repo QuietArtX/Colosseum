@@ -24,7 +24,7 @@ module.exports = async (client) => {
     setInterval(() => {
         client.user.setPresence({ 
             activities: [{ name: `${activities[Math.floor(Math.random() * activities.length)]}`, type: 2 }], 
-            status: 'busy', 
+            status: 'do not disturb', 
         });
     }, 5000)
 
