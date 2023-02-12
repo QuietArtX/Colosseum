@@ -37,6 +37,8 @@ module.exports = {
    
     let number = interaction.options.getInteger("amount");
     
+    await interaction.channel.bulkDelete(number)
+    
     const purEmbed = new EmbedBuilder()
     .setTitle(`PURGE SUCCESS`)
     .setColor(client.color)
