@@ -32,13 +32,14 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: false });
    
     let number = interaction.options.getInteger("amount");
     
     const purEmbed = new EmbedBuilder()
     .setTitle(`WARNING`)
-    .setColor(`Are you sure you want to delete ${number} messages?`)
+    .setColor(client.color)
+    .setDescription(`Are you sure you want to delete ${number} messages?`)
     .setFooter({
       text: `Click **YES** if you want to delete the message`
     });
@@ -54,7 +55,7 @@ module.exports = {
       .setStyle(ButtonStyle.Secondary),
     );
     
-    const trash = new ActionRowBuilder().addComponents(
+    const trashButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
       .setCustomId('trash')
       .setLabel('🗑️ DEETE THIS MESSAGE!')
@@ -74,9 +75,6 @@ module.exports = {
       if (!interaction.guild.members.me.permissions.has("ManageMessage")) return interaction.reply({
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
-      if (p.customId === 'trash') {
-        await interaction.deleteReply()
-      }
       if (p.customId === 'yes') {
         await interaction.channel.bulkDelete(number)
         interaction.editReply({
@@ -85,7 +83,7 @@ module.exports = {
             .setColor(client.color)
             .setDescription(`SUCCESS DELETED ${number} MESSSAGES`)
           ],
-          components: [trash]
+          components: [trashButton]
         });
       }
       if (p.customId === 'no') {
@@ -95,8 +93,11 @@ module.exports = {
             .setColor(client.color)
             .setDescription(`CANCELED`)
           ],
-          components: [trash]
+          components: [trashButton]
         });
+      }
+      if (p.customId === 'trash') {
+        await interaction.deleteReply()
       }
     });
   }
