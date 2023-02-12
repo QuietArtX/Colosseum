@@ -26,7 +26,7 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply({ ephemeral: true });
     
     const cEmbed = new EmbedBuilder()
     .setTitle(`!! CLONE WARNING !!`)
@@ -49,8 +49,7 @@ module.exports = {
     );
     await interaction.editReply({
       embeds: [cEmbed],
-      components: [cButton],
-      ephemeral: true
+      components: [cButton]
     });
   }
 }
