@@ -16,6 +16,7 @@ module.exports = {
       name: "amount",
       description: "input amount",
       type: ApplicationCommandOptionType.Integer,
+      required: true,
     }
   ],
   permissions: {
@@ -39,9 +40,9 @@ module.exports = {
     const purEmbed = new EmbedBuilder()
     .setTitle(`WARNING`)
     .setColor(client.color)
-    .setDescription(`Are you sure you want to delete ${number} messages?`)
+    .setDescription(`ARE YOU SURE YOU WILL REMOVE **${number}** MESSAGES?`)
     .setFooter({
-      text: `Click **YES** if you want to delete the message`
+      text: `Messages will not be able to return if deleted`
     });
     
     const purButton = new ActionRowBuilder().addComponents(
@@ -75,6 +76,9 @@ module.exports = {
       if (!interaction.guild.members.me.permissions.has("ManageMessage")) return interaction.reply({
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
+      if (p.customId === 'trash') {
+        interaction.deleteReply();
+      }  
       if (p.customId === 'yes') {
         await interaction.channel.bulkDelete(number)
         interaction.editReply({
@@ -95,9 +99,6 @@ module.exports = {
           ],
           components: [trashButton]
         });
-      }
-      if (p.customId === 'trash') {
-        await interaction.deleteReply()
       }
     });
   }
