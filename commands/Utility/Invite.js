@@ -41,10 +41,12 @@ module.exports = {
     
     await interaction.editReply({
       content: `Loading...`,
-    }).then (msg => msg.delete({
-      Timeout: 6000
-    }));
-    await interaction.editRely({
+    }).then (msg => {
+      msg.delete({
+      timeout: 6000
+      })
+    });
+    await interaction.editReply({
       embeds: [iEmbed],
       components: [iButton]
     })
