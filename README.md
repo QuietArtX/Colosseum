@@ -28,9 +28,10 @@
 ## 📚 Installation
 
 ```
-git clone https://github.com/Adivise/NanoSpacePlus
-cd NanoSpacePlus
+git clone https://github.com/QuietArtX/Colosseum
+cd Colosseum
 npm install
+node .
 ```
 
 ## 🔩 Features & Commands
