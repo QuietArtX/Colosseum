@@ -51,7 +51,7 @@ module.exports = {
       .setStyle(ButtonStyle.Success)
       );
     
-    const purge = await interaction.editReply({
+    const purge = await interaction.reply({
       embeds: [purEmbed],
       components: [trashButton]
     });
@@ -65,7 +65,7 @@ module.exports = {
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
       if (p.customId === 'trash') {
-        await interaction.deleteReply()
+        interaction.deleteReply()
       }
     });
   }
