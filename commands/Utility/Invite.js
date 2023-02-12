@@ -42,7 +42,7 @@ module.exports = {
     await interaction.editReply({
       content: `Loading...`
     }).then (msg => msg.edit({
-      content: ` `
+      content: ` `,
       embeds: [iEmbed],
       components: [iButton]
     }), 10000);
