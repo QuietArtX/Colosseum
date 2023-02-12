@@ -79,7 +79,7 @@ module.exports = {
       if (p.customId === 'yes') {
         interaction.channel.bulkDelete(number).then(() => {
           interaction.channel.send({ embeds: [purEmbed], components: [trashButton] })
-        }
+        });
       }
       if (p.customId === 'no') {
         interaction.editReply({
