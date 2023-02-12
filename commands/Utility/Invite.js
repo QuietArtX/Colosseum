@@ -42,9 +42,9 @@ module.exports = {
     const time = 6000;
     const bEmbed = await interaction.editReply({
       content: `Loading...`,
-    }).then(bEmbed) {
+    }).then(bEmbed => {
       timeout: 6000,
       bEmbed.delete()
-    }
+    });
   }
 }
