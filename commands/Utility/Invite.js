@@ -26,22 +26,22 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply({ ephemeral: false});
     
-    const invite = new EmbedBuilder()
+    const iEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`INVITE ME TO YOUR SERVER!\nCLICK THE BUTTON BELOW`);
+    .setDescription(`HERE YOUR INVITE LINK\n CLICK ON BUTTON BELLOW`);
     
-    const bInvite = new ActionRowBuilder().addComponents(
+    const iButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-      .setCustomId('inv')
       .setLabel('INVITE')
       .setStyle(ButtonStyle.Link)
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1064974505597993152&permissions=8&scope=bot%20applications.commands')
-      )
-      await interaction.editReply({
-        embeds: [invite],
-        components: [bInvite]
-      });
+    );
+    
+    await interaction.editReply({
+      embeds: [iEmbed],
+      components: [iButton]
+    });
   }
 }
