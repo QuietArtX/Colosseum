@@ -53,7 +53,7 @@ module.exports = {
           ] })
 
         let time;
-        if (plan === 'trial') time = Date.now() + 1800000:
+        if (plan === 'trial') time = Date.now() + 1800000;
         if (plan === 'daily') time = Date.now() + 86400000;
         if (plan === 'weekly') time = Date.now() + 86400000 * 7;
         if (plan === 'monthly') time = Date.now() + 86400000 * 30;
