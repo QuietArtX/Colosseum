@@ -32,7 +32,7 @@ module.exports = {
     .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
     .setDescription(`U Want To Clone This Bot?\nClick The Button Below\n\n**JUST PUT YOUR BOT TOKEN IN ENV SECRET & DON'T CHANGE ANYTHING**`)
     .setFooter({
-      text: `don't forget to give star to my repository, thank you!`
+      text: `don't forget to give star to my repository, thank you!!`
     })
     .setColor(client.color)
     .setTimestamp();
