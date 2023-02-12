@@ -37,19 +37,19 @@ module.exports = {
    
     let number = interaction.options.getInteger("amount");
     
+    await interaction.channel.bulkDelete(number)
+    
     const purEmbed = new EmbedBuilder()
     .setTitle(`PURGE SUCCESS`)
     .setColor(client.color)
     .setDescription(`SUCCESSFULLY DELETED **${number}** MESSAGES`)
-    
-    await interaction.channel.bulkDelete(number);
     
     const trashButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
       .setCustomId('trash')
       .setLabel('🗑️ DEETE THIS MESSAGE!')
       .setStyle(ButtonStyle.Success)
-      );
+      )
     
     const purge = await interaction.reply({
       embeds: [purEmbed],
