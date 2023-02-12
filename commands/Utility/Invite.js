@@ -43,6 +43,6 @@ module.exports = {
     const bEmbed = await interaction.editReply({
       content: `Loading...`,
     });
-    if (time) await msg.delete(bEmbed)
+    if (time) return interaction.delete(bEmbed)
   }
 }
