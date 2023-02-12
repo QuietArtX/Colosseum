@@ -42,7 +42,7 @@ module.exports = {
         let codes = [];
 
         const plan = name;
-        const plans = ['daily', 'weekly', 'monthly', 'yearly', 'lifetime'];
+        const plans = ['trial', 'daily', 'weekly', 'monthly', 'yearly', 'lifetime'];
 
         if (!plans.includes(name))
         return interaction.editReply({ embeds: [
