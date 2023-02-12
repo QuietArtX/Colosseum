@@ -62,7 +62,7 @@ module.exports = {
     
     const purge = await interaction.editReply({
       embeds: [purEmbed],
-      components: [trashButton]
+      components: [PButton]
     });
     
     const collector = purge.createMessageComponentCollector({
