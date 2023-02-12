@@ -39,12 +39,15 @@ module.exports = {
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1064974505597993152&permissions=8&scope=bot%20applications.commands')
     );
     
-    const time = 6000;
-    const bEmbed = await interaction.editReply({
-      content: `Loading...`,
-    }).then(bEmbed => {
-      timeout: 6000,
-      bEmbed.delete()
-    });
+    await interaction.editReply({
+      content: `<a:waiting:802770372516118561>`,
+      timeout: 6000
+    }).then(msg => {
+      msg.edit({
+        content: ` `,
+        embeds: [iEmbed],
+        components: [iButton]
+      })
+    })
   }
 }
