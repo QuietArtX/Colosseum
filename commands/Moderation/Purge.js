@@ -38,23 +38,9 @@ module.exports = {
     let number = interaction.options.getInteger("amount");
     
     const purEmbed = new EmbedBuilder()
-    .setTitle(`WARNING`)
+    .setTitle(`PURGE SUCCESS`)
     .setColor(client.color)
-    .setDescription(`ARE YOU SURE YOU WILL REMOVE **${number}** MESSAGES?`)
-    .setFooter({
-      text: `Messages will not be able to return if deleted`
-    });
-    
-    const purButton = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-      .setCustomId('yes')
-      .setLabel('YES')
-      .setStyle(ButtonStyle.Danger),
-      new ButtonBuilder()
-      .setCustomId('no')
-      .setLabel('NO')
-      .setStyle(ButtonStyle.Secondary),
-    );
+    .setDescription(`SUCCESSFULLY DELETED **${number}** MESSAGES`)
     
     const trashButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -65,7 +51,7 @@ module.exports = {
     
     const purge = await interaction.editReply({
       embeds: [purEmbed],
-      components: [purButton]
+      components: [trashButton]
     });
     
     const collector = purge.createMessageComponentCollector({
@@ -77,28 +63,7 @@ module.exports = {
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
       if (p.customId === 'trash') {
-        interaction.deleteReply();
-      }  
-      if (p.customId === 'yes') {
-        await interaction.channel.bulkDelete(number)
-        interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`SUCCESS DELETED ${number} MESSSAGES`)
-          ],
-          components: [trashButton]
-        });
-      }
-      if (p.customId === 'no') {
-        interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`CANCELED`)
-          ],
-          components: [trashButton]
-        });
+        await interaction.deleteReply()
       }
     });
   }
