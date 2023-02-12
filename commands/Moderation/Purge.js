@@ -51,7 +51,7 @@ module.exports = {
       .setStyle(ButtonStyle.Success)
       )
     
-    const purge = await interaction.followUp({
+    const purge = await interaction.deferReply({
       embeds: [purEmbed],
       components: [trashButton]
     });
