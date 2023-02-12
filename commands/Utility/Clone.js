@@ -28,8 +28,9 @@ module.exports = {
     await interaction.deferReply({ ephemeral: true });
     
     const cEmbed = new EmbedBuilder()
-    .setTitle(`!! CLONE WARNING !!`)
-    .setDescription(`U Want To Clone This Bot?\nwhere can i get this code? Click The Button Below\n\n**JUST PUT YOUR BOT TOKEN IN ENV SECRET & DON'T CHANGE ANYTHING**`)
+    .setTitle(`<a:Attention:1013754096316063814> CLONE WARNING !!`)
+    .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
+    .setDescription(`U Want To Clone This Bot?\nClick The Button Below\n\n**JUST PUT YOUR BOT TOKEN IN ENV SECRET & DON'T CHANGE ANYTHING**`)
     .setColor(client.color)
     .setTimestamp();
     

@@ -30,7 +30,7 @@ module.exports = {
     
     const iEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`HERE YOUR INVITE LINK\nCLICK ON BUTTON BELLOW`);
+    .setDescription(`HERE YOUR INVITE LINK\nCLICK ON BUTTON BELOW`);
     
     const iButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
