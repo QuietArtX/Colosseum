@@ -73,7 +73,6 @@ module.exports = {
       if (!interaction.guild.members.me.permissions.has("ManageMessage")) return interaction.reply({
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
-      }
       if (p.customId === 'yes') {
         interaction.channel.bulkDelete(number).then(() => {
           interaction.followUp({ embeds: [purEmbed], components: [trashButton] })
