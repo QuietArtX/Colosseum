@@ -77,8 +77,9 @@ module.exports = {
         interaction.deleteReply()
       }
       if (p.customId === 'yes') {
-        interaction.channel.bulkDelete(number);
-        await interaction.editReply({ content: `succes`, components: [trashButton] })
+        interaction.channel.bulkDelete(number).then(() => {
+          interaction.channel.send({ embeds [purEmbed], components: [trashButton] })
+        }
       }
       if (p.customId === 'no') {
         interaction.editReply({
