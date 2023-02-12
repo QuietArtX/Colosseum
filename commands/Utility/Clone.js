@@ -11,7 +11,6 @@ module.exports = {
   name: ["bot", "clone"],
   description: "Clone bot for your discord server",
   category: "Utility",
-  ooption: [],
   permissions: {
         channel: [],
         bot: [],
