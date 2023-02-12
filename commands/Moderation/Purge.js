@@ -42,7 +42,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`SUCCESSFULLY DELETED **${number}** MESSAGES`)
     
-    await interaction.channel.bulkDelete();
+    await interaction.channel.bulkDelete(number);
     
     const trashButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
