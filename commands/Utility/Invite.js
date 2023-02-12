@@ -39,13 +39,10 @@ module.exports = {
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1064974505597993152&permissions=8&scope=bot%20applications.commands')
     );
     
-    await interaction.editReply({
+    const time = 6000;
+    const bEmbed = await interaction.editReply({
       content: `Loading...`,
-      timeout: 6000
-    }).then (msg => {
-      msg.delete({
-      timeout: 6000
-      })
     });
+    if (time) await msg.delete(bEmbed)
   }
 }
