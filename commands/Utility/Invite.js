@@ -46,5 +46,5 @@ module.exports = {
       timeout: 6000,
       bEmbed.delete()
     }
-    });
+  }
 }
