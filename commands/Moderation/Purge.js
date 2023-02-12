@@ -98,5 +98,6 @@ module.exports = {
           components: [trash]
         });
       }
+    });
   }
 }
