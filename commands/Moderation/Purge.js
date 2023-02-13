@@ -82,17 +82,18 @@ module.exports = {
               .setLabel('hapus')
               .setStyle(ButtonStyle.Success)
             )
-            ] })
-        });
+            ] 
+          });
+          if (b.customId === 'trs') {
+            await interaction.deleteReply()
+          }
+        })
       }
       if (p.customId === 'no') {
         interaction.editReply({
           content: 'cancel',
           components: [trashButton]
         })
-      }
-      if (p.customId === 'trs') {
-        await interaction.deleteReply()
       }
     });
   }
