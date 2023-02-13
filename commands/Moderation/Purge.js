@@ -84,7 +84,7 @@ module.exports = {
             )
             ] 
           });
-          if (b.customId === 'trs') {
+          if (p.customId === 'trs') {
             interaction.deleteReply()
           }
         })
