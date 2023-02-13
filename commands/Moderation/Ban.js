@@ -107,7 +107,7 @@ module.exports = {
           ],
           components: []
         });
-        await delay(2000);
+        await delay(5000);
         interaction.deleteReply();
       }
       if (b.customId === "no") {
@@ -123,12 +123,14 @@ module.exports = {
           ],
           components: []
         });
+        await delay(5000);
+        interaction.deleteReply();
       }
     });
     
     collector.on('end', async () => {
-      await msg.edit({ content: `timeout!` })
-      await delay(2000);
+      msg.edit({ content: `timeout!` })
+      await delay(5000);
       interaction.deleteReply();
     });
   }
