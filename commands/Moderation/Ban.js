@@ -125,10 +125,10 @@ module.exports = {
       filter: (b) => {
         if (interaction.guild.members.me.permissions.has("BanMembers")) return true;
         else {
-          interaction.reply({
+          b.reply({
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
           ephemeral: true
-          })
+          }) return false;
         };
       },
       componentType: ComponentType.Button,
