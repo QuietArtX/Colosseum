@@ -124,10 +124,10 @@ module.exports = {
     const collector = msg.createMessageComponentCollector({
       filter: (b) => {
         if (guild.members.me.permissions.has("BanMembers") === interaction.user.id) return interaction.editReply({
-      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
-      ephemeral: true
-      });
-      }
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
+          ephemeral: true
+          });
+      },
       componentType: ComponentType.Button,
       time: 30000
     });
