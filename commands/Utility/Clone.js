@@ -27,6 +27,10 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: true });
     
+    const loading = await interaction.editReply({
+      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`<a:waiting:802770372516118561 Loading...`)]
+    });
+    
     const cEmbed = new EmbedBuilder()
     .setTitle(`<a:Attention:1013754096316063814> CLONE WARNING !!`)
     .setThumbnail(client.user.displayAvatarURL({ dynamic: true, size: 2048 }))
@@ -49,9 +53,14 @@ module.exports = {
       .setStyle(ButtonStyle.Link)
       .setURL('https://github.com/QuietArtX/Colloseum/fork')
     );
-    await interaction.editReply({
+    
+    await delay(3000);
+    loading.edit({
       embeds: [cEmbed],
       components: [cButton]
     });
   }
+}
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -107,6 +107,8 @@ module.exports = {
           ],
           components: []
         });
+        await delay(2000);
+        interaction.deleteReply();
       }
       if (b.customId === "no") {
         interaction.editReply({
@@ -125,7 +127,13 @@ module.exports = {
     });
     
     collector.on('end', async () => {
-      await interaction.deleteReply({ timeout: 5000 });
+      await delay(2000);
+      interaction.editReply({ content: `timeout!` })
+      await delay(2000);
+      interaction.deleteReply();
     });
   }
+}
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
