@@ -70,7 +70,7 @@ module.exports = {
       embeds: [botEmbed],
       ephemeral: true
     });
-    if (targetMember === user.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: trye });
+    if (targetMember === interaction.user.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
     
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
