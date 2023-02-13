@@ -69,19 +69,23 @@ module.exports = {
     .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
     const ownEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCESS DENIED! YOU CANT BAN OWNER!!`);
+    .setDescription(`ACCESS DENIED! YOU CANT MUTE OWNER!!`);
     const yourEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCESS DENIED! YOU CANT BAN YOURSELF!!`);
+    .setDescription(`ACCESS DENIED! YOU CANT MUTE YOURSELF!!`);
+    const botEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`UPSS! YOU CAN'T BAN ME 🧸`);
     
     if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
     if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (targetMember.id === interaction.client.user.id) return interaction.followUp({ embeds: [botEmbed], ephemeral: true })
     if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
     
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`BAN TIMEOUT!`)
-    .setDescription(`BANNED FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
+    .setTitle(`MUTE TIMEOUT!`)
+    .setDescription(`MUTE FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -89,8 +93,8 @@ module.exports = {
     
     const succBan = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`BAN SUCCESS`)
-    .setDescription(`SUCCESSFUL BANNED!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
+    .setTitle(`MUTE SUCCESS`)
+    .setDescription(`SUCCESSFUL MUTE!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n◈ Duration: **${time}**\n─────────────────────`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -98,8 +102,8 @@ module.exports = {
     
     const cnclBan = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`BAN CANCEL`)
-    .setDescription(`CANCELED BANNED FOR!\n─────────────────────\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
+    .setTitle(`MUTE CANCEL`)
+    .setDescription(`CANCELED MUTE FOR!\n─────────────────────\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -133,8 +137,8 @@ module.exports = {
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`BAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **  ${reason}**\n─────────────────────`)
+        .setTitle(`MUTE PENDING!`)
+        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **  ${reason}**\n◈ Duration: **${time}**\n─────────────────────`)
         .setFooter({
           text: `Colosseum Music Moderator | TIME 30s`
         })
@@ -161,7 +165,7 @@ module.exports = {
     collector.on('collect', async (b) => {
       if (!b.deferred) await b.deferUpdate();
       if (b.customId === "yes") {
-        await targetMember.timeout({convertedTime, reason})
+        await targetMember.timeout(convertedTime, reason)
         interaction.editReply({
           embeds: [succBan],
           components: [deactvButton]

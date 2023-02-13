@@ -14,10 +14,10 @@ module.exports = {
   options: [
     {
       name: "userid",
-      description: "input userid",
+      description: "input user id for unban",
       required: true,
-      type: ApplicationCommandOptionType.String,
-    }
+      type: ApplicationCommandOptionType.User,
+    },
   ],
   permissions: {
         channel: [],
@@ -33,87 +33,145 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply();
     
-    const { channel, options } = interaction;
+    const targetUsers = interaction.options.getUser("userid");
+    const uTag = await interaction.user.tag;
     
-    const userId = options.getString("userid");
+    const targetMember = await interaction.guild.members.fetch(targetUsers)
+    const targetMemberRolePosition = targetMember.roles.highest.position;
+    const requestMemberRolePosition = interaction.member.roles.highest.position
+    const botRolePosition = interaction.guild.members.me.roles.highest.position
+    const PermsBot = interaction.guild.members.me.permissions.has("BanMembers")
+    
+    if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
+    
+    const erroleEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
+    const ownEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT UNBAN OWNER!!`);
+    const yourEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT UNBAN YOURSELF!!`);
+    const botEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`UPSS! YOU CAN'T UNBAN ME 🧸`);
+    
+    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (targetMember.id === interaction.client.user.id) return  interaction.followUp({ embeds: [botEmbed], ephemeral: true })
+    if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
+    
+    const timeoutBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`UNBAN TIMEOUT!`)
+    .setDescription(`UNBANNED FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ \n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const succBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`UNBAN SUCCESS`)
+    .setDescription(`SUCCESSFUL UNBANNED!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ \n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const cnclBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`UNBAN CANCEL`)
+    .setDescription(`CANCELED UNBANNED FOR!\n─────────────────────\n◈ User: ${targetMember}\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const actvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+        )
+    
+    const deactvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger)
+          .setDisabled(true),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(true)
+        )
     
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`UNBAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR UNBAN THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
         .setFooter({
-          text: `Colosseum Music Moderator`
+          text: `Colosseum Music Moderator | TIME 30s`
         })
         .setTimestamp()
       ],
-      components: [
-        new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-          .setCustomId(`yes`)
-          .setLabel('YES')
-          .setStyle(ButtonStyle.Danger),
-          new ButtonBuilder()
-          .setCustomId(`no`)
-          .setLabel('NO')
-          .setStyle(ButtonStyle.Secondary)
-        )
-      ]
+      components: [actvButton]
     });
     
     const collector = msg.createMessageComponentCollector({
+      filter: (b) => {
+        if (b.user.id == interaction.user.id) return true;
+        else {
+          b.reply({
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED!`)],
+          ephemeral: true
+          });
+          return false;
+        };
+      },
       componentType: ComponentType.Button,
-      time: 25000
+      time: 30000
     });
     
     collector.on('collect', async (b) => {
-      if (!b.deffered) await b.deferUpdate();
-      if (!interaction.guild.members.me.permissions.has("BanMembers")) return interaction.reply({
-      embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BAN MEMBERS`)],
-      ephemeral: true
-      });
+      if (!b.deferred) await b.deferUpdate();
       if (b.customId === "yes") {
-        await interaction.guild.members.unban(userId)
+        await interaction.guild.members.unban(targetUsers)
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setTitle(`UNBAN SUCCESS`)
-            .setDescription(`SUCCESSFUL UNBANNED!\n－－－－－－－\n◈ User: <@${userId}>\n－－－－－－－`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [succBan],
+          components: [deactvButton]
         });
+        await delay(10000);
+        interaction.deleteReply();
       }
-      if (b.customId === "no") {
+      if (b.customId === "cancel") {
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`BANNED CANCELED`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [cnclBan],
+          components: [deactvButton]
         });
+        await delay(10000);
+        interaction.deleteReply();
       }
     });
     
-    collector.on('end', async (collected, reason) => {
-      if (reason === "time") {
-        const timbed = new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`Timeout! Please Try Again!`)
-        msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
-      }
+    collector.on('end', async () => {
+      msg.edit({ content: ` `, embeds: [timeoutBan], components: [deactvButton] })
+      await delay(10000);
+      msg.delete();
     });
   }
+}
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

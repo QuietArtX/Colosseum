@@ -9,16 +9,16 @@ const {
 const ms = require("ms");
 
 module.exports = {
-  name: ["unmute"],
-  description: "Unmute member from this server",
+  name: ["mute"],
+  description: "muta member from this server",
   category: "Moderation",
   options: [
     {
       name: "target",
-      description: "mention a target for unmute",
+      description: "mention a target for mute",
       required: true,
       type: ApplicationCommandOptionType.User,
-    }
+    },
   ],
   permissions: {
         channel: [],
@@ -34,101 +34,148 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply();
     
-    const { guild, options } = interaction;
+    const targetUsers = interaction.options.getUser("target");
+    const uTag = await interaction.user.tag
     
-    const users = options.getUser("target");
-    const member = guild.members.cache.get(users.id)
+    const targetMember = await interaction.guild.members.fetch(targetUsers)
+    const targetMemberRolePosition = targetMember.roles.highest.position;
+    const requestMemberRolePosition = interaction.member.roles.highest.position
+    const botRolePosition = interaction.guild.members.me.roles.highest.position
+    const PermsBot = interaction.guild.members.me.permissions.has("ModerateMembers")
     
-    const errEmbed = new EmbedBuilder()
+    if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
+    if (!PermsBot) return interation.followUp({
+      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO MUTE THIS MEMBERS`)]
+    })
+    
+    const erroleEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCES DENIED! YOU DONT HAVE ACCESS FOR MODERATE MEMBERS`);
+    .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
+    const ownEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT MUTE OWNER!!`);
+    const yourEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT MUTE YOURSELF!!`);
+    const botEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`UPSS! YOU CAN'T BAN ME 🧸`);
     
-    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
-      embeds: [errEmbed],
-      ephemeral: true
-    });
-    if (!interaction.guild.members.me.permissions.has("ModerateMembers")) return interaction.reply({
-      embeds: [errEmbed],
-      ephemeral: true
-    });
+    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (targetMember.id === interaction.client.user.id) return interaction.followUp({ embeds: [botEmbed], ephemeral: true })
+    if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
     
-    const msg = await interaction.editReply({
-      embeds: [
-        new EmbedBuilder()
-        .setColor(client.color)
-        .setTitle(`UNMUTE PENDING!`)
-        .setDescription(`ARE YOU SURE FOR UNMUTE THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n－－－－－－－`)
-        .setFooter({
-          text: `Colosseum Music Moderator`
-        })
-        .setTimestamp()
-      ],
-      components: [
-        new ActionRowBuilder().addComponents(
+    const timeoutBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`MUTE TIMEOUT!`)
+    .setDescription(`MUTE FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const succBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`MUTE SUCCESS`)
+    .setDescription(`SUCCESSFUL MUTE!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const cnclBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`MUTE CANCEL`)
+    .setDescription(`CANCELED MUTE FOR!\n─────────────────────\n◈ User: ${targetMember}\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const actvButton = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
           .setCustomId(`yes`)
           .setLabel('YES')
           .setStyle(ButtonStyle.Danger),
           new ButtonBuilder()
-          .setCustomId(`no`)
-          .setLabel('NO')
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
           .setStyle(ButtonStyle.Secondary)
         )
-      ]
+    
+    const deactvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger)
+          .setDisabled(true),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(true)
+        )
+    
+    const msg = await interaction.editReply({
+      embeds: [
+        new EmbedBuilder()
+        .setColor(client.color)
+        .setTitle(`MUTE PENDING!`)
+        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
+        .setFooter({
+          text: `Colosseum Music Moderator | TIME 30s`
+        })
+        .setTimestamp()
+      ],
+      components: [actvButton]
     });
     
     const collector = msg.createMessageComponentCollector({
+      filter: (b) => {
+        if (b.user.id == interaction.user.id) return true;
+        else {
+          b.reply({
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED!`)],
+          ephemeral: true
+          });
+          return false;
+        };
+      },
       componentType: ComponentType.Button,
-      time: 25000
+      time: 30000
     });
     
     collector.on('collect', async (b) => {
       if (!b.deferred) await b.deferUpdate();
-      if (!interaction.guild.members.me.permissions.has("ModerateMembers")) return interaction.reply({
-        embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MODERATE MEMBERS`)],
-        ephemeral: true
-    });      
       if (b.customId === "yes") {
-        await member.timeout(null)
+        await targetMember.timeout(null)
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setTitle(`UNMUTE SUCCESS`)
-            .setDescription(`\n－－－－－－－\n◈ User: ${member}\n－－－－－－－`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [succBan],
+          components: [deactvButton]
         });
+        await delay(10000);
+        interaction.deleteReply();
       }
-      if (b.customId === "no") {
+      if (b.customId === "cancel") {
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`UNMUTE CANCELED`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [cnclBan],
+          components: [deactvButton]
         });
+        await delay(10000);
+        interaction.deleteReply();
       }
     });
     
-    collector.on('end', async (collected, reason) => {
-      if (reason === "time") {
-        const timbed = new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`Timeout! Please Try Again!`)
-        msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
-      }
+    collector.on('end', async () => {
+      msg.edit({ content: ` `, embeds: [timeoutBan], components: [deactvButton] })
+      await delay(10000);
+      msg.delete();
     });
   }
+}
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
