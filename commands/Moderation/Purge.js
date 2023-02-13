@@ -48,22 +48,13 @@ module.exports = {
       .setLabel('🗑️ DELETE THIS MESSAGE!')
       .setStyle(ButtonStyle.Success)
       );
-      
-    const PButton = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-      .setCustomId('yes')
-      .setLabel('YES')
-      .setStyle(ButtonStyle.Danger),
-      new ButtonBuilder()
-      .setCustomId('no')
-      .setLabel('NO')
-      .setStyle(ButtonStyle.Secondary)
-      )
     
-    const purge = await interaction.editReply({
-      embeds: [purEmbed],
-      components: [PButton]
-    });
+    const purge = await interaction.channel.bulkDelete(number).then(() => {
+      interaction.fetchReply({
+        embeds: [purEmbed],
+        components: [trashButton]
+      })
+    }
     
     const collector = purge.createMessageComponentCollector({
       componentType: ComponentType.Button
@@ -73,28 +64,8 @@ module.exports = {
       if (!interaction.guild.members.me.permissions.has("ManageMessage")) return interaction.reply({
       embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR MENAGE MESSAGE`)]
       });
-      if (p.customId === 'yes') {
-        interaction.channel.bulkDelete(number).then(() => {
-          interaction.followUp({ embeds: [purEmbed], components: [
-            new ActionRowBuilder().addComponents(
-              new ButtonBuilder()
-              .setCustomId('trs')
-              .setLabel('hapus')
-              .setStyle(ButtonStyle.Success)
-            )
-            ] 
-          }).then((msg) => {
-            if (p.customId === 'trs') {
-              msg.delete()
-            }
-          })
-        })
-      }
-      if (p.customId === 'no') {
-        interaction.editReply({
-          content: 'cancel',
-          components: [trashButton]
-        })
+      if (p.customId === 'trash') {
+        interaction.deleteReply();
       }
     });
   }
