@@ -60,7 +60,7 @@ module.exports = {
     
     if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
     if (!PermsBot) return interation.followUp({
-      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO MUTE THIS MEMBERS`]
+      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO MUTE THIS MEMBERS`)]
     })
     
     const erroleEmbed = new EmbedBuilder()
