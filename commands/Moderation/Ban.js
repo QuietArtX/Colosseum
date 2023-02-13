@@ -65,12 +65,13 @@ module.exports = {
     .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN ME`);
     
     if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (targetMember.id === interaction.targetMember.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
     if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
     if (targetMemberRolePosition >= botRolePosition) return interaction.followUp({
       embeds: [botEmbed],
       ephemeral: true
     });
-    if (targetMember.id === interaction.targetMember.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+
     
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
