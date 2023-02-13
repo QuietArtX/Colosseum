@@ -46,7 +46,7 @@ module.exports = {
     
     const targetMember = await interaction.guild.members.fetch(targetUsers)
     const targetMemberRolePosition = targetMember.roles.highest.position;
-    const requestMemberRolePosition = interaction.member.role.highest.position
+    const requestMemberRolePosition = interaction.member.roles.highest.position
     const botRolePosition = interaction.guild.members.me.roles.highest.position
     
     if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
