@@ -49,12 +49,63 @@ module.exports = {
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`Action denied! cannot ban the role above you!`);
+    .setDescription(`ACTION DENIED! Cannot **BAN** the role above you!`);
     
     if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.editReply({
       embeds: [errEmbed],
       ephemeral: true
     });
+    
+    const timeoutBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`BAN TIMEOUT!`)
+    .setDescription(`BANNED FAILED DUE TO OUT OF TIME!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const succBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`BAN SUCCESS`)
+    .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const cnclBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`BAN CANCEL`)
+    .setDescription(`CANCELED BANNED FOR!\n－－－－－－－\n◈User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const actvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+        )
+    
+    const deactvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger)
+          .setDisabled(true),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(true)
+        )
     
     const msg = await interaction.editReply({
       embeds: [
@@ -63,27 +114,16 @@ module.exports = {
         .setTitle(`BAN PENDING!`)
         .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
         .setFooter({
-          text: `Colosseum Music Moderator`
+          text: `Colosseum Music Moderator | Timeout 15s`
         })
         .setTimestamp()
       ],
-      components: [
-        new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-          .setCustomId(`yes`)
-          .setLabel('YES')
-          .setStyle(ButtonStyle.Danger),
-          new ButtonBuilder()
-          .setCustomId(`no`)
-          .setLabel('NO')
-          .setStyle(ButtonStyle.Secondary)
-        )
-      ]
+      components: [actvButton]
     });
     
     const collector = msg.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      time: 25000
+      time: 15000
     });
     
     collector.on('collect', async (b) => {
@@ -95,33 +135,16 @@ module.exports = {
       if (b.customId === "yes") {
         await member.ban({reason})
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setTitle(`BAN SUCCESS`)
-            .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [succBan]
+          components: [deactvButton]
         });
         await delay(5000);
         interaction.deleteReply();
       }
-      if (b.customId === "no") {
+      if (b.customId === "cancel") {
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`BANNED CANCELED`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [cnclBan],
+          components: [deactvButton]
         });
         await delay(5000);
         interaction.deleteReply();
@@ -129,7 +152,7 @@ module.exports = {
     });
     
     collector.on('end', async () => {
-      msg.edit({ content: `timeout!` })
+      msg.edit({ content: ` `, embeds: [timeoutBan], components: [deactvButton] })
       await delay(5000);
       msg.delete();
     });
