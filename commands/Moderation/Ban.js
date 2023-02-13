@@ -50,6 +50,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
     
+    if (member.id === user.id) return interaction.followUp({ embeds: [errEmbed], ephemeral: true });
     if (guild.ownerId === member.id) return interaction.followUp({ embeds: [errEmbed], ephemeral: true });
     if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.followUp({
       embeds: [errEmbed],
