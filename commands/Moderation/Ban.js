@@ -135,7 +135,7 @@ module.exports = {
       if (b.customId === "yes") {
         await member.ban({reason})
         interaction.editReply({
-          embeds: [succBan]
+          embeds: [succBan],
           components: [deactvButton]
         });
         await delay(5000);
