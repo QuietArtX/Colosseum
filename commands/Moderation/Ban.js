@@ -46,14 +46,20 @@ module.exports = {
     const member = await interaction.guild.members.fetch(users.id);
     const uTag = await interaction.user.tag;
     
-    const errEmbed = new EmbedBuilder()
+    const erroleEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
+    const ownEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT BAN OWNER!!`);
+    const yourEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT BAN YOURSELF!!`);
     
-    if (member.id === user.id) return interaction.followUp({ embeds: [errEmbed], ephemeral: true });
-    if (guild.ownerId === member.id) return interaction.followUp({ embeds: [errEmbed], ephemeral: true });
+    if (member.id === user.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (guild.ownerId === member.id) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
     if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.followUp({
-      embeds: [errEmbed],
+      embeds: [erroleEmbed],
       ephemeral: true
     });
     
