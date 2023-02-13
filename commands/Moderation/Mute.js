@@ -26,7 +26,7 @@ module.exports = {
     },
     {
       name: "reason",
-      description: "provide a reason"
+      description: "provide a reason",
       type: ApplicationCommandOptionType.String,
     }
   ],
