@@ -127,7 +127,7 @@ module.exports = {
     });
     
     collector.on('end', async () => {
-      await interaction.editReply({ content: `timeout!` })
+      await msg.edit({ content: `timeout!` })
       await delay(2000);
       interaction.deleteReply();
     });
