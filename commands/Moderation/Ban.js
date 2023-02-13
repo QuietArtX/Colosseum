@@ -38,9 +38,8 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false });
-    
-    const { channel, options } = interaction;
+    await interaction.deferReply({ ephemeral: true })
+    const { channel, options, guild } = interaction;
     
     const users = options.getUser("target");
     const reason = options.getString("reason") || "NO REASON PROVIDED";
@@ -49,9 +48,10 @@ module.exports = {
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACTION DENIED!ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
- 
-    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
+    .setDescription(`ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
+    
+    if (guild.ownerId === member.id) return interaction.followUp({ embeds: [errEmbed], ephemeral: true });
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.followUp({
       embeds: [errEmbed],
       ephemeral: true
     });
@@ -123,7 +123,7 @@ module.exports = {
     
     const collector = msg.createMessageComponentCollector({
       filter: (b) => {
-        if (b.guild.members.me.permissions.has("BanMembers")) return true;
+        if (b.user.id == interaction.user.id) return true;
         else {
           b.reply({
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED!`)],
