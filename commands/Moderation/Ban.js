@@ -51,7 +51,7 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`ACTION DENIED!ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
  
-    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.editReply({
+    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.reply({
       embeds: [errEmbed],
       ephemeral: true
     });
@@ -123,10 +123,10 @@ module.exports = {
     
     const collector = msg.createMessageComponentCollector({
       filter: (b) => {
-        if (b.user.id === interaction.guild.members.me.permissions.has("BanMembers")) return true;
+        if (guild.members.me.permissions.has("BanMembers")) return true;
         else {
           b.reply({
-          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED!`)],
           ephemeral: true
           });
           return false;
