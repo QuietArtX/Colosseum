@@ -128,7 +128,8 @@ module.exports = {
           b.reply({
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
           ephemeral: true
-          }) return false;
+          });
+          return false;
         };
       },
       componentType: ComponentType.Button,
