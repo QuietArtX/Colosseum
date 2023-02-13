@@ -63,7 +63,7 @@ module.exports = {
     .setDescription(`ACCESS DENIED! YOU CANT BAN YOURSELF!!`);
     
     if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
-    if (targetMember.id === interaction.client.user.id)
+    if (targetMember.id === interaction.client.user.id) return  interaction.followUp({ content: `bacot kau` })
     if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
     if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
     
