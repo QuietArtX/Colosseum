@@ -75,7 +75,7 @@ module.exports = {
       });
       if (p.customId === 'yes') {
         interaction.channel.bulkDelete(number).then(() => {
-          interaction.followUp({ embeds: [purEmbed], components: [
+          interaction.editReply({ embeds: [purEmbed], components: [
             new ActionRowBuilder().addComponents(
               new ButtonBuilder()
               .setCustomId('trs')
@@ -83,10 +83,11 @@ module.exports = {
               .setStyle(ButtonStyle.Success)
             )
             ] 
-          });
-          if (p.customId === 'trs') {
-            interaction.deleteReply()
-          }
+          }).then(() => {
+            if (p.customId === 'trs') {
+              interaction.deleteReply()
+            }
+          })
         })
       }
       if (p.customId === 'no') {
