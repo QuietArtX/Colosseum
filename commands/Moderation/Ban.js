@@ -48,6 +48,7 @@ module.exports = {
     const targetMemberRolePosition = targetMember.roles.highest.position;
     const requestMemberRolePosition = interaction.member.roles.highest.position
     const botRolePosition = interaction.guild.members.me.roles.highest.position
+    const PermsBot = interaction.guild.members.me.permissions.has("BanMembers")
     
     if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
     

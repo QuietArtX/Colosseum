@@ -32,8 +32,8 @@ module.exports = {
   ],
   permissions: {
         channel: [],
-        bot: ["BanMembers"],
-        user: ["BanMembers"]
+        bot: ["ModerateMembers"],
+        user: ["ModerateMembers"]
     },
   settings: {
         isPremium: false,
@@ -49,15 +49,19 @@ module.exports = {
     const targetUsers = interaction.options.getUser("target");
     const reason = interaction.options.getString("reason") || "NO REASON PROVIDED";
     const uTag = await interaction.user.tag;
-    const time = options.getString("time")
+    const time = interaction.options.getString("time")
     const convertedTime = ms(time);
     
     const targetMember = await interaction.guild.members.fetch(targetUsers)
     const targetMemberRolePosition = targetMember.roles.highest.position;
     const requestMemberRolePosition = interaction.member.roles.highest.position
     const botRolePosition = interaction.guild.members.me.roles.highest.position
+    const PermsBot = interation.guild.members.me.permissions.has("ModerateMembers")
     
     if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
+    if (!PermsBot) return interation.followUp({
+      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO MUTE THIS MEMBERS`]
+    })
     
     const erroleEmbed = new EmbedBuilder()
     .setColor(client.color)
