@@ -38,35 +38,44 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: true })
-    const { channel, options, guild } = interaction;
+    await interaction.deferReply({ ephemeral: true });
     
-    const users = options.getUser("target");
-    const reason = options.getString("reason") || "NO REASON PROVIDED";
-    const member = await interaction.guild.members.fetch(users.id);
+    const targetUsers = interaction.options.getUser("target");
+    const reason = interaction.options.getString("reason") || "NO REASON PROVIDED";
     const uTag = await interaction.user.tag;
+    
+    const targetMember = await interaction.guild.members.fetch(targetUsers)
+    const targetMemberRolePosition = targetMember.roles.highest.position;
+    const requestMemberRolePosition = interaction.member.role.highest.position
+    const botRolePosition = interaction.guild.members.me.roles.highest.position
+    
+    if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
     
     const erroleEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCESS DENIED! BECAUSE THAN HIM`);
+    .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
     const ownEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! YOU CANT BAN OWNER!!`);
     const yourEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! YOU CANT BAN YOURSELF!!`);
+    const botEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN ME`);
     
-    if (interaction.member.id === users.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
-    if (guild.ownerId === users.id) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
-    if (guild.member.me.roles.highest.position <= member.roles.highest.position) return interaction.followUp({
-      embeds: [erroleEmbed],
+    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
+    if (targetMemberRolePosition >= botRolePosition) return interaction.followUp({
+      embeds: [botEmbed],
       ephemeral: true
     });
+    if (targetMember === user.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: trye });
     
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
     .setTitle(`BAN TIMEOUT!`)
-    .setDescription(`BANNED FAILED DUE TO OUT OF TIME!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+    .setDescription(`BANNED FAILED DUE TO OUT OF TIME!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n－－－－－－－`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -75,7 +84,7 @@ module.exports = {
     const succBan = new EmbedBuilder()
     .setColor(client.color)
     .setTitle(`BAN SUCCESS`)
-    .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+    .setDescription(`SUCCESSFUL BANNED!\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n－－－－－－－`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -84,7 +93,7 @@ module.exports = {
     const cnclBan = new EmbedBuilder()
     .setColor(client.color)
     .setTitle(`BAN CANCEL`)
-    .setDescription(`CANCELED BANNED FOR!\n－－－－－－－\n◈User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
+    .setDescription(`CANCELED BANNED FOR!\n－－－－－－－\n◈User: ${targetMember}\n◈ Reason: **${reason}**\n－－－－－－－`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -119,7 +128,7 @@ module.exports = {
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`BAN PENDING!`)
-        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
         .setFooter({
           text: `Colosseum Music Moderator | TIME 30s`
         })
@@ -146,7 +155,7 @@ module.exports = {
     collector.on('collect', async (b) => {
       if (!b.deferred) await b.deferUpdate();
       if (b.customId === "yes") {
-        await member.ban({reason})
+        await targetMember.ban({reason})
         interaction.editReply({
           embeds: [succBan],
           components: [deactvButton]
