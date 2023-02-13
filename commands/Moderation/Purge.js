@@ -86,6 +86,7 @@ module.exports = {
       }
       if (p.customId === 'trash') {
         await interaction.deleteReply()
+      }
     });
   }
 }
