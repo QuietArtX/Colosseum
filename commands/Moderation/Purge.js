@@ -53,7 +53,7 @@ module.exports = {
       interaction.fetchReply({
         embeds: [purEmbed],
         components: [trashButton]
-      })
+      }))
     }
     
     const collector = purge.createMessageComponentCollector({
