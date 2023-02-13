@@ -127,7 +127,7 @@ module.exports = {
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
           ephemeral: true
       });
-      }
+      },
       componentType: ComponentType.Button,
       time: 30000
     });
