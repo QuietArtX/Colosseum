@@ -9,7 +9,7 @@ const {
 
 module.exports = {
   name: ["kick"],
-  description: "Kick member from this server",
+  description: "kick member from this server",
   category: "Moderation",
   options: [
     {
@@ -38,98 +38,141 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply({ ephemeral: false });
+    await interaction.deferReply();
     
-    const { channel, options } = interaction;
+    const targetUsers = interaction.options.getUser("target");
+    const reason = interaction.options.getString("reason") || "NO REASON PROVIDED";
+    const uTag = await interaction.user.tag;
     
-    const users = options.getUser("target");
-    const reason = options.getString("reason") || "NO REASON PROVIDED";
-    const member = await interaction.guild.members.fetch(users.id);
+    const targetMember = await interaction.guild.members.fetch(targetUsers)
+    const targetMemberRolePosition = targetMember.roles.highest.position;
+    const requestMemberRolePosition = interaction.member.roles.highest.position
+    const botRolePosition = interaction.guild.members.me.roles.highest.position
     
-    const errEmbed = new EmbedBuilder()
+    if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
+    
+    const erroleEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`Action denied! cannot kick the role above you!`);
+    .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
+    const ownEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT KICK OWNER!!`);
+    const yourEmbed = new EmbedBuilder()
+    .setColor(client.color)
+    .setDescription(`ACCESS DENIED! YOU CANT KICK YOURSELF!!`);
     
-    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.editReply({
-      embeds: [errEmbed],
-      ephemeral: true
-    });
+    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
+    
+    const timeoutBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`KICK TIMEOUT!`)
+    .setDescription(`KICK FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const succBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`KICK SUCCESS`)
+    .setDescription(`SUCCESSFUL KICK!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const cnclBan = new EmbedBuilder()
+    .setColor(client.color)
+    .setTitle(`KICK CANCEL`)
+    .setDescription(`CANCELED KICK FOR!\n─────────────────────\n◈ User: ${targetMember}\n◈ Reason: **${reason}**\n─────────────────────`)
+    .setFooter({
+      text: `Colosseum Music Moderator`
+            })
+    .setTimestamp()
+    
+    const actvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+        )
+    
+    const deactvButton = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+          .setCustomId(`yes`)
+          .setLabel('YES')
+          .setStyle(ButtonStyle.Danger)
+          .setDisabled(true),
+          new ButtonBuilder()
+          .setCustomId(`cancel`)
+          .setLabel('CANCEL')
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(true)
+        )
     
     const msg = await interaction.editReply({
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
         .setTitle(`KICK PENDING!`)
-        .setDescription(`ARE YOU SURE FOR KICK THIS MEMBER?\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
+        .setDescription(`ARE YOU SURE FOR KICK THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n◈ Reason: **  ${reason}**\n─────────────────────`)
         .setFooter({
-          text: `Colosseum Music Moderator`
+          text: `Colosseum Music Moderator | TIME 30s`
         })
         .setTimestamp()
       ],
-      components: [
-        new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-          .setCustomId(`yes`)
-          .setLabel('YES')
-          .setStyle(ButtonStyle.Danger),
-          new ButtonBuilder()
-          .setCustomId(`no`)
-          .setLabel('NO')
-          .setStyle(ButtonStyle.Secondary)
-        )
-      ]
+      components: [actvButton]
     });
     
     const collector = msg.createMessageComponentCollector({
+      filter: (b) => {
+        if (b.user.id == interaction.user.id) return true;
+        else {
+          b.reply({
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED!`)],
+          ephemeral: true
+          });
+          return false;
+        };
+      },
       componentType: ComponentType.Button,
-      time: 25000
+      time: 30000
     });
     
     collector.on('collect', async (b) => {
-      if (!b.deffered) await b.deferUpdate();
-      if (!interaction.guild.members.me.permissions.has("KickMembers")) return interaction.reply({
-      embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR KICK MEMBERS`)],
-      ephemeral: true
-      });
+      if (!b.deferred) await b.deferUpdate();
       if (b.customId === "yes") {
-        await member.kick({reason})
+        await targetMember.kick({reason})
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setTitle(`KICK SUCCESS`)
-            .setDescription(`SUCCESSFUL KICK!\n－－－－－－－\n◈ User: ${member}\n◈ Reason: **${reason}**\n－－－－－－－`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [succBan],
+          components: [deactvButton]
         });
+        await delay(10000);
+        interaction.deleteReply();
       }
-      if (b.customId === "no") {
+      if (b.customId === "cancel") {
         interaction.editReply({
-          embeds: [
-            new EmbedBuilder()
-            .setColor(client.color)
-            .setDescription(`KICK CANCELED`)
-            .setFooter({
-              text: `Colosseum Music Moderator`
-            })
-            .setTimestamp()
-          ],
-          components: []
+          embeds: [cnclBan],
+          components: [deactvButton]
         });
+        await delay(10000);
+        interaction.deleteReply();
       }
     });
     
-    collector.on('end', async (collected, reason) => {
-      if (reason === "time") {
-        const timbed = new EmbedBuilder()
-        .setColor(client.color)
-        .setDescription(`Timeout! Please Try Again!`)
-        msg.edit({ embeds: [timbed], components: [] }).then (msg => msg.delete({ timeout: 6000 }))
-      }
+    collector.on('end', async () => {
+      msg.edit({ content: ` `, embeds: [timeoutBan], components: [deactvButton] })
+      await delay(10000);
+      msg.delete();
     });
   }
+}
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
