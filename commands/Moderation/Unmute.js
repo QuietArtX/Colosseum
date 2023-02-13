@@ -45,29 +45,7 @@ module.exports = {
     const botRolePosition = interaction.guild.members.me.roles.highest.position
     const PermsBot = interaction.guild.members.me.permissions.has("ModerateMembers")
     
-    if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
-    if (!PermsBot) return interation.followUp({
-      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO UNMUTE THIS MEMBERS`)]
-    })
-    
-    const erroleEmbed = new EmbedBuilder()
-    .setColor(client.color)
-    .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
-    const ownEmbed = new EmbedBuilder()
-    .setColor(client.color)
-    .setDescription(`ACCESS DENIED! YOU CANT UNMUTE OWNER!!`);
-    const yourEmbed = new EmbedBuilder()
-    .setColor(client.color)
-    .setDescription(`ACCESS DENIED! YOU CANT UNMUTE YOURSELF!!`);
-    const botEmbed = new EmbedBuilder()
-    .setColor(client.color)
-    .setDescription(`UPSS! YOU CAN'T BAN ME 🧸`);
-    
-    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
-    if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
-    if (targetMember.id === interaction.client.user.id) return interaction.followUp({ embeds: [botEmbed], ephemeral: true })
-    if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
-    
+
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
     .setTitle(`UNMUTE TIMEOUT!`)
