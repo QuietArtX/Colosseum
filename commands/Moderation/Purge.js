@@ -75,7 +75,7 @@ module.exports = {
       });
       if (p.customId === 'yes') {
         interaction.channel.bulkDelete(number).then(() => {
-          interaction.editReply({ embeds: [purEmbed], components: [
+          interaction.followUp({ embeds: [purEmbed], components: [
             new ActionRowBuilder().addComponents(
               new ButtonBuilder()
               .setCustomId('trs')
@@ -83,9 +83,9 @@ module.exports = {
               .setStyle(ButtonStyle.Success)
             )
             ] 
-          }).then(() => {
+          }).then((msg) => {
             if (p.customId === 'trs') {
-              interaction.deleteReply()
+              msg.delete()
             }
           })
         })
