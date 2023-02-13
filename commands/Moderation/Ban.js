@@ -48,7 +48,7 @@ module.exports = {
     
     const erroleEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
+    .setDescription(`ACCESS DENIED! BECAUSE THAN HIM`);
     const ownEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! YOU CANT BAN OWNER!!`);
@@ -56,9 +56,9 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! YOU CANT BAN YOURSELF!!`);
     
-    if (member.id === user.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
-    if (guild.ownerId === member.id) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
-    if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.followUp({
+    if (interaction.member.id === users.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (guild.ownerId === users.id) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (guild.member.me.roles.highest.position <= member.roles.highest.position) return interaction.followUp({
       embeds: [erroleEmbed],
       ephemeral: true
     });

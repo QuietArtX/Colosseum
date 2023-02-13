@@ -17,7 +17,7 @@ module.exports = {
       directory: resolve("languages"), // <= location of language
     },
 
-    DEV_ID: [], // if you want to use command bot only, you can put your id here example: ["123456789", "123456789"]
+    DEV_ID: ["989430735561715712"], // if you want to use command bot only, you can put your id here example: ["123456789", "123456789"]
 
     MONGO_URI: process.env.MONGO_URI || "mongodb+srv://mango1:mango1@ytdatabase.erk5d9e.mongodb.net/?retryWrites=true&w=majority", // your mongo uri
     LIMIT_TRACK: parseInt(process.env.LIMIT_TRACK || "50"),  //<= dafault is "50" // limit track in playlist
