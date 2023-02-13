@@ -6,6 +6,7 @@ const {
   ApplicationCommandOptionType,
   ComponentType
 } = require("discord.js");
+const ms = require("ms");
 
 module.exports = {
   name: ["mute"],
