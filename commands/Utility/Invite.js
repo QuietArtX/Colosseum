@@ -29,7 +29,7 @@ module.exports = {
     await interaction.deferReply({ ephemeral: false });
     
     const loading = await interaction.editReply({
-      embeds: [new EmbedBuilder().setColor(client.color).set(`<a:waiting:802770372516118561> Generate Invite Link...`)]
+      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`<a:waiting:802770372516118561> Generate Invite Link...`)]
     });
     
     const iEmbed = new EmbedBuilder()
