@@ -9,13 +9,13 @@ const {
 const ms = require("ms");
 
 module.exports = {
-  name: ["mute"],
+  name: ["unmute"],
   description: "muta member from this server",
   category: "Moderation",
   options: [
     {
       name: "target",
-      description: "mention a target for mute",
+      description: "mention a target for unmute",
       required: true,
       type: ApplicationCommandOptionType.User,
     },
@@ -47,7 +47,7 @@ module.exports = {
     
     if (!targetMember) return interaction.followUp({ content: `This user is not on the server` });
     if (!PermsBot) return interation.followUp({
-      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO MUTE THIS MEMBERS`)]
+      embeds: [new EmbedBuilder().setColor(client.color).setDescription(`I DON'T HAVE PERMISSIONS TO UNMUTE THIS MEMBERS`)]
     })
     
     const erroleEmbed = new EmbedBuilder()
@@ -55,10 +55,10 @@ module.exports = {
     .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN YOU.`);
     const ownEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCESS DENIED! YOU CANT MUTE OWNER!!`);
+    .setDescription(`ACCESS DENIED! YOU CANT UNMUTE OWNER!!`);
     const yourEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACCESS DENIED! YOU CANT MUTE YOURSELF!!`);
+    .setDescription(`ACCESS DENIED! YOU CANT UNMUTE YOURSELF!!`);
     const botEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setDescription(`UPSS! YOU CAN'T BAN ME 🧸`);
@@ -70,8 +70,8 @@ module.exports = {
     
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`MUTE TIMEOUT!`)
-    .setDescription(`MUTE FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
+    .setTitle(`UNMUTE TIMEOUT!`)
+    .setDescription(`UNMUTE FAILED DUE TO OUT OF TIME!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -79,8 +79,8 @@ module.exports = {
     
     const succBan = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`MUTE SUCCESS`)
-    .setDescription(`SUCCESSFUL MUTE!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
+    .setTitle(`UNMUTE SUCCESS`)
+    .setDescription(`SUCCESSFUL UNMUTE!\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -88,8 +88,8 @@ module.exports = {
     
     const cnclBan = new EmbedBuilder()
     .setColor(client.color)
-    .setTitle(`MUTE CANCEL`)
-    .setDescription(`CANCELED MUTE FOR!\n─────────────────────\n◈ User: ${targetMember}\n─────────────────────`)
+    .setTitle(`UNMUTE CANCEL`)
+    .setDescription(`CANCELED UNMUTE FOR!\n─────────────────────\n◈ User: ${targetMember}\n─────────────────────`)
     .setFooter({
       text: `Colosseum Music Moderator`
             })
@@ -123,8 +123,8 @@ module.exports = {
       embeds: [
         new EmbedBuilder()
         .setColor(client.color)
-        .setTitle(`MUTE PENDING!`)
-        .setDescription(`ARE YOU SURE FOR MUTE THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
+        .setTitle(`UNMUTE PENDING!`)
+        .setDescription(`ARE YOU SURE FOR UNMUTE THIS MEMBER?\n─────────────────────\n◈ Moderator: @${uTag}\n◈ User: ${targetMember}\n─────────────────────`)
         .setFooter({
           text: `Colosseum Music Moderator | TIME 30s`
         })
