@@ -75,7 +75,14 @@ module.exports = {
       });
       if (p.customId === 'yes') {
         interaction.channel.bulkDelete(number).then(() => {
-          interaction.followUp({ embeds: [purEmbed], components: [trashButton] })
+          interaction.followUp({ embeds: [purEmbed], components: [
+            new ActionRowBuilder().addComponents(
+              new ButtonBuilder()
+              .setCustomId('trs')
+              .setLabel('hapus')
+              .setStyle(ButtonStyle.Success)
+            )
+            ] })
         });
       }
       if (p.customId === 'no') {
@@ -84,7 +91,7 @@ module.exports = {
           components: [trashButton]
         })
       }
-      if (p.customId === 'trash') {
+      if (p.customId === 'trs') {
         await interaction.deleteReply()
       }
     });
