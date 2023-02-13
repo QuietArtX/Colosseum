@@ -44,7 +44,7 @@ module.exports = {
     const reason = interaction.options.getString("reason") || "NO REASON PROVIDED";
     const uTag = await interaction.user.tag;
     
-    const targetMember = await interaction.guild.members.fetch(targetUsers)
+    const targetMember = await interaction.guild.members.fetch(targetUsers.id)
     const targetMemberRolePosition = targetMember.roles.highest.position;
     const requestMemberRolePosition = interaction.member.roles.highest.position
     const botRolePosition = interaction.guild.members.me.roles.highest.position
@@ -64,8 +64,8 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`ACCESS DENIED! BECAUSE THEY HAVE THE SAME/HIGHER ROLE THAN ME`);
     
-    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
-    if (targetMember.id === interaction.targetMember.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (targetMember === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (interaction.member.id === targetMember) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
     if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
     if (targetMemberRolePosition >= botRolePosition) return interaction.followUp({
       embeds: [botEmbed],
