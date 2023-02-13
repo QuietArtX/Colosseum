@@ -28,6 +28,10 @@ module.exports = {
   run: async (interaction, client, user) => {
     await interaction.deferReply({ ephemeral: false });
     
+    const loading = await interaction.editReply({
+      embeds: [new EmbedBuilder().setColor(client.color).set(`<a:waiting:802770372516118561> Generate Invite Link...`)]
+    });
+    
     const iEmbed = new EmbedBuilder()
     .setColor(client.color)
     .setDescription(`HERE YOUR INVITE LINK\nCLICK ON BUTTON BELOW`);
@@ -39,8 +43,8 @@ module.exports = {
       .setStyle(ButtonStyle.Link)
       .setURL('https://discord.com/api/oauth2/authorize?client_id=1064974505597993152&permissions=8&scope=bot%20applications.commands')
     );
-    
-    await interaction.editReply({
+    await delay(3000)
+    loading.edit({
         embeds: [iEmbed],
         components: [iButton]
     });
