@@ -49,8 +49,8 @@ module.exports = {
     
     const errEmbed = new EmbedBuilder()
     .setColor(client.color)
-    .setDescription(`ACTION DENIED! Cannot **BAN** the role above you!`);
-    
+    .setDescription(`ACTION DENIED!ACCESS DENIED! BECAUSE YOUR ROLE IS LOWER THAN HIM`);
+ 
     if (member.roles.highest.position >= interaction.member.roles.highest.position) return interaction.editReply({
       embeds: [errEmbed],
       ephemeral: true
@@ -114,7 +114,7 @@ module.exports = {
         .setTitle(`BAN PENDING!`)
         .setDescription(`ARE YOU SURE FOR BAN THIS MEMBER?\n－－－－－－－\n◈  Moderator: @${uTag}\n◈ User: ${member}\n◈ Reason: **  ${reason}**\n－－－－－－－`)
         .setFooter({
-          text: `Colosseum Music Moderator | Timeout 15s`
+          text: `Colosseum Music Moderator | TIME 30s`
         })
         .setTimestamp()
       ],
@@ -122,23 +122,25 @@ module.exports = {
     });
     
     const collector = msg.createMessageComponentCollector({
+      filter: (b) => {
+        if (!interaction.guild.members.me.permissions.has("BanMembers")) return interaction.reply({
+          embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
+          ephemeral: true
+      });
+      }
       componentType: ComponentType.Button,
-      time: 15000
+      time: 30000
     });
     
     collector.on('collect', async (b) => {
       if (!b.deferred) await b.deferUpdate();
-      if (!interaction.guild.members.me.permissions.has("BanMembers")) return interaction.reply({
-      embeds: [new EmbedBuilder().setColor(client.color)    .setDescription(`ACCESS DENIED! YOU DO NOT HAVE ACCESS FOR BANNED MEMBERS`)],
-      ephemeral: true
-      });
       if (b.customId === "yes") {
         await member.ban({reason})
         interaction.editReply({
           embeds: [succBan],
           components: [deactvButton]
         });
-        await delay(5000);
+        await delay(10000);
         interaction.deleteReply();
       }
       if (b.customId === "cancel") {
@@ -146,14 +148,14 @@ module.exports = {
           embeds: [cnclBan],
           components: [deactvButton]
         });
-        await delay(5000);
+        await delay(10000);
         interaction.deleteReply();
       }
     });
     
     collector.on('end', async () => {
       msg.edit({ content: ` `, embeds: [timeoutBan], components: [deactvButton] })
-      await delay(5000);
+      await delay(10000);
       msg.delete();
     });
   }
