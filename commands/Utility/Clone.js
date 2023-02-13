@@ -48,7 +48,7 @@ module.exports = {
       .setStyle(ButtonStyle.Link)
       .setURL('https://replit.com/github/QuietArtX/Colloseum'),
       new ButtonBuilder()
-      .setLabel('Fork on GitHub')
+      .setLabel('Fork on GitHub!')
       .setEmoji('1064244587541045319')
       .setStyle(ButtonStyle.Link)
       .setURL('https://github.com/QuietArtX/Colloseum/fork')
