@@ -123,7 +123,7 @@ module.exports = {
     
     const collector = msg.createMessageComponentCollector({
       filter: (b) => {
-        if (guild.members.me.permissions.has("BanMembers")) return true;
+        if (b.guild.members.me.permissions.has("BanMembers")) return true;
         else {
           b.reply({
           embeds: [new EmbedBuilder().setColor(client.color).setDescription(`ACCESS DENIED!`)],
