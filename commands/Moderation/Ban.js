@@ -65,10 +65,10 @@ module.exports = {
     .setColor(client.color)
     .setDescription(`UPSS! YOU CAN'T BAN ME 🧸`);
     
-    if (targetMember.id === interaction.guild.ownerId) return interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
-    if (targetMember.id === interaction.client.user.id) return  interaction.followUp({ embeds: [botEmbed], ephemeral: true })
-    if (targetMember.id === interaction.member.id) return interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
-    if (targetMemberRolePosition >= requestMemberRolePosition ) return interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
+    if (targetMember.id === interaction.guild.ownerId) return await interaction.followUp({ embeds: [ownEmbed], ephemeral: true });
+    if (targetMember.id === interaction.client.user.id) return await interaction.followUp({ embeds: [botEmbed], ephemeral: true })
+    if (targetMember.id === interaction.member.id) return await interaction.followUp({ embeds: [yourEmbed], ephemeral: true });
+    if (targetMemberRolePosition >= requestMemberRolePosition ) return await interaction.followUp({ embeds: [erroleEmbed], ephemeral: true });
     
     const timeoutBan = new EmbedBuilder()
     .setColor(client.color)
