@@ -38,7 +38,7 @@ module.exports = {
   },
   
   run: async (interaction, client, user) => {
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: false });
     
     const targetUsers = interaction.options.getUser("target");
     const reason = interaction.options.getString("reason") || "NO REASON PROVIDED";
