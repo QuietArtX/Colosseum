@@ -23,7 +23,7 @@ module.exports = {
     LIMIT_TRACK: parseInt(process.env.LIMIT_TRACK || "50"),  //<= dafault is "50" // limit track in playlist
     LIMIT_PLAYLIST: parseInt(process.env.LIMIT_PLAYLIST || "10"), //<= default is "10" // limit can create playlist per user
 
-    DEFAULT_SEARCH: "ytmsearch", "ytsearch", "spsearch", "scsearch", // default search engine & "ytmsearch" / "ytsearch" / "scsearch" / "spsearch"
+    DEFAULT_SEARCH: "ytsearch", // default search engine & "ytmsearch" / "ytsearch" / "scsearch" / "spsearch"
     NODES: [
       { 
         identifier: "OddCoder",
