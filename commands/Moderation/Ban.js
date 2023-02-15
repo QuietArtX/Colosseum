@@ -41,7 +41,7 @@ module.exports = {
     await interaction.deferReply({ ephemeral: false });
     
     const targetUsers = interaction.options.getUser("target");
-    const reason = interaction.options.getString("reason") || "NO REASON PROVIDED";
+    const reason = interaction.options.getString("reason") || "NO REASON PROVIDED!";
     const uTag = await interaction.user.tag;
     
     const targetMember = await interaction.guild.members.fetch(targetUsers)
